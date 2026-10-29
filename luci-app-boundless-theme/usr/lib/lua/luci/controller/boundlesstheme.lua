@@ -30,6 +30,8 @@ function index()
 		call("action_managelog")).leaf = true
 	entry({"admin", "system", "boundlesstheme", "activate"},
 		post("action_activate")).leaf = true
+	entry({"admin", "system", "boundlesstheme", "scheme"},
+		post("action_scheme")).leaf = true
 end
 
 local BUNDLE_SLUG = "syamsulsariphidayat7/boundless-luci"
@@ -38,6 +40,7 @@ local REPO_API   = "https://api.github.com/repos/" .. BUNDLE_SLUG
 local THEME_SUB  = "luci-theme-boundless"
 
 local CASCADE    = "/www/luci-static/boundless/cascade.css"
+local SCHEME_CSS = "/www/luci-static/boundless/scheme.css"
 local PREV_FILE  = "/etc/boundless-previous-theme"
 local INSTALLER_DIR = "/root/luci-theme-boundless"
 local APP_VERSION_FILE = "/usr/lib/lua/luci/view/boundlesstheme/VERSION"
@@ -156,6 +159,74 @@ local function theme_state()
 	}
 end
 
+-- ================= Skema warna =================
+-- Skema yang LULUS saring Syamsul (2026-10-29, dari sample 6 skema
+-- historis tema): varian gelap Love Couple + Pun Yeta. Atas
+-- permintaan Syamsul nama tampilnya TANPA kata "Gelap" ("Love Couple
+-- (bawaan)" + "Pun Yeta"); yang dicoret waktu itu adalah versi
+-- terangnya (Biru M3, Pun Yeta asli, Aqua Marine, Love Couple asli) -
+-- hex-nya tersimpan di sample-skema.png (workspace/your_files/schemes).
+-- Ditambah 3 skema uiGradients pilihan Syamsul (2026-10-29):
+-- Sand to Blue, Purplepine, Deep Space. Untuk ketiganya, stop ketiga
+-- (progress) = warna kedua diterangkan 35% ke putih, primer = warna
+-- pertama digelapkan 20% (pola turunan yang sama seperti skema lama).
+-- Pilihan disimpan di UCI (boundlesstheme.settings.scheme) dan diterapkan dengan menulis ulang scheme.css di folder
+-- statis tema - file itu di-@import cascade.css SETELAH custom.css,
+-- jadi override-nya menang di spesifisitas yang sama. "bawaan" =
+-- tanpa override (nilai token asli di custom.css). Skema disimpan
+-- di perangkat, jadi berlaku untuk semua browser, dan install.sh
+-- tema menjaga file scheme.css tetap ada saat install ulang.
+local SCHEMES = {
+	{ id = "bawaan",         name = "Love Couple (bawaan)",
+	  c1 = "#29445e", c2 = "#89253e", third = "#b67887", primary = "#0b486b" },
+	{ id = "pun-yeta",       name = "Pun Yeta",
+	  c1 = "#0b486b", c2 = "#ef8e38", third = "#f5b877", primary = "#0b486b" },
+	{ id = "sand-to-blue",   name = "Sand to Blue",
+	  c1 = "#3e5151", c2 = "#decba4", third = "#eaddc4", primary = "#324141" },
+	{ id = "purplepine",     name = "Purplepine",
+	  c1 = "#20002c", c2 = "#cbb4d4", third = "#ddcee3", primary = "#1a0023" },
+	{ id = "deep-space",     name = "Deep Space",
+	  c1 = "#000000", c2 = "#434343", third = "#858585", primary = "#000000" },
+}
+
+local function scheme_by_id(id)
+	for _, s in ipairs(SCHEMES) do
+		if s.id == id then return s end
+	end
+	return nil
+end
+
+local function current_scheme()
+	local uci = luci.model.uci.cursor()
+	local id = uci:get("boundlesstheme", "settings", "scheme")
+	if id and scheme_by_id(id) then return id end
+	return "bawaan"
+end
+
+local function write_scheme_css(s)
+	local f = io.open(SCHEME_CSS, "w")
+	if not f then return false end
+	if s.id == "bawaan" then
+		f:write("/* Skema bawaan (Love Couple): tanpa override - nilai token asli custom.css yang berlaku. */\n")
+	else
+		f:write(string.format(
+			"/* Skema aktif: %s - ditulis dashboard Boundless Theme; jangan diedit manual. */\n"
+			.. ":root {\n"
+			.. "\t--m3-primary: %s;\n"
+			.. "\t--m3-grad-header: linear-gradient(90deg, %s 0%%, %s 100%%);\n"
+			.. "\t--m3-grad-accent: linear-gradient(135deg, %s 0%%, %s 100%%);\n"
+			.. "\t--m3-grad-primary: linear-gradient(135deg, %s 0%%, %s 100%%);\n"
+			.. "\t--m3-grad-progress: linear-gradient(90deg, %s 0%%, %s 55%%, %s 100%%);\n"
+			.. "}\n"
+			.. "#menu { background-color: %s !important; }\n",
+			s.name, s.primary,
+			s.c1, s.c2, s.c1, s.c2, s.c1, s.c2,
+			s.c1, s.c2, s.third, s.c1))
+	end
+	f:close()
+	return true
+end
+
 -- Ref rilis terbaru repo gabungan = tag v<versi> tertinggi; fallback
 -- ke branch main bila belum ada tag / API tidak terjangkau.
 local function latest_ref()
@@ -262,6 +333,10 @@ local DL_SCRIPT = "/tmp/boundlesstheme-online.sh"
 
 function action_status()
 	local st = theme_state()
+	local schemes = {}
+	for _, s in ipairs(SCHEMES) do
+		schemes[#schemes + 1] = { id = s.id, name = s.name, c1 = s.c1, c2 = s.c2 }
+	end
 	luci.http.prepare_content("application/json")
 	luci.http.write(luci.jsonc.stringify({
 		ok = true,
@@ -272,6 +347,8 @@ function action_status()
 		has_installer = st.has_installer,
 		app_version = app_version(),
 		themes = theme_list(),
+		scheme = current_scheme(),
+		schemes = schemes,
 	}))
 end
 
@@ -298,6 +375,32 @@ function action_activate()
 	-- keadaan cache tema yang basi.
 	luci.sys.call("( sleep 1; /etc/init.d/uhttpd restart ) </dev/null >/dev/null 2>&1 &")
 	http.write(luci.jsonc.stringify({ ok = true, active = want }))
+end
+
+-- POST /scheme — simpan skema warna pilihan ke UCI + tulis scheme.css.
+-- Aksi sinkron dan cepat (tanpa proses latar): file CSS statis, jadi
+-- halaman LuCI berikutnya langsung memakai skema baru; halaman yang
+-- sudah terbuka perlu hard refresh karena cache CSS browser.
+function action_scheme()
+	if not require_post() then return end
+	local http = luci.http
+	http.prepare_content("application/json")
+	local s = scheme_by_id(http.formvalue("scheme") or "")
+	if not s then
+		http.status(400, "Bad Request")
+		return http.write(luci.jsonc.stringify({ ok = false, error = "skema tidak dikenal" }))
+	end
+	local uci = luci.model.uci.cursor()
+	if not uci:get_first("boundlesstheme", "settings") then
+		uci:section("boundlesstheme", "settings", "settings")
+	end
+	uci:set("boundlesstheme", "settings", "scheme", s.id)
+	uci:commit("boundlesstheme")
+	if not write_scheme_css(s) then
+		http.status(500, "Internal Server Error")
+		return http.write(luci.jsonc.stringify({ ok = false, error = "gagal menulis scheme.css - tema belum terpasang?" }))
+	end
+	http.write(luci.jsonc.stringify({ ok = true, scheme = s.id }))
 end
 
 function action_check()

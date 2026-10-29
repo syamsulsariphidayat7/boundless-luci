@@ -93,6 +93,7 @@
 	<li><a href='https://www.youtube.com/c/IndonesianTechChannel/videos' target='_blank'>Youtube</a></li>
 	<li><a href='/cgi-bin/luci/admin/status/about'>About</a></li>
 	<li><a href='/cgi-bin/luci/admin/status/release_ram'>Clear</a></li>
+	<li><a href='/cgi-bin/luci/admin/system/boundlesstheme'>Tema</a></li>
 	<script>document.getElementById("yacd").setAttribute("href", "http://" + window.location.hostname + ":9090/ui/yacd/",);</script>
   </ul>
 </nav>

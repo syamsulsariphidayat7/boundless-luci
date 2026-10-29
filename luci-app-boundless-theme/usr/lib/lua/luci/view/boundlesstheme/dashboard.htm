@@ -60,12 +60,18 @@
 
   <div class="btw-card">
     <h2>Ganti Tema</h2>
-    <p class="btw-note">Pilih tema terdaftar lalu klik <b>Aktifkan</b> &mdash; sama seperti dropdown <b>Design</b> di System &rarr; Language and Style, tanpa pindah halaman. LuCI restart sebentar setelah tema diganti.</p>
+    <p class="btw-note">Pilih tema terdaftar lalu klik <b>Aktifkan</b> &mdash; sama seperti dropdown <b>Design</b> di System &rarr; Language and Style, tanpa pindah halaman. LuCI restart sebentar setelah tema diganti. Saat yang dipilih <b>Boundless</b>, pilihan <b>skema warna</b>nya muncul di samping &mdash; skema disimpan di perangkat (berlaku untuk semua browser), dan halaman LuCI yang sedang terbuka perlu hard refresh (<b>Ctrl+F5</b>) untuk melihat perubahan skema.</p>
     <div class="btw-btnrow" style="align-items:center">
       <select class="btw-select" id="btw-theme-select"></select>
       <button class="btw-btn primary" id="btw-btn-activate" type="button">Aktifkan Tema</button>
+      <span id="btw-scheme-group" style="display:none;align-items:center;gap:10px;flex-wrap:wrap">
+        <select class="btw-select" id="btw-scheme-select"></select>
+        <span id="btw-scheme-preview" style="width:110px;height:26px;border-radius:999px;border:1px solid var(--btw-border);display:inline-block;flex:none"></span>
+        <button class="btw-btn primary" id="btw-btn-scheme" type="button">Terapkan Skema</button>
+      </span>
     </div>
     <div class="btw-statusline" id="btw-theme-status"></div>
+    <div class="btw-statusline" id="btw-scheme-status"></div>
   </div>
 
   <div class="btw-card">
@@ -105,6 +111,7 @@ var URL_UPDATELOG = "<%=luci.dispatcher.build_url("admin", "system", "boundlesst
 var URL_MANAGE = "<%=luci.dispatcher.build_url("admin", "system", "boundlesstheme", "manage")%>";
 var URL_MANAGELOG = "<%=luci.dispatcher.build_url("admin", "system", "boundlesstheme", "managelog")%>";
 var URL_ACTIVATE = "<%=luci.dispatcher.build_url("admin", "system", "boundlesstheme", "activate")%>";
+var URL_SCHEME = "<%=luci.dispatcher.build_url("admin", "system", "boundlesstheme", "scheme")%>";
 
 function $(id){ return document.getElementById(id); }
 function esc(s){ return String(s == null ? "" : s).replace(/&/g,"&amp;").replace(/</g,"&lt;"); }
@@ -129,7 +136,7 @@ function postJSON(url, data){
 var busy = false;
 function setBusy(b){
   busy = b;
-  ["btw-btn-check","btw-btn-update","btw-btn-rollback","btw-btn-remove","btw-btn-activate"].forEach(function(id){ $(id).disabled = b; });
+  ["btw-btn-check","btw-btn-update","btw-btn-rollback","btw-btn-remove","btw-btn-activate","btw-btn-scheme"].forEach(function(id){ $(id).disabled = b; });
 }
 
 var lastThemesKey = "";
@@ -156,6 +163,38 @@ function fillThemes(s){
   }
 }
 
+var lastSchemesKey = "", schemeData = {};
+function schemePreview(){
+  var sel = $("btw-scheme-select"), s = schemeData[sel.value];
+  if (s) $("btw-scheme-preview").style.background = "linear-gradient(90deg," + s.c1 + "," + s.c2 + ")";
+}
+function fillSchemes(s){
+  var sel = $("btw-scheme-select");
+  var schemes = s.schemes || [];
+  var key = schemes.map(function(x){ return x.id; }).join("|") + "@" + (s.scheme || "");
+  if (key === lastSchemesKey) return;
+  lastSchemesKey = key;
+  schemeData = {};
+  sel.innerHTML = "";
+  schemes.forEach(function(x){
+    schemeData[x.id] = x;
+    var o = document.createElement("option");
+    o.value = x.id; o.textContent = x.name;
+    if (x.id === s.scheme) o.selected = true;
+    sel.appendChild(o);
+  });
+  schemePreview();
+}
+$("btw-scheme-select").addEventListener("change", schemePreview);
+
+/* Grup skema hanya tampil saat tema yang dipilih di dropdown
+   adalah Boundless - menyatu ringkas di kartu Ganti Tema. */
+function syncSchemeRow(){
+  var isB = $("btw-theme-select").value === "/luci-static/boundless";
+  $("btw-scheme-group").style.display = isB ? "inline-flex" : "none";
+}
+$("btw-theme-select").addEventListener("change", syncSchemeRow);
+
 function refresh(){
   return getJSON(URL_STATUS).then(function(s){
     var pill = $("btw-pill"), ptxt = $("btw-pill-text");
@@ -170,6 +209,8 @@ function refresh(){
     $("btw-appver").textContent = "v" + (s.app_version || "?");
     $("btw-foot-ver").textContent = "v" + (s.app_version || "?");
     fillThemes(s);
+    fillSchemes(s);
+    syncSchemeRow();
   }).catch(function(){ /* STB mungkin sedang restart; abaikan */ });
 }
 
@@ -192,6 +233,32 @@ $("btw-btn-activate").addEventListener("click", function(){
     st.className = "btw-statusline ok";
     st.textContent = "Tema diganti ke " + name + ". Halaman dimuat ulang...";
     setTimeout(function(){ location.reload(); }, 3000);
+  }).catch(function(e){
+    setBusy(false);
+    st.className = "btw-statusline err"; st.textContent = "Gagal menghubungi STB: " + e.message;
+  });
+});
+
+/* ---------- Skema warna ---------- */
+$("btw-btn-scheme").addEventListener("click", function(){
+  if (busy) return;
+  var sel = $("btw-scheme-select"), st = $("btw-scheme-status");
+  var id = sel.value;
+  var name = sel.options[sel.selectedIndex] ? sel.options[sel.selectedIndex].textContent : id;
+  if (!id) return;
+  setBusy(true);
+  st.className = "btw-statusline"; st.textContent = "Menerapkan skema " + name + "...";
+  postJSON(URL_SCHEME, { scheme: id }).then(function(r){
+    setBusy(false);
+    if (!r.ok) {
+      st.className = "btw-statusline err";
+      st.textContent = "Gagal: " + (r.error || "tidak diketahui");
+      return;
+    }
+    lastSchemesKey = "";
+    st.className = "btw-statusline ok";
+    st.textContent = "Skema " + name + " diterapkan. Hard refresh (Ctrl+F5) halaman LuCI lain untuk melihatnya.";
+    refresh();
   }).catch(function(e){
     setBusy(false);
     st.className = "btw-statusline err"; st.textContent = "Gagal menghubungi STB: " + e.message;

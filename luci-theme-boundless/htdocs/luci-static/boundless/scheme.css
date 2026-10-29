@@ -1,0 +1,14 @@
+/*
+ *	Boundless color scheme overrides.
+ *
+ *	This file ships EMPTY (comment only) = the default scheme
+ *	(Love Couple). When the user picks a color scheme in the
+ *	Boundless Theme dashboard (System > Boundless Theme), the
+ *	dashboard rewrites this file with that scheme's variable
+ *	overrides; cascade.css imports it after custom.css, so the
+ *	overrides win at equal specificity.
+ *
+ *	Do not edit by hand - the dashboard overwrites it. Deleting the
+ *	generated rules (or this file's contents) returns the theme to
+ *	the default scheme.
+ */

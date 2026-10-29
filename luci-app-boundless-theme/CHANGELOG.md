@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.1.0] - 2026-10-29
+
+### Added
+
+- **Kontrol Skema Warna** menyatu di kartu Ganti Tema: grup dropdown
+  skema + strip pratinjau gradien + tombol Terapkan Skema, hanya
+  muncul saat tema yang dipilih adalah Boundless. Lima skema:
+  Love Couple (bawaan), Pun Yeta, Sand to Blue, Purplepine,
+  Deep Space. Pilihan disimpan di UCI
+  (`boundlesstheme.settings.scheme`) dan diterapkan dengan menulis
+  `scheme.css` tema (endpoint POST `scheme`; status menyertakan
+  skema aktif + daftar skema).
+
 ## [1.0.0] - 2026-10-29
 
 Rilis pertama sebagai bagian dari proyek gabungan

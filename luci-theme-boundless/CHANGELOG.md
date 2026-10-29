@@ -4,6 +4,20 @@ Semua perubahan penting tema ini dicatat di sini.
 Format mengikuti [Keep a Changelog](https://keepachangelog.com/),
 versi mengikuti [Semantic Versioning](https://semver.org/).
 
+## [1.1.0] - 2026-10-29
+
+### Added
+
+- **Dukungan skema warna**: `cascade.css` kini meng-`@import`
+  `scheme.css` setelah `custom.css`. File itu terpasang kosong
+  (= skema bawaan Love Couple) dan ditulis ulang oleh dashboard
+  Boundless Theme saat pengguna memilih skema — variabel gradien +
+  primer tertimpa tanpa mengubah file tema lain.
+- **Tombol "Tema" di dock bawah** menuju dashboard pengelolaan
+  (System → Boundless Theme).
+- `install.sh` menjaga `scheme.css` yang sedang aktif agar pilihan
+  skema pengguna tidak hilang saat install/update ulang.
+
 ## [1.0.0] - 2026-10-29
 
 Rilis pertama sebagai bagian dari proyek gabungan

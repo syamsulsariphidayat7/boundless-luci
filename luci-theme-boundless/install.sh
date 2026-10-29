@@ -27,10 +27,24 @@ echo "$PREV" > /etc/boundless-previous-theme
 echo "[boundless] Tema aktif sekarang: $PREV (disimpan di /etc/boundless-previous-theme)"
 
 echo "[boundless] Menyalin file tema..."
+# Skema warna pilihan user (ditulis dashboard ke scheme.css di folder
+# statis tema) jangan sampai hilang gara-gara install ulang: simpan
+# dulu file yang sedang aktif, kembalikan setelah penyalinan selesai.
+SCHEME_BAK=""
+if [ -f /www/luci-static/boundless/scheme.css ]; then
+	SCHEME_BAK=$(mktemp)
+	cp -f /www/luci-static/boundless/scheme.css "$SCHEME_BAK" 2>/dev/null || SCHEME_BAK=""
+fi
 # Static files (CSS / logo / icon) -> /www/luci-static/...
 mkdir -p /www/luci-static/boundless /www/luci-static/resources
 cp -r "$DIR/htdocs/luci-static/boundless/." /www/luci-static/boundless/
 cp -f "$DIR/htdocs/luci-static/resources/menu-boundless.js" /www/luci-static/resources/
+
+# Kembalikan skema warna pilihan user (lihat catatan di atas)
+if [ -n "$SCHEME_BAK" ] && [ -f "$SCHEME_BAK" ]; then
+	cp -f "$SCHEME_BAK" /www/luci-static/boundless/scheme.css
+	rm -f "$SCHEME_BAK"
+fi
 
 # Ikon navbar REYRE-WRT (v7): header tema ini menampilkan baris ikon
 # shortcut (nikki/openclash/tinyfm/dll) yang gambarnya tinggal di folder
