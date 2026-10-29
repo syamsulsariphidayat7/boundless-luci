@@ -4,6 +4,12 @@ Semua perubahan penting tema ini dicatat di sini.
 Format mengikuti [Keep a Changelog](https://keepachangelog.com/),
 versi mengikuti [Semantic Versioning](https://semver.org/).
 
+## [1.6.0] - 2026-10-30
+
+Tidak ada perubahan kode tema pada rilis ini — nomor versi mengikuti
+rilis gabungan 1.6.0 (perubahan ada di aplikasi pengelola: tombol
+Install / Update hanya muncul bila ada versi baru).
+
 ## [1.5.0] - 2026-10-30
 
 ### Changed

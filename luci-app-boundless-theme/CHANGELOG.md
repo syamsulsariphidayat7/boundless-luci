@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.6.0] - 2026-10-30
+
+### Changed
+
+- **Tombol Install / Update kini bersyarat**: tersembunyi secara
+  bawaan dan hanya muncul bila cek update menyatakan ada versi
+  baru. Cek berjalan **otomatis saat halaman dibuka** (tombol Cek
+  Update tetap ada untuk memeriksa ulang manual); bila sudah versi
+  terbaru, gagal cek, atau GitHub tak terjangkau, tombol tetap
+  sembunyi dan alasannya tertulis di baris status.
+
 ## [1.5.0] - 2026-10-30
 
 Tidak ada perubahan kode aplikasi pada rilis ini — nomor versi

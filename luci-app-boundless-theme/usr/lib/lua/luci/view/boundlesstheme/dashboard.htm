@@ -76,11 +76,11 @@
 
   <div class="btw-card">
     <h2>Install / Update</h2>
-    <p class="btw-note" id="btw-update-text">Tema <b>dan aplikasi pengelola ini</b> dipasang &amp; diperbarui dari repo GitHub <b>boundless-luci</b> (rilis terbaru). Klik <b>Cek Update</b> untuk membandingkan versi.</p>
+    <p class="btw-note" id="btw-update-text">Tema <b>dan aplikasi pengelola ini</b> dipasang &amp; diperbarui dari repo GitHub <b>boundless-luci</b> (rilis terbaru). Versi dibandingkan otomatis saat halaman dibuka — tombol Install / Update hanya muncul bila ada versi baru.</p>
     <div class="btw-notes" id="btw-notes"></div>
     <div class="btw-btnrow">
       <button class="btw-btn" id="btw-btn-check" type="button">Cek Update</button>
-      <button class="btw-btn primary" id="btw-btn-update" type="button">Install / Update Sekarang</button>
+      <button class="btw-btn primary" id="btw-btn-update" type="button" style="display:none">Install / Update Sekarang</button>
     </div>
     <div class="btw-statusline" id="btw-update-status"></div>
     <pre class="btw-log" id="btw-update-log"></pre>
@@ -294,31 +294,39 @@ function pollLog(url, logEl, statusEl, doneFn){
   })();
 }
 
-$("btw-btn-check").addEventListener("click", function(){
-  var st = $("btw-update-status"), notes = $("btw-notes");
+/* Tombol Install / Update hanya muncul bila cek menyatakan ada
+   versi baru; cek berjalan otomatis saat halaman dibuka dan bisa
+   diulang manual lewat tombol Cek Update. */
+function doCheck(){
+  var st = $("btw-update-status"), notes = $("btw-notes"), btn = $("btw-btn-update");
   st.className = "btw-statusline"; st.textContent = "Memeriksa GitHub...";
   getJSON(URL_CHECK).then(function(r){
-    if (!r.ok) { st.className = "btw-statusline err"; st.textContent = "Gagal memeriksa update."; return; }
+    if (!r.ok) { btn.style.display = "none"; st.className = "btw-statusline err"; st.textContent = "Gagal memeriksa update."; return; }
     if (!r.remote) {
+      btn.style.display = "none";
       st.className = "btw-statusline err";
       st.textContent = "Tidak bisa menjangkau GitHub (offline / repo belum ada).";
       notes.className = "btw-notes"; notes.textContent = "";
       return;
     }
     if (r.update) {
+      btn.style.display = "";
       st.className = "btw-statusline";
       st.innerHTML = "Ada versi baru: <b>v" + esc(r.remote) + "</b>" +
         (r["local"] ? " (terpasang: v" + esc(r["local"]) + ")" : " (tema belum terpasang)");
       if (r.notes) { notes.className = "btw-notes show"; notes.textContent = r.notes; }
     } else {
+      btn.style.display = "none";
       st.className = "btw-statusline ok";
       st.textContent = "Sudah versi terbaru (v" + r.remote + ").";
       notes.className = "btw-notes"; notes.textContent = "";
     }
   }).catch(function(){
+    btn.style.display = "none";
     st.className = "btw-statusline err"; st.textContent = "Gagal memeriksa update (jaringan?).";
   });
-});
+}
+$("btw-btn-check").addEventListener("click", doCheck);
 
 $("btw-btn-update").addEventListener("click", function(){
   if (busy) return;
@@ -390,8 +398,9 @@ $("btw-btn-remove").addEventListener("click", function(){
   doManage("remove", "HAPUS tema Boundless dari perangkat?\nTema aktif diganti ke tema bawaan dan semua file Boundless dihapus. Aplikasi pengelola ini TIDAK ikut terhapus.");
 });
 
-/* ---------- Muat awal: status + lanjutkan pantauan bila ada proses ---------- */
+/* ---------- Muat awal: status + cek update otomatis + lanjutkan pantauan bila ada proses ---------- */
 refresh();
+doCheck();
 (function resume(){
   getJSON(URL_UPDATELOG).then(function(r){
     if (r.running) {
