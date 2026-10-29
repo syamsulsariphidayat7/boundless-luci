@@ -1,0 +1,44 @@
+{#
+	Boundless derivative of luci-theme-material (see header.ut).
+
+	luci-theme-material
+	Copyright 2015 Lutty Yang <lutty@wcan.in>
+
+	Have a bug? Please create an issue here on GitHub!
+	https://github.com/LuttyYang/luci-theme-material/issues
+
+	luci-theme-bootstrap:
+	Copyright 2008 Steven Barth <steven@midlink.org>
+	Copyright 2008 Jo-Philipp Wich <jow@openwrt.org>
+	Copyright 2012 David Menting <david@nut-bolt.nl>
+
+	MUI:
+	https://github.com/muicss/mui
+
+	Licensed to the public under the Apache License 2.0
+-#}
+
+			</div>
+			<footer class="mobile-hide">
+				<a href="https://github.com/openwrt/luci" target="_blank" rel="noreferrer">Powered by {{ version.luciname }} ({{ version.luciversion }})</a> /
+				{{ version.distname }} {{ version.distversion }} ({{ version.distrevision }})
+			</footer>
+		</div>
+	</div>
+{#-
+	REYRE-WRT compatibility (v6, 2026-10-28): custom firmwares such as
+	REYRE-WRT (Amlogic HG680P) patch the stock material footer with the
+	two placeholder divs below. Their Status > Overview include
+	(view/status/include/10_system.js) references the bare globals
+	`tempcpu` and `cpuusage`, which the browser resolves via named
+	access to these element ids, and their admin_status index polls
+	admin/status/realtime/temp_cpu_combined to fill them. Without the
+	divs the overview throws "ReferenceError: tempcpu is not defined".
+	Ported 1:1 from the firmware's patched material footer.ut.
+-#}
+<div id="tempcpu"></div>
+<div id="cpuusage"></div>
+	<script>L.require('menu-boundless')</script>
+
+</body>
+</html>

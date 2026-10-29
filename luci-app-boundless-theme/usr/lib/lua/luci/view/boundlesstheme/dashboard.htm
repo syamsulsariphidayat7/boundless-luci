@@ -1,0 +1,341 @@
+<%+header%>
+<style>
+.btw-wrap{--btw-grad:linear-gradient(90deg,#29445e,#89253e);--btw-card:#ffffff;--btw-border:#d3dae2;--btw-text:#1b2330;--btw-muted:#5c6a7a;--btw-green:#1d9d57;--btw-red:#d43a31;--btw-amber:#e07f00;max-width:100%;padding:16px 14px 22px;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--btw-text)}
+.btw-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.btw-title{margin:0;font-size:24px;letter-spacing:2px;font-family:ui-monospace,Menlo,monospace}
+.btw-title .btw-mark{background:var(--btw-grad);-webkit-background-clip:text;background-clip:text;color:transparent;font-size:28px}
+.btw-sub{margin:4px 0 0;color:var(--btw-muted);font-size:13px}
+.btw-pill{display:inline-flex;align-items:center;gap:8px;background:var(--btw-card);border:1px solid var(--btw-border);border-radius:999px;padding:8px 16px;font-size:13px;font-weight:600}
+.btw-dot{width:10px;height:10px;border-radius:50%;background:#9aa4b2;flex:none}
+.btw-pill.on{color:var(--btw-green);border-color:#a9dfc2}.btw-pill.on .btw-dot{background:var(--btw-green);box-shadow:0 0 8px var(--btw-green)}
+.btw-pill.off{color:var(--btw-amber);border-color:#f3d3a4}.btw-pill.off .btw-dot{background:var(--btw-amber);box-shadow:0 0 8px var(--btw-amber)}
+.btw-pill.none{color:var(--btw-red);border-color:#f2c1bd}.btw-pill.none .btw-dot{background:var(--btw-red);box-shadow:0 0 8px var(--btw-red)}
+.btw-card{background:var(--btw-card);border:1px solid var(--btw-border);border-radius:16px;padding:18px;box-shadow:0 1px 2px rgba(16,24,40,.04),0 8px 24px rgba(16,24,40,.05);margin-bottom:14px}
+.btw-card h2{margin:0 0 12px;font-size:13px;text-transform:uppercase;letter-spacing:1.5px;color:var(--btw-muted)}
+.btw-card.danger{border-color:#f2c1bd}
+.btw-card.danger h2{color:var(--btw-red)}
+.btw-rows{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px 18px}
+.btw-kv .k{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--btw-muted);margin-bottom:3px}
+.btw-kv .v{font-size:15px;font-weight:600}
+.btw-badge{display:inline-block;background:var(--btw-grad);color:#fff;border-radius:999px;padding:2px 10px;font-size:12px;font-weight:700;font-family:ui-monospace,Menlo,monospace}
+.btw-badge.grey{background:#eef2f6;color:var(--btw-muted)}
+.btw-btn{appearance:none;border:1px solid var(--btw-border);background:#fff;color:var(--btw-text);border-radius:999px;padding:9px 18px;font-size:13.5px;font-weight:600;cursor:pointer;transition:transform .15s,box-shadow .15s,filter .15s}
+.btw-btn:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(20,24,31,.18)}
+.btw-btn:disabled{opacity:.5;cursor:default;transform:none;box-shadow:none}
+.btw-btn.primary{background:var(--btw-grad);border-color:transparent;color:#fff}
+.btw-btn.danger{background:#fff;border-color:#e5a19c;color:var(--btw-red)}
+.btw-btn.danger:hover{background:#fdf0ef}
+.btw-btnrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.btw-note{font-size:13px;color:var(--btw-muted);line-height:1.55}
+.btw-note b{color:var(--btw-text)}
+.btw-log{display:none;background:#141a22;color:#c9e4d4;border-radius:12px;padding:12px 14px;font-family:ui-monospace,Menlo,monospace;font-size:12px;line-height:1.5;white-space:pre-wrap;word-break:break-word;max-height:260px;overflow:auto;margin-top:12px}
+.btw-log.show{display:block}
+.btw-statusline{font-size:13px;margin-top:10px;min-height:18px}
+.btw-statusline.ok{color:var(--btw-green);font-weight:600}
+.btw-statusline.err{color:var(--btw-red);font-weight:600}
+.btw-notes{display:none;background:#f7f9fc;border:1px solid var(--btw-border);border-radius:12px;padding:10px 14px;font-size:12.5px;white-space:pre-wrap;margin-top:10px;max-height:180px;overflow:auto}
+.btw-notes.show{display:block}
+.btw-foot{text-align:center;color:var(--btw-muted);font-size:12px;margin-top:6px}
+.btw-select{appearance:auto;border:1px solid var(--btw-border);background:#fff;color:var(--btw-text);border-radius:10px;padding:9px 12px;font-size:13.5px;font-weight:600;min-width:230px;cursor:pointer}
+</style>
+
+<div class="btw-wrap">
+  <div class="btw-top">
+    <div>
+      <h1 class="btw-title"><span class="btw-mark">&#8734;</span> BOUNDLESS THEME</h1>
+      <p class="btw-sub">Panel kelola tema LuCI <b>luci-theme-boundless</b> &mdash; install, update, rollback, hapus.</p>
+    </div>
+    <span class="btw-pill" id="btw-pill"><span class="btw-dot"></span><span id="btw-pill-text">Memuat...</span></span>
+  </div>
+
+  <div class="btw-card">
+    <h2>Status Tema</h2>
+    <div class="btw-rows">
+      <div class="btw-kv"><div class="k">Versi Terpasang</div><div class="v" id="btw-ver">&mdash;</div></div>
+      <div class="btw-kv"><div class="k">Tema Aktif Saat Ini</div><div class="v" id="btw-active">&mdash;</div></div>
+      <div class="btw-kv"><div class="k">Installer Lokal (/root)</div><div class="v" id="btw-installer">&mdash;</div></div>
+      <div class="btw-kv"><div class="k">Aplikasi Pengelola</div><div class="v" id="btw-appver">&mdash;</div></div>
+    </div>
+  </div>
+
+  <div class="btw-card">
+    <h2>Ganti Tema</h2>
+    <p class="btw-note">Pilih tema terdaftar lalu klik <b>Aktifkan</b> &mdash; sama seperti dropdown <b>Design</b> di System &rarr; Language and Style, tanpa pindah halaman. LuCI restart sebentar setelah tema diganti.</p>
+    <div class="btw-btnrow" style="align-items:center">
+      <select class="btw-select" id="btw-theme-select"></select>
+      <button class="btw-btn primary" id="btw-btn-activate" type="button">Aktifkan Tema</button>
+    </div>
+    <div class="btw-statusline" id="btw-theme-status"></div>
+  </div>
+
+  <div class="btw-card">
+    <h2>Install / Update</h2>
+    <p class="btw-note" id="btw-update-text">Tema dipasang &amp; diperbarui dari repo GitHub <b>boundless-luci</b> (rilis terbaru). Klik <b>Cek Update</b> untuk membandingkan versi.</p>
+    <div class="btw-notes" id="btw-notes"></div>
+    <div class="btw-btnrow">
+      <button class="btw-btn" id="btw-btn-check" type="button">Cek Update</button>
+      <button class="btw-btn primary" id="btw-btn-update" type="button">Install / Update Sekarang</button>
+    </div>
+    <div class="btw-statusline" id="btw-update-status"></div>
+    <pre class="btw-log" id="btw-update-log"></pre>
+  </div>
+
+  <div class="btw-card danger">
+    <h2>Rollback &amp; Hapus</h2>
+    <p class="btw-note"><b>Rollback</b>: aktifkan lagi tema yang dipakai sebelum Boundless (file tema tetap ada). <b>Hapus Tema</b>: rollback + hapus semua file Boundless dari perangkat. Selama proses, LuCI akan restart &mdash; halaman ini ikut terputus sebentar, itu normal.</p>
+    <div class="btw-btnrow">
+      <button class="btw-btn" id="btw-btn-rollback" type="button">Rollback</button>
+      <button class="btw-btn danger" id="btw-btn-remove" type="button">Hapus Tema</button>
+    </div>
+    <div class="btw-statusline" id="btw-manage-status"></div>
+    <pre class="btw-log" id="btw-manage-log"></pre>
+  </div>
+
+  <p class="btw-foot">luci-app-boundless-theme <span id="btw-foot-ver"></span> &middot; Syamsul Sarip Hidayat &middot; Boundless</p>
+</div>
+
+<script>
+(function(){
+"use strict";
+var CSRF_TOKEN = "<%=token%>";
+var URL_STATUS = "<%=luci.dispatcher.build_url("admin", "system", "boundlesstheme", "status")%>";
+var URL_CHECK  = "<%=luci.dispatcher.build_url("admin", "system", "boundlesstheme", "check")%>";
+var URL_UPDATE = "<%=luci.dispatcher.build_url("admin", "system", "boundlesstheme", "update")%>";
+var URL_UPDATELOG = "<%=luci.dispatcher.build_url("admin", "system", "boundlesstheme", "updatelog")%>";
+var URL_MANAGE = "<%=luci.dispatcher.build_url("admin", "system", "boundlesstheme", "manage")%>";
+var URL_MANAGELOG = "<%=luci.dispatcher.build_url("admin", "system", "boundlesstheme", "managelog")%>";
+var URL_ACTIVATE = "<%=luci.dispatcher.build_url("admin", "system", "boundlesstheme", "activate")%>";
+
+function $(id){ return document.getElementById(id); }
+function esc(s){ return String(s == null ? "" : s).replace(/&/g,"&amp;").replace(/</g,"&lt;"); }
+
+function getJSON(url){
+  return fetch(url, { credentials: "same-origin" }).then(function(r){
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    return r.json();
+  });
+}
+function postJSON(url, data){
+  var body = "token=" + encodeURIComponent(CSRF_TOKEN);
+  Object.keys(data || {}).forEach(function(k){ body += "&" + encodeURIComponent(k) + "=" + encodeURIComponent(data[k]); });
+  return fetch(url, { method: "POST", credentials: "same-origin",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" }, body: body
+  }).then(function(r){
+    return r.json().catch(function(){ return { ok: false, error: "HTTP " + r.status }; })
+      .then(function(j){ if (!r.ok && j.ok !== true) { j.ok = false; } return j; });
+  });
+}
+
+var busy = false;
+function setBusy(b){
+  busy = b;
+  ["btw-btn-check","btw-btn-update","btw-btn-rollback","btw-btn-remove","btw-btn-activate"].forEach(function(id){ $(id).disabled = b; });
+}
+
+var lastThemesKey = "";
+function fillThemes(s){
+  var sel = $("btw-theme-select");
+  var themes = s.themes || [];
+  var key = themes.map(function(t){ return t.path; }).join("|") + "@" + (s.mediaurlbase || "");
+  if (key === lastThemesKey) return;
+  lastThemesKey = key;
+  sel.innerHTML = "";
+  var found = false;
+  themes.forEach(function(t){
+    var o = document.createElement("option");
+    o.value = t.path; o.textContent = t.name;
+    if (t.path === s.mediaurlbase) { o.selected = true; found = true; }
+    sel.appendChild(o);
+  });
+  if (!found && s.mediaurlbase) {
+    var cur = document.createElement("option");
+    cur.value = s.mediaurlbase;
+    cur.textContent = s.mediaurlbase.replace("/luci-static/", "") + " (aktif sekarang)";
+    cur.selected = true;
+    sel.appendChild(cur);
+  }
+}
+
+function refresh(){
+  return getJSON(URL_STATUS).then(function(s){
+    var pill = $("btw-pill"), ptxt = $("btw-pill-text");
+    pill.className = "btw-pill" + (!s.installed ? " none" : (s.active ? " on" : " off"));
+    ptxt.textContent = !s.installed ? "Tidak Terpasang" : (s.active ? "Aktif" : "Terpasang, Tidak Aktif");
+    $("btw-ver").innerHTML = s.installed
+      ? '<span class="btw-badge">' + esc(s.version ? ("v" + s.version) : "?") + "</span>"
+      : '<span class="btw-badge grey">tidak ada</span>';
+    var base = (s.mediaurlbase || "").replace("/luci-static/", "") || "-";
+    $("btw-active").textContent = base;
+    $("btw-installer").textContent = s.has_installer ? "Tersedia" : "Tidak ada";
+    $("btw-appver").textContent = "v" + (s.app_version || "?");
+    $("btw-foot-ver").textContent = "v" + (s.app_version || "?");
+    fillThemes(s);
+  }).catch(function(){ /* STB mungkin sedang restart; abaikan */ });
+}
+
+/* ---------- Ganti tema ---------- */
+$("btw-btn-activate").addEventListener("click", function(){
+  if (busy) return;
+  var sel = $("btw-theme-select"), st = $("btw-theme-status");
+  var path = sel.value;
+  var name = sel.options[sel.selectedIndex] ? sel.options[sel.selectedIndex].textContent : path;
+  if (!path) return;
+  setBusy(true);
+  st.className = "btw-statusline"; st.textContent = "Mengganti tema ke " + name + "...";
+  postJSON(URL_ACTIVATE, { theme: path }).then(function(r){
+    setBusy(false);
+    if (!r.ok) {
+      st.className = "btw-statusline err";
+      st.textContent = "Gagal: " + (r.error || "tidak diketahui");
+      return;
+    }
+    st.className = "btw-statusline ok";
+    st.textContent = "Tema diganti ke " + name + ". Halaman dimuat ulang...";
+    setTimeout(function(){ location.reload(); }, 3000);
+  }).catch(function(e){
+    setBusy(false);
+    st.className = "btw-statusline err"; st.textContent = "Gagal menghubungi STB: " + e.message;
+  });
+});
+
+/* ---------- Update ---------- */
+var POLL_MS = 1500, MAX_MS = 180000;
+
+function pollLog(url, logEl, statusEl, doneFn){
+  var started = Date.now();
+  (function tick(){
+    getJSON(url).then(function(r){
+      if (r.log) { logEl.textContent = r.log; logEl.scrollTop = logEl.scrollHeight; }
+      if (r.done) { doneFn(r.code === 0, r); return; }
+      if (Date.now() - started > MAX_MS) { doneFn(false, r, "timeout"); return; }
+      setTimeout(tick, POLL_MS);
+    }).catch(function(){
+      // uhttpd sedang restart di tengah proses: terus pantau.
+      if (Date.now() - started > MAX_MS) { doneFn(false, null, "timeout"); return; }
+      setTimeout(tick, POLL_MS);
+    });
+  })();
+}
+
+$("btw-btn-check").addEventListener("click", function(){
+  var st = $("btw-update-status"), notes = $("btw-notes");
+  st.className = "btw-statusline"; st.textContent = "Memeriksa GitHub...";
+  getJSON(URL_CHECK).then(function(r){
+    if (!r.ok) { st.className = "btw-statusline err"; st.textContent = "Gagal memeriksa update."; return; }
+    if (!r.remote) {
+      st.className = "btw-statusline err";
+      st.textContent = "Tidak bisa menjangkau GitHub (offline / repo belum ada).";
+      notes.className = "btw-notes"; notes.textContent = "";
+      return;
+    }
+    if (r.update) {
+      st.className = "btw-statusline";
+      st.innerHTML = "Ada versi baru: <b>v" + esc(r.remote) + "</b>" +
+        (r["local"] ? " (terpasang: v" + esc(r["local"]) + ")" : " (tema belum terpasang)");
+      if (r.notes) { notes.className = "btw-notes show"; notes.textContent = r.notes; }
+    } else {
+      st.className = "btw-statusline ok";
+      st.textContent = "Sudah versi terbaru (v" + r.remote + ").";
+      notes.className = "btw-notes"; notes.textContent = "";
+    }
+  }).catch(function(){
+    st.className = "btw-statusline err"; st.textContent = "Gagal memeriksa update (jaringan?).";
+  });
+});
+
+$("btw-btn-update").addEventListener("click", function(){
+  if (busy) return;
+  if (!window.confirm("Pasang / perbarui tema Boundless dari rilis GitHub terbaru?\nLuCI akan restart di tengah proses.")) return;
+  var st = $("btw-update-status"), log = $("btw-update-log");
+  setBusy(true);
+  st.className = "btw-statusline"; st.textContent = "Memulai pemasangan...";
+  log.className = "btw-log show"; log.textContent = "";
+  postJSON(URL_UPDATE, {}).then(function(r){
+    if (!r.ok) {
+      st.className = "btw-statusline err";
+      st.textContent = "Gagal memulai: " + (r.error || "tidak diketahui");
+      setBusy(false); return;
+    }
+    st.textContent = "Pemasangan berjalan (ref " + (r.ref || "?") + ")...";
+    pollLog(URL_UPDATELOG, log, st, function(okDone, r, why){
+      setBusy(false);
+      if (okDone) {
+        st.className = "btw-statusline ok";
+        st.textContent = "Selesai. Tema Boundless v" + ((r && r["local"]) || "?") + " terpasang. Halaman dimuat ulang...";
+        refresh(); setTimeout(function(){ location.reload(); }, 3000);
+      } else {
+        st.className = "btw-statusline err";
+        st.textContent = why === "timeout" ? "Proses terlalu lama; cek log di atas." : "Pemasangan gagal (kode " + (r ? r.code : "?") + "). Lihat log di atas.";
+      }
+    });
+  }).catch(function(e){
+    st.className = "btw-statusline err"; st.textContent = "Gagal menghubungi STB: " + e.message;
+    setBusy(false);
+  });
+});
+
+/* ---------- Rollback / Hapus ---------- */
+function doManage(action, confirmMsg){
+  if (busy) return;
+  if (!window.confirm(confirmMsg)) return;
+  var st = $("btw-manage-status"), log = $("btw-manage-log");
+  setBusy(true);
+  st.className = "btw-statusline"; st.textContent = "Memulai...";
+  log.className = "btw-log show"; log.textContent = "";
+  postJSON(URL_MANAGE, { action: action }).then(function(r){
+    if (!r.ok) {
+      st.className = "btw-statusline err";
+      st.textContent = "Gagal memulai: " + (r.error || "tidak diketahui");
+      setBusy(false); return;
+    }
+    st.textContent = (action === "rollback" ? "Rollback" : "Penghapusan") + " berjalan...";
+    pollLog(URL_MANAGELOG, log, st, function(okDone, r, why){
+      setBusy(false);
+      if (okDone) {
+        st.className = "btw-statusline ok";
+        st.textContent = "Selesai. Halaman dimuat ulang...";
+        setTimeout(function(){ location.reload(); }, 3000);
+      } else {
+        st.className = "btw-statusline err";
+        st.textContent = why === "timeout" ? "Proses terlalu lama; cek log di atas." : "Proses gagal (kode " + (r ? r.code : "?") + "). Lihat log di atas.";
+      }
+    });
+  }).catch(function(e){
+    st.className = "btw-statusline err"; st.textContent = "Gagal menghubungi STB: " + e.message;
+    setBusy(false);
+  });
+}
+
+$("btw-btn-rollback").addEventListener("click", function(){
+  doManage("rollback", "Rollback ke tema sebelumnya?\nTema aktif akan diganti, file Boundless tetap ada.");
+});
+$("btw-btn-remove").addEventListener("click", function(){
+  doManage("remove", "HAPUS tema Boundless dari perangkat?\nTema aktif diganti ke tema bawaan dan semua file Boundless dihapus. Aplikasi pengelola ini TIDAK ikut terhapus.");
+});
+
+/* ---------- Muat awal: status + lanjutkan pantauan bila ada proses ---------- */
+refresh();
+(function resume(){
+  getJSON(URL_UPDATELOG).then(function(r){
+    if (r.running) {
+      var st = $("btw-update-status"), log = $("btw-update-log");
+      setBusy(true);
+      st.textContent = "Pemasangan sedang berjalan...";
+      log.className = "btw-log show"; log.textContent = r.log || "";
+      pollLog(URL_UPDATELOG, log, st, function(){ setBusy(false); refresh(); });
+    }
+  }).catch(function(){});
+  getJSON(URL_MANAGELOG).then(function(r){
+    if (r.running) {
+      var st = $("btw-manage-status"), log = $("btw-manage-log");
+      setBusy(true);
+      st.textContent = "Proses pengelolaan sedang berjalan...";
+      log.className = "btw-log show"; log.textContent = r.log || "";
+      pollLog(URL_MANAGELOG, log, st, function(){ setBusy(false); refresh(); });
+    }
+  }).catch(function(){});
+})();
+setInterval(function(){ if (!document.hidden && !busy) refresh(); }, 15000);
+})();
+</script>
+<%+footer%>

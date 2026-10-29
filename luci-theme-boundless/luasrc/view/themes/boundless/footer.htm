@@ -1,0 +1,21 @@
+<%#
+	LEGACY LUA TEMPLATE - see header.htm in this directory.
+	OpenWrt 24.10 uses ucode/template/themes/boundless/footer.ut instead.
+	Boundless is a derivative of luci-theme-material - Apache License 2.0
+-%>
+			</div>
+			<footer class="mobile-hide">
+				<a href="https://github.com/openwrt/luci" target="_blank" rel="noreferrer">Powered by <%=luci.version.luciname%> (<%=luci.version.luciversion%>)</a> /
+				<%=luci.version.distname%> <%=luci.version.distversion%> (<%=luci.version.distrevision%>)
+			</footer>
+		</div>
+	</div>
+	<%# REYRE-WRT compatibility (v6): placeholder divs for the firmware's
+	     Status > Overview Temperature / CPU Usage rows - see footer.ut. %>
+	<div id="tempcpu"></div>
+	<div id="cpuusage"></div>
+
+	<script>L.require('menu-boundless')</script>
+
+</body>
+</html>

@@ -1,0 +1,4240 @@
+/**
+ *	luci-theme-boundless - cascade.css
+ *	Version: 1.0.0 (see the VERSION file and CHANGELOG.md; check the
+ *	installed version on a device with: grep -m1 "Version:" cascade.css)
+ *
+ *	DERIVATIVE WORK: everything up to the "MATERIAL3 LIGHT OVERRIDES" block
+ *	at the end of this file is the cascade.css of the official
+ *	luci-theme-material (OpenWrt 24.10 branch, git luci), unmodified except
+ *	for this header, so that all selectors keep matching LuCI's markup.
+ *	The Material 3 restyling (light since v5) is the appended override block plus the
+ *	re-valued variables in custom.css (imported below).
+ *
+ *	Original: luci-theme-material, Copyright 2015 Lutty Yang <lutty@wcan.in>,
+ *	based on luci-theme-bootstrap and MUI. Licensed under Apache-2.0.
+ */
+/*
+ *	Include custom css
+ */
+@import url("custom.css");
+
+.table {
+	position: relative;
+	display: table;
+}
+
+.tr {
+	display: table-row;
+}
+.thead {
+	display: table-header-group;
+}
+
+.tbody {
+	display: table-row-group;
+}
+
+.tfoot {
+	display: table-footer-group;
+}
+
+.td,
+.th {
+	line-height: normal;
+	display: table-cell;
+	padding: .5em;
+	text-align: center;
+	vertical-align: middle;
+}
+
+.th {
+	font-weight: bold;
+}
+
+.tr.placeholder {
+	height: 4em;
+}
+
+.tr.placeholder > .td {
+	line-height: 3;
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	text-align: center !important;
+	background: inherit;
+}
+
+.td[width="33%"], 
+.td[width="33%"]~.td {
+	padding: 1.1em;
+}
+
+.table[width="33%"],
+.th[width="33%"],
+.td[width="33%"] {
+	width: 33%;
+}
+
+.table[width="100%"],
+.th[width="100%"],
+.td[width="100%"] {
+	width: 100%;
+}
+
+.col-1 {
+	flex: 1 1 30px !important;
+}
+
+.col-2 {
+	flex: 2 2 60px !important;
+}
+
+.col-3 {
+	flex: 3 3 90px !important;
+}
+
+.col-4 {
+	flex: 4 4 120px !important;
+}
+
+.col-5 {
+	flex: 5 5 150px !important;
+}
+
+.col-6 {
+	flex: 6 6 180px !important;
+}
+
+.col-7 {
+	flex: 7 7 210px !important;
+}
+
+.col-8 {
+	flex: 8 8 240px !important;
+}
+
+.col-9 {
+	flex: 9 9 270px !important;
+}
+
+.col-10 {
+	flex: 10 10 300px !important;
+}
+
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-family: inherit;
+	font-weight: normal;
+	line-height: 1.1 !important;
+	color: inherit;
+}
+
+html {
+	overflow-y: hidden;
+}
+
+body {
+	font-size: .8rem;
+	background-color: #eee;
+}
+
+html,
+body {
+	font-family: "Microsoft Yahei", "WenQuanYi Micro Hei", "sans-serif", "Helvetica Neue", "Helvetica", "Hiragino Sans GB";
+	font-family: var(--font-body);
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+select {
+	padding: .36rem .8rem;
+	color: #555;
+	border: thin solid #ccc;
+	background-color: var(--white-color);
+	background-image: none;
+}
+
+.btn,
+button,
+select,
+input,
+.cbi-dropdown {
+	min-height: 1.8rem;
+	padding: 0;
+	color: rgba(0, 0, 0, .87);
+	border: 0;
+	border-bottom: 2px solid rgba(0, 0, 0, .26);
+	border-radius: 0;
+	outline: 0;
+	background-color: transparent;
+	background-image: none;
+	box-shadow: none;
+	align-items: center;
+}
+
+select,
+.cbi-dropdown {
+	width: inherit;
+	cursor: default;
+}
+
+select:not([multiple="multiple"]):focus,
+input:not(.cbi-button):focus,
+.cbi-dropdown:focus {
+	border-color: var(--main-color);
+}
+
+.cbi-dropdown,
+select[multiple="multiple"] {
+	height: auto;
+}
+
+pre {
+	overflow: auto;
+}
+
+code {
+	font-size: 1rem;
+	font-size-adjust: .35;
+	padding: 1px 3px;
+	color: #101010;
+	border-radius: 2px;
+	background: #ddd;
+}
+
+abbr {
+	cursor: help;
+	text-decoration: underline;
+	color: #005470;
+}
+
+hr {
+	margin: 1rem 0;
+	opacity: .1;
+	border-color: #eee;
+}
+
+header,
+.main {
+	position: absolute;
+	width: 100%;
+}
+
+header {
+	position: fixed;
+	z-index: 2000;
+	float: left;
+	height: 4rem;
+	transition: box-shadow .2s;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, .26);
+}
+
+footer {
+	font-size: .8rem;
+	overflow: hidden;
+	padding: 1rem;
+	text-align: right;
+	white-space: nowrap;
+	color: #aaa;
+	text-shadow: 0 0 2px #bbb;
+}
+
+footer > a {
+	text-decoration: none;
+	color: #aaa;
+}
+
+small {
+	font-size: 90%;
+	line-height: 1.42857143;
+	white-space: normal;
+}
+
+.main {
+	position: relative;
+	top: 4rem;
+	bottom: 0;
+	overflow-y: auto;
+	height: 100%;
+	height: calc(100% - 4rem);
+}
+
+.main > .loading {
+	position: fixed;
+	z-index: 1000;
+	top: 0;
+	opacity: 1;
+	visibility: visible;
+	width: 100%;
+	height: 100%;
+	pointer-events: none;
+	background-color: rgb(240, 240, 240);
+	transition: visibility 400ms, opacity 400ms;
+}
+
+.main > .loading > span {
+	font-family: monospace;
+	font-size: 2rem;
+	font-size-adjust: .35;
+	position: relative;
+	top: 12.5%;
+	display: block;
+	text-align: center;
+	color: #888;
+}
+
+.main > .loading > span > .loading-img {
+	position: relative;
+	top: .1rem;
+	left: .05rem;
+	display: inline-block;
+	width: 1.25rem;
+	height: 1.25rem;
+	margin-right: 1rem;
+	animation: anim-rotate 2s infinite linear;
+	background: url(./icons/spinner.svg) no-repeat center;
+}
+
+@keyframes anim-rotate {
+	0% {
+		-webkit-transform: rotate(0);
+		-ms-transform: rotate(0);
+		transform: rotate(0);
+	}
+	100% {
+		-webkit-transform: rotate(360deg);
+		-ms-transform: rotate(360deg);
+		transform: rotate(360deg);
+	}
+}
+
+.main-left {
+	position: fixed;
+	top: 4rem;
+	float: left;
+	overflow-x: auto;
+	width: calc(0% + 15rem);
+	min-width: max-content;
+	height: calc(100% - 4rem);
+	background-color: var(--menu-bg-color);
+	transition: visibility 400ms, width 400ms;
+}
+
+.main-right {
+	float: right;
+	width: 85%;
+	width: calc(100% - 15rem);
+	height: 100%;
+	background-color: #eee;
+}
+
+.main-right > #maincontent {
+	background-color: #eee;
+}
+
+.pull-right {
+	float: right;
+}
+
+.pull-left {
+	float: left;
+}
+
+.nowrap:not(.td) {
+	white-space: nowrap;
+}
+
+[disabled="disabled"] {
+	pointer-events: none;
+}
+
+header {
+	color: var(--header-color);
+	background: var(--header-bg);
+}
+
+header > .fill > .container {
+	margin-top: .5rem;
+	padding: .5rem 1rem 0 1rem;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+header > .fill > .container > #logo {
+	margin: 0 3.5rem 0 1.5rem;
+}
+
+header > .fill > .container > #logo > img {
+	width: calc(0% + 10rem);
+	margin-top: -.5rem;
+}
+
+header > .fill > .container > .brand {
+	font-size: 1.4rem;
+	position: absolute;
+	cursor: default;
+	vertical-align: text-bottom;
+	text-decoration: none;
+	color: var(--header-color);
+}
+
+header > .fill > .container > .status {
+	position: absolute;
+	top: 25%;
+	right: 1em;
+	float: right;
+}
+
+header > .fill > .container > .status > * {
+	position: relative;
+	top: .2rem;
+	float: left;
+	margin-left: .3rem;
+	cursor: pointer;
+}
+
+.modemenu-buttons {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	color: var(--header-color);
+	background: var(--header-bg);
+	padding: .5rem;
+	transition: box-shadow .2s;
+	box-shadow: 0 2px 5px rgb(0 0 0 / 26%);
+}
+
+#modemenu {
+	margin: 0.25rem;
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+}
+
+#modemenu > li > a {
+	font-size: .8rem;
+	font-weight: bold;
+	padding: .3rem .8rem;
+	white-space: nowrap;
+	text-decoration: none;
+	text-transform: uppercase;
+	color: var(--white-color) !important;
+	border-radius: 3px;
+	background-color: #bfbfbf;
+	text-shadow: none;
+}
+
+#modemenu > li > a.active {
+	background-color: var(--dark-blue-color) !important;
+}
+
+#modemenu > li.divider {
+	margin-left: .25rem;
+	margin-right: .25rem;
+	border: .5rem solid var(--submenu-bg-hover);
+	border-left: 1px solid var(--submenu-bg-hover);
+	border-right: 1px solid var(--submenu-bg-hover);
+	border-radius: 1rem;
+}
+
+#xhr_poll_status {
+	display: flex;
+}
+
+.alert,
+.alert-message {
+	font-weight: bold;
+	margin-bottom: 1em;
+	padding: 1rem;
+	border: 0;
+	border-radius: 0 !important;
+	box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .16), 0 0 2px 0 rgba(0, 0, 0, .12);
+	text-shadow: 1px 1px rgba(0, 0, 0, .1);
+}
+
+.alert-message > h4 {
+	font-size: 110%;
+	font-weight: bold;
+}
+
+.alert-message > * {
+	margin: .5rem 0;
+}
+
+.alert-message .btn {
+	padding: .3rem .6rem;
+}
+
+.alert-message.notice,
+.label.notice {
+	background-color: var(--notice-color);
+	color: var(--on-notice-color);
+}
+
+.alert-message.danger,
+.btn.danger,
+.label.danger {
+	background-color: var(--danger-color);
+	color: var(--on-danger-color);
+}
+
+.alert-message.warning,
+.btn.warning,
+.label.warning {
+	background-color: var(--warning-color);
+	color: var(--on-warning-color);
+}
+
+.alert-message.success,
+.btn.success,
+.label.success {
+	background-color: var(--success-color);
+	color: var(--on-success-color);
+}
+
+.alert-message.error,
+.btn.error,
+.label.error {
+	background-color: var(--on-error-color);
+	color: var(--error-color);
+}
+
+[data-indicator]:not([data-style="inactive"]) {
+	background-color: var(--notice-color) !important;
+}
+
+.container .alert,
+.container .alert-message {
+	margin-top: 1rem;
+}
+
+.main > .main-left > .nav {
+	margin-top: .5rem;
+}
+
+.main > .main-left > .nav > li {
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.main > .main-left > .nav > li:last-child {
+	display: flex;
+	align-items: center;
+	margin: 2rem 0 1rem 0;
+	padding: 0 0 0 2rem;
+}
+
+.main > .main-left > .nav > li a {
+	display: block;
+	color: var(--menu-color);
+}
+
+.main > .main-left > .nav > li.active > a {
+	color: var(--white-color);
+}
+
+.main > .main-left > .nav > li.active {
+	background-color: var(--submenu-bg-hover-active);
+}
+
+.main > .main-left > .nav > li.slide.active {
+	background-color: unset;
+}
+
+.main > .main-left > .nav > .slide {
+	padding: 0;
+}
+
+.main > .main-left > .nav > .slide > ul {
+	display: none;
+}
+
+.main > .main-left > .nav > .slide.active > ul {
+	display: block;
+}
+
+.main > .main-left > .nav > .slide > .menu,
+.main > .main-left > .nav > li > [data-title] {
+	font-size: 1.15rem;
+	font-weight: 500;
+	display: flex;
+	align-items: center;
+	width: 100%;
+	padding: .5rem 1rem;
+	text-decoration: none;
+	color: var(--main-menu-color);
+}
+
+.main > .main-left > .nav > .slide > .menu::before {
+	position: absolute;
+	right: 17px;
+	width: 16px;
+	height: 16px;
+	content: "";
+	background: url(./icons/arrow.svg) no-repeat;
+}
+
+.main > .main-left > .nav > .slide > .menu.active::before {
+	transform: rotate(-180deg);
+}
+
+body[class*="node-"] > .main > .main-left > .nav > .slide > .menu::before {
+	transition: transform .1s ease-in-out;
+}
+
+body[class*="node-"] > .main > .main-left > .nav > .slide > .menu.active::before {
+	transition: transform .2s ease-in-out;
+}
+
+.main > .main-left[style*="overflow: hidden"] > .nav > .slide > .menu::before {
+	display: none;
+}
+
+.main > .main-left > .nav > li:last-child::before {
+	position: absolute;
+	left: 14px;
+	width: 24px;
+	height: 24px;
+	content: url(./icons/logout.svg);
+}
+
+.main > .main-left > .nav > li:hover,
+.main > .main-left > .nav > .slide > .menu:hover {
+	background: var(--submenu-bg-hover);
+}
+
+.main > .main-left > .nav > .slide:hover {
+	background: none;
+}
+
+.main > .main-left > .nav > .slide > .slide-menu > .active {
+	background-color: var(--submenu-bg-hover-active);
+}
+
+.main > .main-left > .nav > .slide > .slide-menu > li > a {
+	white-space: nowrap;
+	text-decoration: none;
+	padding: .4rem 2rem;
+}
+
+.main > .main-left > .nav > .slide > .slide-menu > .active > a {
+	color: var(--white-color);
+}
+
+.main > .main-left > .nav > .slide > .slide-menu > li:hover {
+	background: var(--submenu-bg-hover);
+}
+
+.main > .main-left > .nav > .slide > .slide-menu > li:not(.active):hover > a {
+	color: var(--menu-color-hover);
+}
+
+.main > .main-left > .nav > .slide > .slide-menu > .active:hover {
+	background-color: var(--main-color);
+}
+
+/* ripple effect */
+.main > .main-left > .nav > .slide > .menu,
+.main > .main-left > .nav > .slide > .slide-menu > li,
+.main > .main-left > .nav > li:last-child {
+	position: relative;
+	overflow: hidden;
+	transform: translate3d(0, 0, 0);
+}
+
+.main > .main-left > .nav > .slide > .menu::after,
+.main > .main-left > .nav > .slide > .slide-menu > li::after,
+.main > .main-left > .nav > li:last-child::after {
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: block;
+	width: 100%;
+	height: 100%;
+	content: "";
+	transition: transform .5s, opacity 1s;
+	transform: scale(10, 10);
+	pointer-events: none;
+	opacity: 0;
+	background-image: radial-gradient(circle, var(--black-color) 10%, transparent 10.01%);
+	background-repeat: no-repeat;
+	background-position: 50%;
+}
+
+.main > .main-left > .nav > .slide > .menu:active::after,
+.main > .main-left > .nav > .slide > .slide-menu > li:active::after,
+.main > .main-left > .nav > li:last-child:active::after {
+	transition: 0s;
+	transform: scale(0, 0);
+	opacity: .2;
+}
+
+#maincontent > .container {
+	margin: 0 2rem 1rem 2rem;
+}
+
+ul {
+	line-height: normal;
+}
+
+li {
+	list-style-type: none;
+}
+
+h1 {
+	font-size: 2rem;
+	padding-bottom: 10px;
+	border-bottom: thin solid #eee;
+}
+
+h2 {
+	font-size: 1.8rem;
+	margin: 2rem 0 0 0;
+	padding-bottom: 10px;
+	border-bottom: thin solid #eee;
+}
+
+h3 {
+	font-size: 1.4rem;
+	margin: 2rem 0 0 0;
+	padding-bottom: 10px;
+}
+
+h4 {
+	font-size: 1.2rem;
+	margin: 2rem 0 0 0;
+	padding-bottom: 10px;
+}
+
+h5 {
+	font-size: 1rem;
+	margin: 2rem 0 0 0;
+	padding-bottom: 10px;
+}
+
+.cbi-section,
+.cbi-section-error,
+#iptables,
+.Firewall form,
+#cbi-network > .cbi-section-node,
+#cbi-wireless > .cbi-section-node,
+#cbi-wireless > #wifi_assoclist_table,
+[data-tab-title],
+[data-page^="admin-system-admin"]:not(.node-main-login) .cbi-map:not(#cbi-dropbear),
+[data-page="admin-system-package-manager"] #maincontent > .container {
+	font-family: inherit;
+	font-weight: normal;
+	font-style: normal;
+	line-height: normal;
+	min-width: inherit;
+	margin: 1rem 0 0 0;
+	padding: 2rem;
+	border: 0;
+	border-radius: 0;
+	background-color: var(--white-color);
+	box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .16), 0 0 2px 0 rgba(0, 0, 0, .12);
+}
+
+.cbi-modal .cbi-section,
+.cbi-section .cbi-section {
+	padding: 0;
+	box-shadow: none;
+}
+
+.cbi-modal .cbi-tabmenu {
+	margin-left: 0;
+}
+
+.cbi-map-descr,
+.cbi-section-descr {
+	font-size: small;
+	line-height: 1.42857143;
+	padding: .5rem;
+	color: #999;
+}
+
+.cbi-map-descr + fieldset {
+	margin-top: 1rem;
+}
+
+.cbi-section > legend {
+	display: none !important;
+}
+
+fieldset > fieldset,
+.cbi-section > .cbi-section {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	box-shadow: none;
+}
+
+.cbi-section > h3:first-child,
+.panel-title {
+	font-size: 1.4rem;
+	line-height: 1;
+	display: block;
+	width: 100%;
+	margin: 0;
+	margin-bottom: .5rem;
+	padding-bottom: 1rem;
+	color: #404040;
+	border-bottom: thin solid #eee;
+}
+
+.cbi-section > h4:first-child,
+.cbi-section > p:first-child,
+[data-tab-title] > h3:first-child,
+[data-tab-title] > h4:first-child,
+[data-tab-title] > p:first-child {
+	padding-top: 1rem;
+}
+
+table {
+	border-spacing: 0;
+	border-collapse: collapse;
+}
+
+table,
+.table {
+	overflow-y: hidden;
+	width: 100%;
+	box-shadow: 0 0 0 1px #ddd;
+}
+
+table > tbody > tr > td,
+table > tbody > tr > th,
+table > tfoot > tr > td,
+table > tfoot > tr > th,
+table > thead > tr > td,
+table > thead > tr > th,
+.table > .tbody > .tr > .td,
+.table > .tbody > .tr > .th,
+.table > .tfoot > .tr > .td,
+.table > .tfoot > .tr > .th,
+.table > .thead > .tr > .td,
+.table > .thead > .tr > .th,
+.table > .tr > .td.cbi-value-field,
+.table > .tr > .th.cbi-section-table-cell {
+	padding: .5rem;
+}
+
+.container > .cbi-section:first-of-type > .table[width="100%"] > .tr > .td {
+	padding: .6rem;
+}
+
+.cbi-section-table-cell {
+	line-height: 1.1;
+	align-self: flex-end;
+	flex: 1 1 auto;
+}
+
+tr > td,
+tr > th,
+.tr > .td,
+.tr > .th,
+.cbi-section-table-row::before,
+#cbi-wireless > #wifi_assoclist_table > .tr:nth-child(2) {
+	border-top: thin solid #ddd;
+}
+
+#cbi-wireless .td,
+#cbi-network .tr:first-child > .td,
+.table[width="100%"] > .tr:first-child > .td,
+[data-page="admin-network-diagnostics"] .tr > .td,
+.tr.table-titles > .th,
+.tr.cbi-section-table-titles > .th {
+	border-top: 0 !important;
+}
+
+.table[width="100%"] > .tr:first-child > .td {
+	margin: auto 0;
+}
+
+.cbi-section-table-row {
+	margin-bottom: 1rem;
+	text-align: center !important;
+	background: var(--white-color-low);
+}
+
+.cbi-section-table-row:last-child {
+	margin-bottom: 0;
+}
+
+.cbi-section-table-row > .cbi-value-field .cbi-dropdown,
+.cbi-section-table-row > .cbi-value-field .cbi-input-select,
+.cbi-section-table-row > .cbi-value-field .cbi-input-text,
+.cbi-section-table-row > .cbi-value-field .cbi-input-password {
+	width: 100%;
+}
+
+.cbi-section-table-row > .cbi-value-field [data-dynlist] > input,
+.cbi-section-table-row > .cbi-value-field input.cbi-input-password {
+	width: calc(100% - 1.5rem);
+}
+
+.cbi-section-table-row .td {
+	text-align: center !important;
+}
+
+div > table > tbody > tr:nth-of-type(2n),
+div > .table > .tr:nth-of-type(2n) {
+	background-color: var(--white-color-low);
+}
+
+/* fix multiple table */
+table table,
+.table .table,
+.cbi-value-field table,
+.cbi-value-field .table,
+td > table > tbody > tr > td,
+.td > .table > .tbody > .tr > .td,
+.cbi-value-field > table > tbody > tr > td,
+.cbi-value-field > .table > .tbody > .tr > .td {
+	border: 0;
+}
+
+/* button style */
+.btn,
+.cbi-button,
+.item::after {
+	font-size: .8rem;
+	display: inline-block;
+	width: auto !important;
+	padding: 0 .8rem;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	transition: all .2s ease-in-out;
+	text-align: center;
+	vertical-align: middle;
+	white-space: nowrap;
+	text-decoration: none;
+	text-transform: uppercase;
+	color: rgba(0, 0, 0, .87);
+	border: 0;
+	border-radius: .2rem;
+	background-color: #f0f0f0;
+	background-image: none;
+	-webkit-appearance: none;
+	-ms-touch-action: manipulation;
+	touch-action: manipulation;
+}
+
+.cbi-button-up,
+.cbi-button-down {
+	font-size: 1.2rem;
+	display: inline-block;
+	min-width: 0;
+	padding: .2rem .3rem;
+	color: transparent !important;
+	background: url(./icons/arrow.svg) no-repeat center;
+	background-size: 12px 20px;
+}
+
+.cbi-button-up {
+	transform: scaleY(-1);
+}
+
+.cbi-button:not(select) {
+	-webkit-appearance: none !important;
+}
+
+.cbi-button + .cbi-button {
+	margin-left: .6rem;
+}
+
+.btn:hover,
+.btn:focus,
+.btn:active,
+.cbi-button:hover,
+.cbi-button:focus,
+.cbi-button:active,
+.item:hover::after,
+.item:focus::after,
+.item:active::after,
+.cbi-page-actions .cbi-button-apply + .cbi-button-save:hover,
+.cbi-page-actions .cbi-button-apply + .cbi-button-save:focus,
+.cbi-page-actions .cbi-button-apply + .cbi-button-save:active {
+	text-decoration: none;
+	outline: 0;
+}
+
+.btn:hover,
+.btn:focus,
+.cbi-button:hover,
+.cbi-button:focus,
+.item:hover::after,
+.item:focus::after {
+	box-shadow: 0 0 2px rgba(0, 0, 0, .12), 0 2px 2px rgba(0, 0, 0, .2);
+}
+
+.btn:active,
+.cbi-button:active,
+.item:active::after {
+	box-shadow: 0 10px 20px rgba(0, 0, 0, .19), 0 6px 6px rgba(0, 0, 0, .23);
+}
+
+.cbi-button-up:hover,
+.cbi-button-up:focus {
+	box-shadow: 0 0 2px rgba(0, 0, 0, .12), 0 -2px 2px rgba(0, 0, 0, .2);
+}
+
+.cbi-button-up:active {
+	box-shadow: 0 -10px 20px rgba(0, 0, 0, .19), 0 -6px 6px rgba(0, 0, 0, .23);
+}
+
+.btn:disabled,
+.cbi-button:disabled {
+	cursor: not-allowed;
+	pointer-events: none;
+	opacity: .5;
+	box-shadow: none;
+}
+
+/* gray */
+.alert-message [class="btn"],
+.modal div[class="btn"],
+.cbi-button-find,
+.cbi-button-link,
+.cbi-button-up,
+.cbi-button-down,
+.cbi-button-neutral,
+.cbi-button[name="zero"],
+.cbi-button[name="restart"],
+.cbi-button[onclick="hide_empty(this)"] {
+	font-weight: bold;
+	border: thin solid var(--gray-color-high);
+	background-color: var(--gray-color);
+}
+
+/* blue */
+.btn.primary,
+.cbi-page-actions .cbi-button-save,
+.cbi-page-actions .cbi-button-apply + .cbi-button-save,
+.cbi-button-add,
+.cbi-button-save,
+.cbi-button-positive,
+.cbi-button-link,
+.cbi-button[value="Enable"],
+.cbi-button[value="Scan"],
+.cbi-button[value^="Back"],
+.cbi-button-neutral[onclick="handleConfig(event)"] {
+	font-weight: normal;
+	color: var(--on-dark-blue-color);
+	border: thin solid var(--dark-blue-color-high);
+	background-color: var(--dark-blue-color);
+}
+
+/* light blue */
+.cbi-page-actions .cbi-button-apply,
+.cbi-section-actions .cbi-button-edit,
+.cbi-button-edit,
+.cbi-button-apply,
+.cbi-button-reload,
+.cbi-button-action,
+.cbi-button[value="Submit"],
+.cbi-button[value="Upload"],
+.cbi-button[value$="Apply"],
+.cbi-button[onclick="addKey(event)"] {
+	font-weight: normal;
+	color: var(--on-light-blue-color);
+	border: thin solid var(--light-blue-color-high);
+	background-color: var(--light-blue-color);
+}
+
+/* red */
+.btn.danger,
+.cbi-section-remove > .cbi-button,
+.cbi-button-remove,
+.cbi-button-reset,
+.cbi-button-negative,
+.cbi-button[value="Stop"],
+.cbi-button[value="Kill"],
+.cbi-button[onclick="reboot(this)"],
+.cbi-button-neutral[value="Restart"] {
+	font-weight: normal;
+	color: var(--on-red-color);
+	border: thin solid var(--red-color-high);
+	background-color: var(--red-color);
+}
+
+/* yellow */
+.btn[value="Dismiss"],
+.cbi-button[value="Terminate"],
+.cbi-button[value="Reset"],
+.cbi-button[value="Disabled"],
+.cbi-button[onclick^="iface_reconnect"],
+.cbi-button[onclick="handleReset(event)"],
+.cbi-button-neutral[value="Disable"] {
+	font-weight: normal;
+	color: var(--on-yellow-color);
+	border: thin solid var(--yellow-color-high);
+	background-color: var(--yellow-color);
+}
+
+/* green */
+.cbi-button-success,
+.cbi-button-download,
+.cbi-button[name="backup"],
+.cbi-button[value="Download"],
+.cbi-button[value="Save mtdblock"] {
+	font-weight: normal;
+	color: var(--on-green-color);
+	border: thin solid var(--green-color-high);
+	background-color: var(--green-color);
+}
+
+.cbi-page-actions .cbi-button-link:first-child {
+	float: left;
+}
+
+.a-to-btn {
+	text-decoration: none;
+}
+
+.cbi-value-field .cbi-button-add {
+	font-weight: bold;
+	margin: 9px 0 4px 3px;
+	padding: 1px 6px;
+}
+
+.tabs {
+	margin: 0 -2rem;
+	padding-left: .5rem;
+	background-color: var(--white-color);
+}
+
+.tabs > li,
+.cbi-tabmenu > li {
+	display: inline-block;
+	padding: .55rem 0;
+	cursor: pointer;
+}
+
+.tabs > li {
+	padding-bottom: .4rem;
+	border-bottom: .2rem solid transparent;
+}
+
+.tabs > li[class~="active"],
+.tabs > li:hover {
+	border-bottom-color: var(--main-color);
+}
+
+.tabs > li:hover {
+	cursor: pointer;
+	border-bottom-color: #c9c9c9;
+}
+
+.tabs > li > a,
+.cbi-tabmenu > li > a {
+	padding: .6rem .9rem;
+	text-decoration: none;
+	color: #404040;
+}
+
+.tabs > li[class~="active"] > a {
+	color: var(--main-color);
+}
+
+.cbi-tabmenu {
+	border: thin solid var(--gray-color);
+	border-bottom: 0;
+}
+
+.cbi-tabmenu > li:hover {
+	background-color: #f1f1f1;
+}
+
+.cbi-tabmenu > li[class~="cbi-tab"] {
+	background-color: var(--white-color);
+}
+
+.cbi-tabmenu {
+	background-color: var(--gray-color);
+}
+
+.cbi-section .cbi-section-remove:nth-of-type(2n),
+.container > .cbi-section .cbi-section-node:nth-of-type(2n) {
+	background-color: var(--white-color-low);
+}
+
+[data-tab-title] {
+	overflow: hidden;
+	height: 0;
+	opacity: 0;
+	margin: 0;
+	padding: 0rem 1rem !important;
+}
+
+[data-tab-active="true"] {
+	overflow: visible;
+	height: auto;
+	opacity: 1;
+	transition: opacity .25s ease-in;
+	margin: inherit !important;
+}
+
+.cbi-section[id] .cbi-section-remove:nth-of-type(4n+3),
+.cbi-section[id] .cbi-section-node:nth-of-type(4n+4) {
+	background-color: var(--white-color-low);
+}
+
+.cbi-section-node-tabbed {
+	margin-top: 0;
+	padding: 0;
+	border: thin solid var(--gray-color);
+	border-top: 0;
+}
+
+.cbi-tabcontainer > .cbi-value:nth-of-type(2n) {
+	background-color: var(--white-color-low);
+}
+
+.cbi-value-field,
+.cbi-value-description {
+	line-height: 1.25;
+	display: table-cell;
+}
+
+.cbi-value-description {
+	font-size: small;
+	padding-top: .4rem;
+	opacity: .5;
+}
+
+.cbi-value-title {
+	display: table-cell;
+	float: left;
+	width: 23rem;
+	padding-top: .35rem;
+	padding-right: 2rem;
+	text-align: right;
+	word-wrap: break-word;
+}
+
+.cbi-value {
+	display: inline-block;
+	width: 100%;
+	padding: .35rem 1rem .2rem 1rem;
+	align-items: baseline;
+}
+
+.cbi-value ul {
+	line-height: 1.25;
+}
+
+.cbi-value-field .cbi-dropdown,
+.cbi-value-field .cbi-input-select,
+.cbi-value input[type="text"],
+.cbi-value input[type="password"] {
+	min-width: 25rem;
+}
+
+#cbi-firewall-zone .cbi-input-select,
+#cbi-network-switch_vlan .cbi-input-select {
+	min-width: 11rem;
+}
+
+#cbi-network-switch_vlan .cbi-input-text {
+	max-width: 3rem;
+}
+
+.cbi-input-invalid {
+	color: var(--error-color);
+	border-bottom-color: var(--error-color);
+}
+
+.cbi-section-error {
+	font-weight: bold;
+	line-height: 1.42857143;
+	margin: 18px;
+	padding: 6px;
+	border: thin solid var(--error-color);
+	border-radius: 3px;
+	background-color: #fce6e6;
+}
+
+.cbi-section-error ul {
+	margin: 0 0 0 20px;
+}
+
+.cbi-section-error ul li {
+	font-weight: bold;
+	color: var(--error-color);
+}
+
+.td[data-title]::before {
+	font-weight: bold;
+	display: none;
+	padding: .25rem 0;
+	content: attr(data-title) ":\20";
+	text-align: left;
+	white-space: nowrap;
+}
+
+.tr.placeholder .td[data-title]::before {
+	display: none;
+}
+
+.tr[data-title]::before,
+.tr.cbi-section-table-titles.named::before {
+	font-weight: bold;
+	display: table-cell;
+	align-self: center;
+	flex: 1 1 5%;
+	padding: .25rem;
+	content: attr(data-title) "\20";
+	text-align: center;
+	vertical-align: middle;
+	white-space: normal;
+	word-wrap: break-word;
+}
+
+.cbi-rowstyle-1 {
+	background-color: var(--white-color-low);
+}
+
+.cbi-rowstyle-2 {
+	background-color: #eee;
+}
+
+.cbi-rowstyle-2 .cbi-button-up,
+.cbi-rowstyle-2 .cbi-button-down,
+body:not(.Interfaces) .cbi-rowstyle-2:first-child {
+	background-color: var(--white-color) !important;
+}
+
+.cbi-section-table .cbi-section-table-titles .cbi-section-table-cell {
+	width: auto !important;
+}
+
+.td.cbi-section-actions {
+	text-align: right !important;
+	vertical-align: middle;
+}
+
+.td.cbi-section-actions > * {
+	display: inline-flex;
+}
+
+.td.cbi-section-actions > * > *,
+.td.cbi-section-actions > * > form > * {
+	margin: 0 5px;
+}
+
+.td.cbi-section-actions > * > form {
+	display: inline-flex;
+	margin: 0;
+}
+
+/* lists */
+.cbi-dynlist {
+	line-height: 1.3;
+	flex-direction: column;
+	min-height: 30px;
+	cursor: text;
+}
+
+.cbi-dynlist > .item {
+	position: relative;
+	max-width: 25rem;
+	margin-right: 2em;
+	padding: .5em .25em .25em 0;
+	pointer-events: auto; /* needed for drag-and-drop in UIDynamicList */
+	color: #666;
+	border-bottom: 2px solid rgba(0, 0, 0, .26);
+	outline: 0;
+	cursor: move; /* drag-and-drop */
+	user-select: text; /* text selection in drag-and-drop */
+}
+
+.cbi-dynlist[name="sshkeys"] > .item {
+	max-width: none;
+}
+
+.cbi-dynlist > .item::after {
+	font-weight: bold;
+	position: absolute;
+	right: -2em;
+	bottom: 0;
+	display: inline-flex;
+	min-height: 17px;
+	padding: 0 6px;
+	content: "\00D7";
+	pointer-events: auto;
+	color: var(--white-color);
+	border: thin solid var(--red-color);
+	background-color: var(--red-color-high);
+}
+
+/* indication line for drag-and-drop in UIDynamicList*/
+.cbi-dynlist > .item.drag-over {
+	border-top: 1px solid black;
+}
+
+/* Make item being dragged in UIDynamicList partially transparent*/
+.cbi-dynlist > .item.dragging {
+	opacity: 0.5;
+}
+
+/* prevent pointer changing when over the span element in UIDynamicList */
+.cbi-dynlist > .item > span {
+	white-space: normal;
+	word-break: break-word;
+	pointer-events: none;
+}
+
+.cbi-dynlist > .add-item {
+	display: inline-flex;
+	align-items: center;
+	width: 100%;
+	min-width: 16rem;
+}
+
+/* indication line for drag-and-drop in UIDynamicList*/
+.cbi-dynlist > .add-item > .cbi-input-text.drag-over {
+	border-top: 1px solid black;
+}
+
+/* indication line for drag-and-drop in UIDynamicList*/
+.cbi-dynlist > .add-item > .cbi-button-add.drag-over {
+	border-top: 1px solid black;
+}
+
+.cbi-dynlist > .add-item:not([ondrop]) > input {
+	overflow: hidden;
+	width: 100%;
+	min-width: 15rem;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.cbi-dynlist > .add-item[ondrop] > input {
+	min-width: 13rem;
+}
+
+.cbi-dynlist,
+.cbi-dropdown {
+	position: relative;
+	display: inline-flex;
+	padding: 0;
+}
+
+.cbi-dropdown[placeholder*="select"] {
+	max-width: 25rem;
+	height: auto;
+	margin-top: -3px;
+}
+
+.cbi-dropdown img {
+	/* the following are necessary to constrain (vector) images of any size */
+	max-height: 1.6em;  /* Adjusts image height to fit slightly larger than text line height */
+	width: auto;  /* Preserves aspect ratio */
+}
+
+.cbi-dropdown > ul {
+	display: flex;
+	overflow-x: hidden;
+	overflow-y: auto;
+	width: 100%;
+	margin: 0 !important;
+	padding: 0;
+	list-style: none;
+	outline: 0;
+}
+
+.cbi-dropdown > ul.preview {
+	display: none;
+}
+
+.cbi-dropdown > .open {
+	flex-basis: 15px;
+}
+
+.cbi-dropdown > .open,
+.cbi-dropdown > .more {
+	font-size: 1rem;
+	font-weight: 900;
+	line-height: 2;
+	display: flex;
+	flex-direction: column;
+	flex-grow: 0;
+	flex-shrink: 0;
+	justify-content: center;
+	padding: 0 .25em;
+	cursor: default;
+	text-align: center;
+	outline: 0;
+}
+
+.cbi-dropdown.btn {
+	min-height: 1.8rem;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	padding-right: 0px;
+}
+
+.cbi-dropdown.btn > .open {
+	font-size: 0.8rem;
+	padding: 0px;
+	margin: 0 5px;
+}
+
+.cbi-dropdown.btn > div {
+	margin: 0px;
+}
+
+.cbi-dropdown > .more,
+.cbi-dropdown > ul > li[placeholder] {
+	font-weight: bold;
+	display: none;
+	color: #777;
+	text-shadow: 1px 1px 0 var(--white-color);
+}
+
+.cbi-dropdown > ul > li {
+	display: none;
+	overflow: hidden;
+	align-items: center;
+	align-self: center;
+	flex-grow: 1;
+	flex-shrink: 1;
+	min-height: 20px;
+	padding: .25em;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.cbi-dropdown > ul > li .hide-open {
+	display: initial;
+}
+
+.cbi-dropdown > ul > li .hide-close {
+	display: none;
+}
+
+.cbi-dropdown > ul > li[display]:not([display="0"]) {
+	border-left: thin solid #ccc;
+}
+
+.cbi-dropdown[empty] > ul {
+	max-width: 1px;
+}
+
+.cbi-dropdown > ul > li > form {
+	display: none;
+	margin: 0;
+	padding: 0;
+	pointer-events: none;
+}
+
+.cbi-dropdown > ul > li img {
+	margin-right: .25em;
+	vertical-align: middle;
+}
+
+.cbi-dropdown > ul > li > form > input[type="checkbox"] {
+	height: auto;
+	margin: 0;
+}
+
+.cbi-dropdown > ul > li input[type="text"] {
+	height: 20px;
+}
+
+.cbi-dropdown[open] > ul.dropdown {
+	position: absolute;
+	z-index: 1100;
+	display: block;
+	width: auto;
+	min-width: 100%;
+	max-width: none;
+	max-height: 200px !important;
+	border: thin solid #918e8c;
+	background: #f6f6f6;
+	box-shadow: 0 0 4px #918e8c;
+	color: var(--main-menu-color);
+}
+
+.cbi-dropdown > ul > li[display],
+.cbi-dropdown[open] > ul.preview,
+.cbi-dropdown[open] > ul.dropdown > li,
+.cbi-dropdown[multiple] > ul > li > label,
+.cbi-dropdown[multiple][open] > ul.dropdown > li,
+.cbi-dropdown[multiple][more] > .more,
+.cbi-dropdown[multiple][empty] > .more {
+	display: flex;
+	align-items: center;
+	flex-grow: 1;
+}
+
+.cbi-dropdown[empty] > ul > li,
+.cbi-dropdown[optional][open] > ul.dropdown > li[placeholder],
+.cbi-dropdown[multiple][open] > ul.dropdown > li > form {
+	display: block;
+}
+
+.cbi-dropdown[open] > ul.dropdown > li .hide-open {
+	display: none;
+}
+
+.cbi-dropdown[open] > ul.dropdown > li .hide-close {
+	display: initial;
+}
+
+.cbi-dropdown[open] > ul.dropdown > li {
+	border-bottom: thin solid #ccc;
+}
+
+.cbi-dropdown[open] > ul.dropdown > li[selected] {
+	background: #b0d0f0;
+}
+
+.cbi-dropdown[open] > ul.dropdown > li.focus,
+.cbi-dropdown[open] > ul.dropdown > li:hover {
+	background: linear-gradient(90deg, #a3c2e8 0%, #84aad9 100%);
+}
+
+.cbi-dropdown[open] > ul.dropdown > li:last-child {
+	margin-bottom: 0;
+	border-bottom: 0;
+}
+
+.cbi-dropdown[open] > ul.dropdown > li[unselectable] {
+	opacity: .7;
+}
+
+.cbi-dropdown[open] > ul.dropdown > li > input.create-item-input:first-child:last-child {
+	width: 100%;
+}
+
+.cbi-dropdown[disabled] {
+	pointer-events: none;
+	opacity: .6;
+}
+
+.cbi-dropdown .zonebadge {
+	width: 100%;
+}
+
+.cbi-dropdown[open] .zonebadge {
+	width: auto;
+}
+
+/* progressbar */
+.cbi-progressbar {
+	position: relative;
+	min-width: 170px;
+	height: 20px;
+	margin: 6px 0;
+	border: thin solid #999;
+	background: #eee;
+}
+
+.cbi-progressbar > div {
+	width: 0;
+	height: 100%;
+	transition: width .25s ease-in;
+	background: var(--bar-bg);
+}
+
+.cbi-progressbar::after {
+	font-family: monospace;
+	font-weight: bold;
+	font-size-adjust: .38;
+	line-height: normal;
+	position: absolute;
+	top: 2px;
+	right: 0;
+	bottom: 2px;
+	left: 0;
+	overflow: hidden;
+	content: attr(title);
+	text-align: center;
+	white-space: pre;
+	text-overflow: ellipsis;
+	text-shadow: 0 0 2px #eee;
+}
+
+#modal_overlay {
+	position: fixed;
+	z-index: 900;
+	top: 4rem;
+	right: 10000px;
+	bottom: 0;
+	left: -10000px;
+	overflow-y: scroll;
+	transition: opacity .125s ease-in;
+	opacity: 0;
+	background: rgba(0, 0, 0, .7);
+	-webkit-overflow-scrolling: touch;
+}
+
+.modal {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	width: 90%;
+	min-width: 270px;
+	max-width: 600px;
+	min-height: 32px;
+	margin: 5em auto;
+	padding: 1em;
+	border-radius: 3px !important;
+	background: var(--white-color);
+	box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .16), 0 0 2px 0 rgba(0, 0, 0, .12);
+}
+
+.modal > * {
+	line-height: normal;
+	flex-basis: 100%;
+	margin-bottom: .5em;
+	max-width: 100%;
+}
+
+.modal > pre,
+.modal > textarea {
+	font-size: 1rem;
+	font-size-adjust: .35;
+	overflow: auto;
+	margin-bottom: .5em;
+	padding: 8.5px;
+	cursor: auto;
+	white-space: pre-wrap;
+	color: #eee;
+	outline: 0;
+	background-color: #101010;
+	box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .16), 0 0 2px 0 rgba(0, 0, 0, .12);
+}
+
+.modal > h4 {
+	margin: .5em 0;
+}
+
+.modal ul {
+	margin-left: 2.2em;
+	word-break: break-word;
+}
+
+.modal li {
+	list-style-type: square;
+	color: #808080;
+}
+
+.modal p {
+	padding-left: .25rem;
+	word-break: break-word;
+}
+
+.modal label.btn {
+	display: flex;
+	align-items: center;
+	white-space: normal;
+	text-align: left;
+	text-transform: none;
+	padding-bottom: 0.2rem;
+	padding-top: 0.2rem;
+}
+
+.modal.cbi-modal {
+	max-width: 90%;
+	max-height: none;
+}
+
+.modal .button-row {
+	display: flex;
+	justify-content: space-between;
+}
+
+.modal .button-row > :not(:last-child) {
+	margin-right: .5em;
+}
+
+.modal .button-row > :first-child {
+	margin-right: auto;
+}
+
+body.modal-overlay-active {
+	overflow: hidden;
+	height: 100vh;
+}
+
+body.modal-overlay-active #modal_overlay {
+	right: 0;
+	left: 0;
+	opacity: 1;
+}
+
+.spinning {
+	position: relative;
+	padding-left: 32px !important;
+}
+
+.spinning::before {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: .2em;
+	width: 32px;
+	content: "";
+	background: url(../resources/icons/loading.svg) no-repeat center;
+	background-size: 16px;
+}
+
+/* luci */
+.hidden {
+	display: none;
+}
+
+.left,
+.left::before {
+	text-align: left !important;
+}
+
+.right,
+.right::before {
+	text-align: right !important;
+}
+
+.center,
+.center::before {
+	text-align: center !important;
+}
+
+.top {
+	align-self: flex-start !important;
+	vertical-align: top !important;
+}
+
+.bottom {
+	align-self: flex-end !important;
+	vertical-align: bottom !important;
+}
+
+.inline {
+	display: inline;
+}
+
+.cbi-page-actions {
+	padding-top: 1rem;
+	text-align: right;
+}
+
+.cbi-page-actions > form[method="post"] {
+	display: inline-block;
+}
+
+.th[data-type="button"],
+.td[data-type="button"],
+.th[data-type="fvalue"],
+.td[data-type="fvalue"] {
+	flex: 1 1 2em;
+	text-align: center;
+}
+
+.ifacebadge {
+	display: inline-flex;
+	gap: .2rem;
+	padding: .5rem .8rem;
+	border-bottom: thin solid #ccc;
+	background: #eee;
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, .2), 0 1px 2px rgba(0, 0, 0, .05);
+}
+
+.ifacebadge img {
+	width: 32px;
+	height: 32px;
+	vertical-align: middle;
+}
+
+td > .ifacebadge,
+.td > .ifacebadge {
+	font-size: .8rem;
+	background-color: #f0f0f0;
+}
+
+.ifacebadge > em,
+.ifacebadge > img {
+	display: inline-block;
+	align-self: flex-start;
+}
+
+.network-status-table {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.network-status-table .ifacebox {
+	flex-grow: 1;
+	margin: .5em;
+}
+
+.network-status-table .ifacebox-body {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+}
+
+.network-status-table .ifacebox-body > span {
+	flex: 10 10 auto;
+	height: 100%;
+}
+
+.network-status-table .ifacebox-body > div {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.network-status-table .ifacebox-body .ifacebadge {
+	align-items: center;
+	flex: 1 1 auto;
+	min-width: 220px;
+	margin: .5em .25em 0 .25em;
+	padding: .5em;
+	background-color: var(--white-color);
+}
+
+#dsl_status_table .ifacebox-body span > strong {
+	display: inline-block;
+	min-width: 50%;
+}
+
+/* textarea */
+.cbi-input-textarea {
+	font-family: monospace;
+	width: 100%;
+	min-height: 14rem;
+	padding: .8rem;
+	color: var(--black-color);
+}
+
+#syslog {
+	font-size: small;
+	overflow-y: hidden;
+	width: 100%;
+	min-height: 15rem;
+	padding: 1rem;
+	resize: none;
+	color: #eee;
+	border: 0;
+	border-radius: 0;
+	background-color: #101010;
+	box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .16), 0 0 2px 0 rgba(0, 0, 0, .12);
+}
+
+#syslog:focus {
+	outline: 0;
+}
+
+/* config changes */
+.uci-change-list {
+	font-family: monospace;
+}
+
+.uci-change-list ins,
+.uci-change-legend-label ins {
+	display: block;
+	padding: 2px;
+	text-decoration: none;
+	border: thin solid #0f0;
+	background-color: #cfc;
+}
+
+.uci-change-list del,
+.uci-change-legend-label del {
+	font-style: normal;
+	display: block;
+	padding: 2px;
+	text-decoration: none;
+	border: thin solid #f00;
+	background-color: #fcc;
+}
+
+.uci-change-list var,
+.uci-change-legend-label var {
+	font-style: normal;
+	display: block;
+	padding: 2px;
+	text-decoration: none;
+	border: thin solid #ccc;
+	background-color: #eee;
+}
+
+.uci-change-list var ins,
+.uci-change-list var del {
+	font-style: normal;
+	padding: 0;
+	white-space: pre;
+	border: 0;
+}
+
+.uci-change-legend {
+	padding: 5px;
+}
+
+.uci-change-legend-label {
+	float: left;
+	width: 150px;
+}
+
+.uci-change-legend-label > ins,
+.uci-change-legend-label > del,
+.uci-change-legend-label > var {
+	display: block;
+	float: left;
+	width: 10px;
+	height: 10px;
+	margin-right: 4px;
+}
+
+.uci-change-legend-label var ins,
+.uci-change-legend-label var del {
+	line-height: .4;
+	border: 0;
+}
+
+.uci-change-list var,
+.uci-change-list del,
+.uci-change-list ins {
+	padding: .5rem;
+}
+
+/* other fix */
+#iwsvg,
+#iwsvg2,
+#bwsvg {
+	border: thin solid var(--gray-color) !important;
+}
+
+#iwsvg,
+[data-page="admin-status-realtime-bandwidth"] #bwsvg {
+	border-top: 0 !important;
+}
+
+.ifacebox {
+	line-height: 1.25;
+	display: inline-flex;
+	flex-direction: column;
+	min-width: 100px;
+	border-bottom: thin solid #ccc;
+	background-color: var(--white-color-low);
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, .4), 0 1px 2px rgba(0, 0, 0, .2);
+}
+
+.ifacebox-head {
+	padding: .25em;
+	background: #eee;
+}
+
+.ifacebox-head.active {
+	background: var(--bar-bg);
+}
+
+.ifacebox-body {
+	padding: .25em;
+}
+
+.cbi-image-button {
+	margin-left: .5rem;
+}
+
+.zonebadge {
+	display: inline-block;
+	padding: .2rem .5rem;
+}
+
+.zonebadge .ifacebadge {
+	margin: .1rem .2rem;
+	padding: .2rem .3rem;
+	border: thin solid #6c6c6c;
+}
+
+.zonebadge > input[type="text"] {
+	min-width: 10rem;
+	margin-top: .3rem;
+	padding: .16rem 1rem;
+}
+
+.zonebadge > em,
+.zonebadge > strong {
+	display: inline-block;
+	margin: 0 .2rem;
+}
+
+.cbi-value-field .cbi-input-checkbox,
+.cbi-value-field .cbi-input-radio {
+	margin-top: .1rem;
+}
+
+.cbi-value-field > ul > li {
+	display: flex;
+}
+
+.cbi-value-field > ul > li > label {
+	margin-top: .5rem;
+}
+
+.cbi-value-field > ul > li .ifacebadge {
+	margin-top: -.5rem;
+	margin-left: .4rem;
+	background-color: #eee;
+}
+
+.cbi-section-table-row > .cbi-value-field .cbi-dropdown {
+	min-width: 7rem;
+}
+
+.cbi-section-create {
+	display: inline-flex;
+	align-items: center;
+	margin: .5rem -3px;
+}
+
+.cbi-section-create > * {
+	margin: .5rem;
+}
+
+.cbi-section-remove {
+	padding: .5rem;
+}
+
+div.cbi-value var,
+td.cbi-value-field var,
+.td.cbi-value-field var {
+	font-style: italic;
+	color: #0069d6;
+}
+
+.cbi-optionals {
+	padding: 1rem 1rem 0 1rem;
+	border-top: thin solid #ccc;
+}
+
+.cbi-dropdown-container {
+	position: relative;
+}
+
+.cbi-tooltip-container,
+span[data-tooltip],
+span[data-tooltip] .label {
+	cursor: help !important;
+}
+
+.cbi-tooltip {
+	position: absolute;
+	z-index: 1000;
+	left: -1000px;
+	padding: 2px 5px;
+	transition: opacity .25s ease-out;
+	white-space: pre;
+	pointer-events: none;
+	opacity: 0;
+	border-radius: 3px;
+	background: var(--white-color);
+	box-shadow: 0 0 2px #444;
+}
+
+.cbi-tooltip-container:hover .cbi-tooltip {
+	left: auto;
+	transition: opacity .25s ease-in;
+	opacity: 1;
+}
+
+.zonebadge .cbi-tooltip {
+	margin: -1.5rem 0 0 -.5rem;
+	padding: .25rem;
+	background: inherit;
+}
+
+.zonebadge-empty {
+	color: #404040;
+	background: repeating-linear-gradient(45deg, rgba(204, 204, 204, .5), rgba(204, 204, 204, .5) 5px, rgba(255, 255, 255, .5) 5px, rgba(255, 255, 255, .5) 10px);
+}
+
+.zone-forwards {
+	display: flex;
+	min-width: 10rem;
+	flex-wrap: nowrap;
+}
+
+.zone-forwards > * {
+	flex: 1 1 45%;
+	text-wrap: auto;
+}
+
+.zone-forwards > span {
+	flex-basis: 10%;
+	padding: 0 .25rem;
+	text-align: center;
+}
+
+.zone-forwards .zone-src,
+.zone-forwards .zone-dest {
+	display: flex;
+	flex-direction: column;
+}
+
+.label,
+[data-indicator] {
+	font-size: .8rem;
+	font-weight: bold;
+	padding: .3rem .8rem;
+	white-space: nowrap;
+	text-decoration: none;
+	text-transform: uppercase;
+	color: var(--white-color) !important;
+	border-radius: 3px;
+	background-color: #bfbfbf;
+	text-shadow: none;
+}
+
+label > input[type="checkbox"],
+label > input[type="radio"] {
+	margin-right: 0.8rem;
+}
+
+label[data-index][data-depends] {
+	padding-right: 2em;
+}
+
+.showSide {
+	display: none;
+}
+
+.darkMask {
+	position: fixed;
+	z-index: 99;
+	width: 100%;
+	height: 100%;
+	content: "";
+	background-color: rgba(0, 0, 0, .56);
+	transition: opacity 400ms, visibility 400ms;
+	visibility: hidden;
+	opacity: 0;
+}
+
+/* diagnostics */
+#diag-rc-output > pre,
+#command-rc-output > pre,
+[data-page="admin-services-wol"] .notice code {
+	font-size: 1.2rem;
+	font-size-adjust: .35;
+	line-height: normal;
+	display: block;
+	overflow-y: hidden;
+	width: 100%;
+	padding: 8.5px;
+	white-space: pre;
+	color: #eee;
+	background-color: #101010;
+	box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .16), 0 0 2px 0 rgba(0, 0, 0, .12);
+}
+
+[data-page="admin-network-diagnostics"] .table {
+	box-shadow: none;
+}
+
+input[name="ping"],
+input[name="traceroute"],
+input[name="nslookup"] {
+	width: 80%;
+}
+
+/* fix Main Login */
+.node-main-login > .main > .main-left {
+	display: none;
+}
+
+.node-main-login > .main > .main-right {
+	width: 100%;
+}
+
+.node-main-login > .main fieldset {
+	display: inline;
+	overflow: hidden;
+	margin-bottom: 1rem;
+	padding: .5rem;
+	border: 0;
+	background: none;
+	box-shadow: none;
+}
+
+.node-main-login > .main .cbi-value-title {
+	width: 9.5rem;
+}
+
+.node-main-login > .main #maincontent {
+	text-align: center;
+}
+
+.node-main-login > .main .container {
+	display: inline-block;
+	margin-top: 2rem !important;
+	padding: 1rem 3.5rem 2rem;
+	text-align: left;
+	background-color: var(--white-color);
+	box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .16), 0 0 2px 0 rgba(0, 0, 0, .12);
+}
+
+.node-main-login > .main form > div:last-child {
+	float: right;
+}
+
+.node-main-login > .main .cbi-value {
+	display: block;
+}
+
+.node-main-login > .main .cbi-value > * {
+	display: inline-block !important;
+}
+
+.node-main-login > .main .cbi-input-text {
+	width: 100% !important;
+	min-width: 15rem;
+}
+
+.node-main-login .cbi-section {
+	box-shadow: none;
+}
+
+@media screen and (min-height: 585px) {
+	.node-main-login footer {
+		position: absolute;
+		bottom: 0;
+		width: 100%;
+	}
+}
+
+/* fix status */
+.node-status-overview > .main fieldset:nth-child(4) .td:nth-child(2),
+.node-status-processes > .main .table .tr .td:nth-child(3) {
+	white-space: normal;
+}
+
+/* fix system reboot */
+[data-page="admin-system-reboot"] p {
+	padding-left: 2rem;
+}
+
+[data-page="admin-system-reboot"] p > span {
+	position: relative;
+	top: .1rem;
+	left: 1rem;
+}
+
+/* samba */
+#cbi-samba [data-tab="template"] .cbi-value-field {
+	display: block;
+}
+
+#cbi-samba [data-tab="template"] .cbi-value-title {
+	width: auto;
+	padding-bottom: .6rem;
+}
+
+/* software */
+.controls > * > .btn:not([aria-label$="page"]) {
+	flex-grow: initial !important;
+	margin-top: .1rem;
+}
+
+.controls > #pager > .btn[aria-label$="page"] {
+	font-size: 1.4rem;
+	font-weight: bold;
+}
+
+.controls > * > label {
+	margin-bottom: .2rem;
+}
+
+.control-group {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 2px;
+}
+
+[data-page="admin-system-package-manager"] div.btn {
+	line-height: 3;
+	display: inline;
+	padding: .3rem .6rem;
+}
+
+[data-page^="admin-system-admin"]:not(.node-main-login) .cbi-map:not(#cbi-dropbear),
+[data-page="admin-system-package-manager"] #maincontent > .container {
+	margin-top: 2rem;
+	padding-top: .1rem;
+}
+
+[data-page="admin-system-package-manager"] #maincontent > .container {
+	margin: 2rem;
+	margin-bottom: 1rem;
+}
+
+.td.version,
+.td.size {
+	white-space: normal !important;
+	word-break: break-word;
+}
+
+.cbi-tabmenu + .cbi-section {
+	margin-top: 0;
+}
+
+/* wireless overview */
+#cbi-wireless > #wifi_assoclist_table > .tr {
+	box-shadow: inset 1px -1px 0 #ddd, inset -1px -1px 0 #ddd;
+}
+
+#cbi-wireless > #wifi_assoclist_table > .tr.placeholder > .td {
+	right: 33px;
+	bottom: 33px;
+	left: 33px;
+	border-top: thin solid #ddd !important;
+}
+
+#cbi-wireless > #wifi_assoclist_table > .tr.table-titles {
+	box-shadow: inset 1px 0 0 #ddd, inset -1px 0 0 #ddd;
+}
+
+#cbi-wireless > #wifi_assoclist_table > .tr.table-titles > .th {
+	border-bottom: thin solid #ddd;
+	box-shadow: 0 -1px 0 0 #ddd;
+}
+
+#wifi_assoclist_table > .tr > .td[data-title="RX Rate / TX Rate"] {
+	width: 23rem;
+}
+
+/* firewall */
+#iptables {
+	margin: 0;
+}
+
+.Firewall form {
+	margin: 2rem 2rem 0 0;
+	padding: 0;
+	box-shadow: none;
+}
+
+#cbi-firewall-redirect table *,
+#cbi-network-switch_vlan table *,
+#cbi-firewall-zone table * {
+	font-size: small;
+}
+
+#cbi-firewall-redirect table input[type="text"],
+#cbi-network-switch_vlan table input[type="text"],
+#cbi-firewall-zone table input[type="text"] {
+	width: 5rem;
+}
+
+#cbi-firewall-redirect table select,
+#cbi-network-switch_vlan table select,
+#cbi-firewall-zone table select {
+	min-width: 3.5rem;
+}
+
+#cbi-network-switch_vlan .th,
+#cbi-network-switch_vlan .td {
+	flex-basis: 12%;
+}
+
+#cbi-firewall-zone .table,
+#cbi-network-switch_vlan .table {
+	display: block;
+}
+
+#cbi-firewall-zone .td,
+#cbi-network-switch_vlan .td {
+	width: 100%;
+}
+
+/* applyreboot fix */
+#applyreboot-container {
+	margin: 2rem;
+}
+
+#applyreboot-section {
+	line-height: 300%;
+	margin: 2rem;
+}
+
+/* openvpn bug fix */
+.OpenVPN a {
+	line-height: initial !important;
+}
+
+/* custom commands */
+.commandbox {
+	width: 24% !important;
+	margin: 10px 0 0 10px !important;
+	padding: .5rem 1rem;
+	border-bottom: thin solid #ccc;
+	background: #eee;
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, .2), 0 1px 2px rgba(0, 0, 0, .05);
+}
+
+.commandbox h3 {
+	line-height: normal !important;
+	overflow: hidden;
+	margin: 6px 0 !important;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.commandbox div {
+	left: auto !important;
+}
+
+.commandbox code {
+	margin-left: 4px;
+	padding: 2px 3px;
+}
+
+.commandbox p:first-of-type {
+	margin-top: -6px;
+}
+
+.commandbox p:nth-of-type(2) {
+	margin-top: 2px;
+}
+
+[data-page^="admin-system-commands"] .panel-title,
+[data-page^="command-cfg"] .mobile-hide,
+[data-page^="command-cfg"] .showSide {
+	display: none;
+}
+
+#command-rc-output .alert-message {
+	line-height: 1.42857143;
+	position: absolute;
+	top: 40px;
+	right: 32px;
+	max-width: 40%;
+	margin: 0;
+	animation: anim-fade-in 1.5s forwards;
+	word-break: break-word;
+	opacity: 0;
+}
+
+@keyframes anim-fade-in {
+	100% {
+		opacity: 1;
+	}
+}
+
+/* IE hacks */
+@media all {
+	.main > .main-left > .nav > .slide > .menu::before {
+		top: 30.25%;
+	}
+
+	.main > .main-left > .nav > li:last-child::before {
+		top: 20%;
+	}
+}
+
+@media screen and (max-width: 1600px) {
+	header > .fill > .container > #logo {
+		margin: 0 2.5rem 0 .5rem;
+	}
+
+	.main-left {
+		width: calc(0% + 13rem);
+	}
+
+	.main-right {
+		width: calc(100% - 13rem);
+	}
+
+	.btn:not(button),
+	.cbi-button {
+		font-size: .8rem;
+		padding: .3rem .6rem;
+	}
+
+	.label,
+	[data-indicator] {
+		padding: .2rem .6rem;
+	}
+
+	fieldset,
+	.cbi-section {
+		padding: 1rem;
+	}
+
+	.cbi-value-title {
+		width: 15rem;
+		padding-right: .6rem;
+	}
+
+	.cbi-value-field .cbi-dropdown,
+	.cbi-value-field .cbi-input-select,
+	.cbi-value input[type="text"],
+	.cbi-value input[type="password"] {
+		min-width: 22rem;
+	}
+
+	#cbi-firewall-zone .cbi-input-select {
+		min-width: 9rem;
+	}
+
+	.cbi-input-textarea {
+		font-size: small;
+	}
+
+	.node-admin-status > .main fieldset li > a {
+		padding: .3rem .6rem;
+	}
+}
+
+@media screen and (max-width: 1366px) {
+	header {
+		height: 3.5rem;
+	}
+
+	header > .fill > .container {
+		margin-top: .25rem;
+		cursor: default;
+	}
+
+	.main {
+		top: 3.5rem;
+		height: calc(100% - 3.5rem);
+	}
+
+	.main-left {
+		top: 3.5rem;
+		width: calc(0% + 13rem);
+		height: calc(100% - 3.5rem);
+	}
+
+	.main-right {
+		width: calc(100% - 13rem);
+	}
+
+	.tabs > li > a,
+	.cbi-tabmenu > li > a {
+		padding: .2rem .5rem;
+	}
+
+	.cbi-section > h3:first-child,
+	.panel-title {
+		font-size: 1.1rem;
+		padding-bottom: 1rem;
+	}
+
+	table {
+		font-size: .7rem !important;
+		width: 100% !important;
+	}
+
+	.table .cbi-input-text {
+		width: 100%;
+	}
+
+	.cbi-value-field .cbi-dropdown,
+	.cbi-value-field .cbi-input-select,
+	.cbi-value input[type="text"],
+	.cbi-value input[type="password"] {
+		min-width: 19rem;
+	}
+
+	#cbi-firewall-zone .cbi-input-select {
+		min-width: 4rem;
+	}
+
+	.main > .main-left > .nav > li,
+	.main > .main-left > .nav > li a,
+	.main > .main-left > .nav > .slide > .menu,
+	.main > .main-left > .nav > li > [data-title] {
+		font-size: .9rem;
+	}
+
+	.main > .main-left > .nav > .slide > .slide-menu > li > a {
+		font-size: .7rem;
+	}
+
+	#modal_overlay {
+		top: 3.5rem;
+	}
+
+	[data-page="admin-network-firewall-forwards"] .table:not(.cbi-section-table) {
+		display: block;
+	}
+
+	[data-page="admin-network-firewall-forwards"] .table:not(.cbi-section-table),
+	[data-page="admin-network-firewall-rules"] .table:not(.cbi-section-table),
+	[data-page="admin-network-hosts"] .table,
+	[data-page="admin-network-routes"] .table {
+		overflow-y: visible;
+	}
+
+	.commandbox {
+		width: 32% !important;
+	}
+}
+
+@media screen and (max-width: 1152px) {
+	header > .fill > .container > #logo {
+		display: none;
+	}
+
+	header > .fill > .container > .brand {
+		position: relative;
+	}
+
+	html,
+	.main {
+		overflow-y: visible;
+	}
+
+	.main > .loading > span {
+		top: 25%;
+	}
+
+	.main-left {
+		position: fixed;
+		z-index: 100;
+		visibility: hidden;
+	}
+
+	.main-right {
+		width: 100%;
+	}
+
+	.showSide {
+		position: relative;
+		top: .18rem;
+		display: inline-flex;
+		align-items: center;
+		width: 1.6rem;
+		height: 1.6rem;
+		margin-right: .7rem;
+		cursor: pointer;
+	}
+
+	.showSide::before {
+		position: absolute;
+		left: 1px;
+		width: 24px;
+		height: 24px;
+		content: "";
+		background: url(./icons/menu.svg) no-repeat center;
+	}
+
+	body:not(.logged-in) .showSide {
+		visibility: hidden;
+		width: 0;
+		margin: 0;
+	}
+
+	.node-main-login > .main .cbi-value-title {
+		text-align: left;
+	}
+
+	.cbi-value-title {
+		width: 12rem;
+		padding-right: 1rem;
+	}
+
+	.cbi-value-field .cbi-dropdown,
+	.cbi-value-field .cbi-input-select,
+	.cbi-value input[type="text"] {
+		width: 16rem;
+		min-width: 16rem;
+	}
+
+	.cbi-value input[type="password"],
+	.cbi-value input[name^="pw"],
+	.cbi-value input[data-update="change"]:nth-child(2) {
+		width: 13rem !important;
+		min-width: 13rem;
+	}
+
+	#diag-rc-output > pre,
+	#command-rc-output > pre,
+	[data-page="admin-services-wol"] .notice code {
+		font-size: 1rem;
+	}
+
+	.table {
+		display: block;
+	}
+
+	.Interfaces .table {
+		overflow-x: hidden;
+	}
+
+	#packages.table {
+		display: grid;
+	}
+
+	.tr {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+	}
+
+	.Overview .table[width="100%"] > .tr {
+		flex-wrap: nowrap;
+	}
+
+	.tr.placeholder {
+		border-bottom: thin solid #ddd;
+	}
+
+	.tr.placeholder > .td,
+	#cbi-firewall .tr > .td,
+	#cbi-network .tr:nth-child(2) > .td,
+	.cbi-section #wifi_assoclist_table .tr > .td {
+		border-top: 0;
+	}
+
+	.th,
+	.td {
+		display: inline-block;
+		align-self: flex-start;
+		flex: 2 2 25%;
+		text-overflow: ellipsis;
+		word-wrap: break-word;
+	}
+
+	.td select,
+	.td input[type="text"] {
+		width: 100%;
+		word-wrap: normal;
+	}
+
+	.td [data-dynlist] > input,
+	.td input.cbi-input-password {
+		width: calc(100% - 1.5rem);
+	}
+
+	.td[data-type="button"],
+	.td[data-type="fvalue"] {
+		flex: 1 1 12.5%;
+		text-align: left;
+	}
+
+	.th.cbi-value-field,
+	.td.cbi-value-field,
+	.th.cbi-section-table-cell,
+	.td.cbi-section-table-cell {
+		flex-basis: auto;
+		padding-top: 1rem;
+	}
+
+	.cbi-section-table-row {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .16), 0 0 2px 0 rgba(0, 0, 0, .12);
+	}
+
+	.td.cbi-value-field,
+	.cbi-section-table-cell {
+		display: inline-block;
+		flex: 10 10 auto;
+		flex-basis: 50%;
+		text-align: center;
+	}
+
+	.td.cbi-section-actions {
+		vertical-align: bottom;
+	}
+
+	.tr.table-titles,
+	.tr.cbi-section-table-titles,
+	.tr.cbi-section-table-descr {
+		display: none;
+	}
+
+	.tr[data-title]::before,
+	.tr.cbi-section-table-titles.named::before {
+		font-size: .9rem;
+		display: block;
+		flex: 1 1 100%;
+		border-bottom: thin solid rgba(0, 0, 0, .26);
+		background: #90c0e0;
+	}
+
+	.td[data-title],
+	[data-page^="admin-status-realtime"] .td[id] {
+		text-align: left;
+	}
+
+	.td[data-title]::before {
+		display: block;
+	}
+
+	.cbi-button + .cbi-button {
+		margin-left: 0;
+	}
+
+	.td.cbi-section-actions > * > *,
+	.td.cbi-section-actions > * > form > * {
+		margin: 2.1px 3px;
+	}
+
+	.Firewall form {
+		position: static !important;
+		margin: 0 0 2rem 0;
+		padding: 2rem;
+		box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .16), 0 0 2px 0 rgba(0, 0, 0, .12);
+	}
+
+	.Firewall form input {
+		width: 100% !important;
+		margin: 0;
+		margin-top: 1rem;
+	}
+
+	.Firewall .center,
+	.Firewall .center::before {
+		text-align: left !important;
+	}
+
+	.commandbox {
+		width: 100% !important;
+		margin-left: 0 !important;
+	}
+}
+
+@media screen and (max-width: 600px) {
+	body {
+		font-size: .8rem;
+	}
+
+	.cbi-progressbar::after {
+		font-size: .95em;
+		line-height: 1.5;
+	}
+
+	fieldset,
+	.cbi-section {
+		margin: 1rem 0 0 0;
+	}
+
+	.tabs {
+		margin: 0 -1rem;
+	}
+
+	#maincontent > .container {
+		margin: 0 .5rem 1.5rem .5rem;
+	}
+
+	.main > .main-left > .nav > .slide > .menu,
+	.main > .main-left > .nav > li > [data-title] {
+		font-size: 1.2rem;
+	}
+
+	.main > .main-left > .nav > .slide > .slide-menu > li > a {
+		font-size: 1rem;
+	}
+
+	.cbi-value-title {
+		display: block;
+		min-width: 0 !important;
+		margin: .5rem 0;
+		text-align: left;
+	}
+
+	.cbi-value-title,
+	.cbi-value-description,
+	.cbi-value-field,
+	.cbi-value-field .cbi-dropdown,
+	.cbi-value-field .cbi-input-select,
+	.cbi-value input[type="text"] {
+		width: 100%;
+	}
+
+	.cbi-value > .cbi-value-field {
+		display: inline-block;
+	}
+
+	.tabs > li > a,
+	.cbi-tabmenu > li > a {
+		font-size: .9rem;
+		padding: .2rem .3rem;
+	}
+
+	.cbi-page-actions > div > input {
+		display: none;
+	}
+
+	.cbi-page-actions > .cbi-button {
+		margin-top: .2rem;
+	}
+
+	.node-main-login > .main .container {
+		margin: 2rem 1.2rem 1.5rem 1.2rem !important;
+		padding: .3rem 1.7rem 2rem 1.6rem;
+	}
+
+	.node-main-login > .main .cbi-value {
+		padding: 0;
+	}
+
+	.node-main-login > .main form > div:last-child {
+		margin-top: 2rem;
+	}
+
+	.node-main-login > .main .cbi-value-title {
+		font-size: 1.2rem;
+		width: 100% !important;
+	}
+
+	.node-main-login > .main fieldset {
+		margin: 0;
+		padding: .5rem;
+	}
+
+	.commandbox p:first-of-type {
+		margin-top: -8px;
+	}
+
+	#syslog,
+	#diag-rc-output > pre,
+	#command-rc-output > pre,
+	[data-page="admin-services-wol"] .notice code {
+		font-size: .8rem !important;
+	}
+
+	h2 {
+		font-size: 2rem;
+	}
+
+	.tabs > li > a {
+		font-size: .9rem;
+	}
+
+	select,
+	input {
+		font-size: .9rem;
+	}
+
+	code {
+		font-size: .8rem;
+	}
+
+	.mobile-hide {
+		display: none;
+	}
+
+	.cbi-section > h3:first-child,
+	.panel-title {
+		font-size: 1.4rem;
+		padding-bottom: 1rem;
+	}
+
+	.node-system-packages > .main .cbi-value.cbi-value-last > div {
+		width: 100% !important;
+	}
+
+	.node-system-packages > .main .cbi-value .cbi-value-field input {
+		width: 100%;
+	}
+
+	.th,
+	.td {
+		flex-basis: 50%;
+	}
+
+	.td.cbi-value-field {
+		flex-basis: 100%;
+	}
+
+	.td.cbi-value-field[data-type="button"],
+	.td.cbi-value-field[data-type="fvalue"] {
+		flex-basis: 25%;
+		text-align: left;
+	}
+
+	.tr[data-title]::before,
+	.tr.cbi-section-table-titles.named::before {
+		font-size: 1rem;
+	}
+
+	td > .ifacebadge,
+	.td > .ifacebadge {
+		font-size: .62rem;
+	}
+
+	#cbi-wireless > #wifi_assoclist_table .td {
+		overflow: hidden;
+	}
+
+	#cbi-wireless > .cbi-section-node .td,
+	.Interfaces .td.cbi-section-actions {
+		text-align: center !important;
+	}
+
+	[data-page="admin-status-processes"] .td[data-title="Hang Up"]::before,
+	[data-page="admin-status-processes"] .td[data-title="Terminate"]::before,
+	[data-page="admin-status-processes"] .td[data-title="Kill"]::before {
+		display: none;
+	}
+
+	.hide-sm,
+	.hide-xs:not([data-title="MAC-Address"]) {
+		display: none;
+	}
+
+	.cbi-modal {
+		padding: .5rem;
+	}
+
+	.cbi-modal .cbi-value {
+		padding: 0 0 .25rem 0;
+	}
+
+	.cbi-modal [data-tab-title] {
+		padding: 0 .25rem !important;
+	}
+
+	[data-tab-title] {
+		padding: 0 .5rem !important;
+	}
+}
+
+@media screen and (min-width: 600px) {
+	::-webkit-scrollbar {
+		width: 10px;
+		height: 10px;
+	}
+
+	::-webkit-scrollbar,
+	::-webkit-scrollbar-corner {
+		background: transparent;
+	}
+
+	::-webkit-scrollbar-thumb {
+		background: #9e9e9e;
+	}
+/*
+	::-webkit-scrollbar-thumb:hover {
+		background: #757575;
+	}
+
+	::-webkit-scrollbar-thumb:active {
+		background: #424242;
+	}*/
+}
+
+/* ==========================================================================
+   MATERIAL3 OVERRIDES  (luci-theme-boundless; v5: LIGHT)
+   --------------------------------------------------------------------------
+   Everything above this block is the UNMODIFIED cascade.css of the official
+   luci-theme-material (OpenWrt 24.10 branch, Apache-2.0), so every selector
+   still matches the markup LuCI generates. This block, loaded last, restyles
+   those same selectors into a Material 3 theme (LIGHT since v5,
+   2026-10-28; theme fully renamed to boundless in v8):
+
+     - surfaces are tonal steps over #F4F6FA (#FFFFFF -> #EFF3F8)
+     - cards / buttons / inputs get large M3 radii (12-20px, pills = 999px)
+     - active menu / tab / button states are pill-shaped, filled with the
+       primary container colour; ONE primary accent is used throughout
+     - hardcoded colours of the original are neutralised here, selector
+       by selector
+
+   Colour tokens themselves live in custom.css (same variable names as the
+   official theme, light values since v5).
+
+   v3 APP-COMPAT PASS (2026-10-27, feedback Syamsul: "banyak tabrakan" di
+   halaman tiap tools/service): semua deklarasi pengubah UKURAN KOTAK di
+   blok override + gradient layer DICABUT (padding/min-height/margin pada
+   section, input, tombol, tabs, page-actions, pre, container mobile) dan
+   !important pada radius tombol dihapus. Yang tersisa hanya warna,
+   background/gradien, border-color, dan border-radius - properti yang
+   tidak mengubah layout, jadi CSS bawaan tiap luci-app tidak lagi perang
+   ukuran dengan tema. Ukuran mengikuti cascade.css resmi apa adanya.
+   ========================================================================== */
+
+/* ---------- base ---------- */
+html { color-scheme: light; }
+
+body {
+	background-color: var(--m3-bg);
+	color: var(--m3-text);
+}
+
+a { color: var(--m3-primary); }
+a:hover { color: var(--m3-on-primary-container); }
+
+code {
+	color: var(--m3-on-primary-container);
+	background: var(--m3-surface-3);
+	border-radius: 6px;
+}
+
+pre {
+	color: var(--m3-text-2);
+	background: var(--m3-surface);
+	border-radius: var(--m3-radius-s);
+}
+
+hr { border-color: var(--m3-outline); opacity: 1; }
+abbr { color: var(--m3-primary); }
+small { color: var(--m3-text-muted); }
+
+::selection { background: var(--m3-primary-container); color: var(--m3-on-primary-container); }
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--m3-bg); }
+::-webkit-scrollbar-thumb { background: var(--m3-surface-4); border-radius: var(--m3-radius-pill); }
+::-webkit-scrollbar-thumb:hover { background: var(--m3-outline-strong); }
+
+/* ---------- header (top bar) ---------- */
+header { background: var(--header-bg); box-shadow: 0 1px 0 var(--m3-outline), 0 4px 16px rgba(0,0,0,.08); }
+header > .fill { background: var(--header-bg); }
+header > .fill > .container > .brand { color: var(--m3-text); }
+header > .fill > .container > .status { color: var(--m3-text-2); }
+header > .fill > .container > .status > * { color: var(--m3-text-2); }
+
+.showSide { opacity: .85; }
+
+#xhr_poll_status { color: var(--m3-text-2); }
+#xhr_poll_status > .green { color: #188038 !important; }
+#xhr_poll_status > .red { color: #d93025 !important; }
+
+/* indicators in the top bar: small tonal pills.
+   v22 (STB report 2026-10-28): the text colour needs !important -
+   the base material rule ".label, [data-indicator]" forces white
+   !important text, which was invisible on these pale tonal
+   backgrounds (the poll PAUSED pill in the top-right looked like an
+   empty white blob). Header indicators also no longer take the
+   accent gradient (removed from the gradient rule above) so they
+   stay tonal with dark text in both states. */
+[data-indicator] {
+	border-radius: var(--m3-radius-pill);
+	background: var(--m3-surface-3);
+	color: var(--m3-text-2) !important;
+	box-shadow: none;
+}
+[data-indicator]:not([data-style="inactive"]) {
+	background: var(--m3-primary-container);
+	color: var(--m3-on-primary-container) !important;
+}
+
+/* ---------- mode menu (Status / System / ... pills above sidebar) ---------- */
+.modemenu-buttons { background: var(--m3-surface); border-radius: var(--m3-radius-m); }
+#modemenu > li > a {
+	color: var(--m3-text-2);
+	border-radius: var(--m3-radius-pill);
+}
+#modemenu > li > a.active,
+#modemenu > li > a:hover {
+	background: var(--m3-primary-container);
+	color: var(--m3-on-primary-container);
+}
+#modemenu > li.divider > span { background: var(--m3-outline); }
+
+/* ---------- left sidebar menu ---------- */
+.main { background: var(--m3-bg); }
+.main-left {
+	background: var(--menu-bg-color);
+	box-shadow: 1px 0 0 var(--m3-outline);
+}
+.main-right { background: var(--m3-bg); }
+.main-right > #maincontent { background: var(--m3-bg); }
+#maincontent > .container { color: var(--m3-text); }
+
+.main > .main-left > .nav { padding: .6rem; }
+/* v4 (2026-10-27, screenshot STB Syamsul): JANGAN beri background/radius
+   pada <li> container sidebar. li.slide yang terbuka itu TINGGI (isi
+   seluruh submenu) - background + radius pill di situ menghasilkan oval
+   biru raksasa di belakang submenu. Highlight hanya boleh di <a> (satu
+   baris) dan di <li> leaf slide-menu yang aktif (satu baris). */
+.main > .main-left > .nav > li { border: 0; margin-bottom: 2px; }
+.main > .main-left > .nav > li a {
+	color: var(--menu-color);
+	border-radius: var(--m3-radius-pill);
+	padding-left: 1rem;
+}
+.main > .main-left > .nav > li:hover > a,
+.main > .main-left > .nav > .slide > .menu:hover {
+	background: var(--m3-surface-3);
+	border-radius: var(--m3-radius-pill);
+}
+.main > .main-left > .nav > li.active,
+.main > .main-left > .nav > li.slide.active {
+	background: transparent;
+}
+.main > .main-left > .nav > li.active > a { color: var(--m3-on-primary-container); font-weight: 600; }
+.main > .main-left > .nav > li.active:not(.slide) > a { background: var(--m3-primary-container); }
+.main > .main-left > .nav > .slide > .menu { border-radius: var(--m3-radius-pill); }
+.main > .main-left > .nav > .slide > .menu.active { color: var(--m3-on-primary-container); }
+.main > .main-left > .nav > .slide > ul { background: transparent; }
+.main > .main-left > .nav > .slide > .slide-menu > li { border-radius: var(--m3-radius-pill); }
+.main > .main-left > .nav > .slide > .slide-menu > li > a { color: var(--m3-text-2); border-radius: var(--m3-radius-pill); }
+.main > .main-left > .nav > .slide > .slide-menu > .active { background: var(--m3-primary-container); border-radius: var(--m3-radius-pill); margin: 0 .4rem; }
+.main > .main-left > .nav > .slide > .slide-menu > .active > a { color: var(--m3-on-primary-container); }
+.main > .main-left > .nav > .slide > .slide-menu > li:not(.active):hover > a { color: var(--m3-text); }
+
+.darkMask { background: rgba(0,0,0,.6); }
+
+.main > .loading { background: var(--m3-bg); color: var(--m3-text-2); }
+
+/* ---------- sections / cards ---------- */
+.cbi-section,
+.cbi-section-error,
+#iptables,
+.Firewall form,
+#cbi-network > .cbi-section-node,
+#cbi-wireless > .cbi-section-node,
+#wifi_assoclist_table,
+.network-status-table {
+	background: var(--m3-surface);
+	color: var(--m3-text);
+	border: 1px solid var(--m3-outline);
+	border-radius: var(--m3-radius-l);
+	box-shadow: 0 1px 3px rgba(0,0,0,.08);
+}
+
+.cbi-modal .cbi-section { background: var(--m3-surface); border-radius: var(--m3-radius-l); }
+.cbi-section .cbi-section { background: var(--m3-surface-2); box-shadow: none; }
+
+.cbi-section > legend,
+.cbi-section > h3:first-child,
+.panel-title {
+	color: var(--m3-text);
+	font-weight: 600;
+	letter-spacing: .01em;
+}
+.cbi-section > h4:first-child, .cbi-section > p:first-child { color: var(--m3-text-2); }
+.cbi-map-descr, .cbi-section-descr { color: var(--m3-text-muted); }
+fieldset > fieldset, .cbi-section > .cbi-section { border-color: var(--m3-outline); }
+
+[data-tab-title] { background: transparent; }
+.cbi-section-node-tabbed { border: 0; padding: 0; }
+
+/* overview status cards (ifacebox) */
+.ifacebox {
+	background: var(--m3-surface-2);
+	border: 1px solid var(--m3-outline);
+	border-radius: var(--m3-radius-m);
+	color: var(--m3-text);
+	box-shadow: none;
+}
+.ifacebox-head { background: var(--m3-surface-3); color: var(--m3-text); border-radius: var(--m3-radius-m) var(--m3-radius-m) 0 0; }
+.ifacebox-head.active { background: var(--m3-primary-container); color: var(--m3-on-primary-container); }
+.ifacebox-body { color: var(--m3-text-2); }
+.network-status-table .ifacebox { background: var(--m3-surface-2); }
+
+/* ---------- tabs ---------- */
+.tabs {
+	background: transparent;
+	margin: 0 0 .4rem 0;
+	padding-left: 0;
+}
+.tabs > li, .cbi-tabmenu > li {
+	background: var(--m3-surface-3);
+	border-radius: var(--m3-radius-pill);
+	border: 0;
+}
+.tabs > li > a, .cbi-tabmenu > li > a { color: var(--m3-text-2); border-radius: var(--m3-radius-pill); }
+.tabs > li:hover, .cbi-tabmenu > li:hover { background: var(--m3-surface-4); }
+.tabs > li:hover > a, .cbi-tabmenu > li:hover > a { color: var(--m3-text); }
+.tabs > li[class~="active"], .cbi-tabmenu > li[class~="cbi-tab"] {
+	background: var(--m3-primary-container);
+	box-shadow: none;
+}
+.tabs > li[class~="active"] > a, .cbi-tabmenu > li[class~="cbi-tab"] > a { color: var(--m3-on-primary-container); font-weight: 600; }
+.cbi-tabmenu { border: 0; background: transparent; }
+
+/* ---------- tables ---------- */
+table, .table { color: var(--m3-text); border-radius: var(--m3-radius-s); }
+table > thead > tr > th, .table .th, .th {
+	color: var(--m3-text-2);
+	border-bottom: 1px solid var(--m3-outline);
+	font-weight: 600;
+	text-align: left;
+}
+tr > td, tr > th, .tr > .td, .tr > .th { border-bottom: 1px solid var(--m3-outline); }
+.cbi-section-table-row { border-bottom: 1px solid var(--m3-outline); }
+.cbi-section-table-row:last-child { border-bottom: 0; }
+div > table > tbody > tr:nth-of-type(2n),
+div > .table > .tr:nth-of-type(2n),
+.cbi-rowstyle-2 { background: var(--m3-surface-2); }
+.cbi-rowstyle-1 { background: transparent; }
+.cbi-section .cbi-section-remove:nth-of-type(2n),
+.container > .cbi-section .cbi-section-node:nth-of-type(2n) { background: var(--m3-surface-2); }
+.td[data-title]::before, .tr[data-title]::before { color: var(--m3-text-muted); }
+.tr.placeholder > .td { color: var(--m3-text-muted); background: transparent; }
+
+/* badges inside tables */
+.ifacebadge, .zonebadge {
+	background: var(--m3-surface-3);
+	color: var(--m3-text);
+	border: 1px solid var(--m3-outline);
+	border-radius: var(--m3-radius-pill);
+	box-shadow: none;
+	text-shadow: none;
+}
+.ifacebadge > em, .zonebadge > em, .zonebadge > strong { color: var(--m3-text-2); }
+.zonebadge-empty { background: var(--m3-surface-2); color: var(--m3-text-muted); }
+.label, [data-indicator="true"] { border-radius: var(--m3-radius-pill); }
+
+/* ---------- forms ---------- */
+.cbi-value { border-bottom: 1px solid var(--m3-outline); }
+.cbi-value:last-child { border-bottom: 0; }
+.cbi-value-title { color: var(--m3-text); }
+.cbi-value-description { color: var(--m3-text-muted); }
+.cbi-value-field { color: var(--m3-text-2); }
+.cbi-tabcontainer > .cbi-value:nth-of-type(2n) { background: var(--m3-surface-2); }
+
+.btn, button, select, input, .cbi-dropdown, textarea {
+	color: var(--m3-text);
+	font-family: inherit;
+}
+
+select,
+input[type="text"], input[type="password"], input[type="number"],
+input[type="search"], input[type="email"], input[type="url"], input[type="tel"],
+input:not([type]), .cbi-input-text, .cbi-input-select, .cbi-input-password,
+.cbi-value input[type="text"], .cbi-value input[type="password"],
+.cbi-dropdown, .cbi-input-textarea, textarea {
+	background-color: var(--m3-surface-3);
+	border: 1px solid var(--m3-outline);
+	border-bottom: 1px solid var(--m3-outline);
+	border-radius: var(--m3-radius-s);
+	box-shadow: none;
+}
+
+select { background-color: var(--m3-surface-3); color: var(--m3-text); border: thin solid var(--m3-outline); }
+
+select:not([multiple="multiple"]):focus,
+input:not(.cbi-button):focus,
+.cbi-dropdown:focus, textarea:focus, .cbi-input-textarea:focus {
+	border-color: var(--m3-primary);
+	outline: 2px solid var(--m3-primary-container);
+	outline-offset: 0;
+	background-color: var(--m3-surface-2);
+}
+
+input[disabled], select[disabled], textarea[disabled], [disabled="disabled"] {
+	opacity: .45;
+	color: var(--m3-text-muted);
+}
+
+.cbi-input-invalid, input.cbi-input-invalid { border-color: var(--error-color) !important; color: var(--m3-text); }
+.cbi-section-error { background: #fdecea; color: #5f2120; border-color: #f2b8b5; }
+.cbi-section-error ul li { color: #5f2120; }
+
+input[type="checkbox"], input[type="radio"] { accent-color: var(--m3-primary); min-height: auto; }
+.cbi-value-field .cbi-input-checkbox, .cbi-value-field .cbi-input-radio { accent-color: var(--m3-primary); }
+
+/* dynlist */
+.cbi-dynlist > .item {
+	background: var(--m3-surface-3);
+	color: var(--m3-text);
+	border: 1px solid var(--m3-outline);
+	border-radius: var(--m3-radius-s);
+	box-shadow: none;
+}
+.cbi-dynlist > .item::after { color: var(--m3-on-primary-container); background: var(--m3-red, #c5221f); border-radius: 0 var(--m3-radius-s) var(--m3-radius-s) 0; }
+.cbi-dynlist > .add-item > input { border-radius: var(--m3-radius-s); }
+
+/* dropdown (cbi-dropdown) */
+.cbi-dropdown > ul > li { color: var(--m3-text); background: var(--m3-surface-3); }
+.cbi-dropdown[open] > ul.dropdown {
+	background: var(--m3-surface-3);
+	border: 1px solid var(--m3-outline);
+	border-radius: var(--m3-radius-s);
+	box-shadow: 0 8px 28px rgba(0,0,0,.18);
+	color: var(--m3-text);
+}
+.cbi-dropdown[open] > ul.dropdown > li { color: var(--m3-text-2); border-bottom: 1px solid var(--m3-outline); background: transparent; }
+.cbi-dropdown[open] > ul.dropdown > li[selected] { background: var(--m3-primary-container); color: var(--m3-on-primary-container); }
+.cbi-dropdown[open] > ul.dropdown > li.focus,
+.cbi-dropdown[open] > ul.dropdown > li:hover { background: var(--m3-surface-4); color: var(--m3-text); }
+.cbi-dropdown > .open, .cbi-dropdown > .more { color: var(--m3-text-2); }
+
+/* ---------- buttons: pill shaped, tonal ---------- */
+.btn, .cbi-button, .item::after {
+	border-radius: var(--m3-radius-pill);
+	border: 1px solid var(--m3-outline);
+	background-color: var(--m3-surface-3);
+	color: var(--m3-text) !important;
+	text-transform: none;
+	font-weight: 600;
+	letter-spacing: .01em;
+	box-shadow: none;
+	text-shadow: none;
+	transition: background-color .15s ease, filter .15s ease;
+}
+.btn:hover, .btn:focus, .cbi-button:hover, .cbi-button:focus, .item:hover::after {
+	background-color: var(--m3-surface-4);
+	filter: none;
+}
+.btn:active, .cbi-button:active { background-color: var(--m3-outline); }
+.btn:disabled, .cbi-button:disabled { opacity: .45; background-color: var(--m3-surface-3); color: var(--m3-text-muted) !important; }
+
+/* primary action = the ONE accent, filled pill */
+.btn.primary,
+.cbi-page-actions .cbi-button-save,
+.cbi-page-actions .cbi-button-apply + .cbi-button-save {
+	background-color: var(--m3-primary);
+	border-color: var(--m3-primary);
+	color: var(--m3-on-primary) !important;
+}
+.btn.primary:hover, .cbi-page-actions .cbi-button-save:hover { background-color: var(--m3-on-primary-container); }
+
+/* apply / edit = primary-container tonal pill */
+.cbi-page-actions .cbi-button-apply,
+.cbi-section-actions .cbi-button-edit, .cbi-button-edit,
+.cbi-page-actions .cbi-button-apply + .cbi-button-reload { background-color: var(--m3-primary-container); border-color: var(--m3-primary-container); color: var(--m3-on-primary-container) !important; }
+
+/* neutral tonal buttons the original painted grey / blue / green / red / yellow */
+.alert-message [class="btn"], .modal div[class="btn"],
+.cbi-button-find, .cbi-button-link, .cbi-button-up, .cbi-button-down,
+.cbi-button-add, .cbi-value-field .cbi-button-add {
+	background-color: var(--m3-surface-3); border-color: var(--m3-outline); color: var(--m3-text) !important;
+}
+.cbi-button-success, .cbi-button-download,
+.cbi-button[name="backup"], .cbi-button[value="Download"] {
+	background-color: #146c2e; border-color: #146c2e; color: #fff !important;
+}
+.btn.danger, .cbi-section-remove > .cbi-button, .cbi-button-remove,
+.cbi-button-reset, .cbi-button-negative {
+	background-color: #a50e0e; border-color: #a50e0e; color: #ffffff !important;
+}
+.btn[value="Dismiss"], .cbi-button[value="Terminate"],
+.cbi-button[value="Reset"], .cbi-button[value="Disable"] {
+	background-color: #e37400; border-color: #e37400; color: #ffffff !important;
+}
+.cbi-page-actions {
+	border-top: 1px solid var(--m3-outline);
+	background: transparent;
+}
+
+/* ---------- alerts ---------- */
+.alert, .alert-message {
+	background: var(--m3-surface-2);
+	color: var(--m3-text);
+	border: 1px solid var(--m3-outline);
+	border-radius: var(--m3-radius-m);
+	box-shadow: 0 2px 8px rgba(0,0,0,.08);
+}
+.alert-message > h4 { color: var(--m3-text); }
+.alert-message.notice { background: var(--notice-color); color: var(--on-notice-color); border-color: var(--m3-primary-container); }
+.alert-message.danger, .alert-message.error { background: #fdecea; color: #5f2120; border-color: #f2b8b5; }
+.alert-message.warning { background: #fef7e0; color: #4d3800; border-color: #f0d48a; }
+.alert-message.success { background: #e6f4ea; color: #0d3318; border-color: #a3d9b1; }
+.label.notice { background: var(--m3-primary-container); color: var(--m3-on-primary-container); }
+.label.danger { background: #a50e0e; color: #ffffff; }
+.label.warning { background: #e37400; color: #ffffff; }
+.label.success { background: #146c2e; color: #ffffff; }
+
+/* ---------- progress, modal, tooltip ---------- */
+.cbi-progressbar { background: var(--m3-surface-4); border: 0; border-radius: var(--m3-radius-pill); overflow: hidden; }
+.cbi-progressbar > div { background: var(--m3-primary); border-radius: var(--m3-radius-pill); }
+.cbi-progressbar::after { color: var(--m3-text); text-shadow: none; }
+
+#modal_overlay { background: rgba(0,0,0,.65); }
+.modal {
+	background: var(--m3-surface-2);
+	color: var(--m3-text);
+	border: 1px solid var(--m3-outline);
+	border-radius: var(--m3-radius-l);
+	box-shadow: 0 12px 40px rgba(0,0,0,.22);
+}
+.modal > h4 { color: var(--m3-text); }
+.modal > pre, .modal > textarea { background: var(--m3-surface); color: var(--m3-text-2); border-radius: var(--m3-radius-s); }
+
+.cbi-tooltip {
+	background: var(--m3-surface-4);
+	color: var(--m3-text);
+	border-radius: 8px;
+	box-shadow: 0 4px 16px rgba(0,0,0,.18);
+}
+
+/* log / preformatted output pages */
+#syslog, #diag-rc-output > pre, #command-rc-output > pre {
+	background: var(--m3-surface);
+	color: var(--m3-text-2);
+	border: 1px solid var(--m3-outline);
+	border-radius: var(--m3-radius-s);
+}
+#syslog:focus { border-color: var(--m3-primary); }
+
+/* uci change list */
+.uci-change-list { color: var(--m3-text-2); }
+.uci-change-list ins, .uci-change-legend-label ins { background: #e6f4ea; color: #0d3318; text-decoration: none; border-radius: 4px; }
+.uci-change-list del, .uci-change-legend-label del { background: #fdecea; color: #5f2120; border-radius: 4px; }
+.uci-change-list var, .uci-change-legend-label var { background: var(--m3-surface-3); color: var(--m3-text); border-radius: 4px; }
+
+/* svg graphs (realtime status) keep a light canvas */
+#iwsvg, #iwsvg2, #bwsvg { background: var(--m3-surface-2); border-radius: var(--m3-radius-s); }
+
+/* ---------- footer ---------- */
+footer { color: var(--m3-text-muted); border-top: 1px solid var(--m3-outline); background: transparent; }
+footer > a { color: var(--m3-text-muted); }
+footer > a:hover { color: var(--m3-primary); }
+
+/* ---------- login page ---------- */
+.node-main-login > .main > .main-right { background: var(--m3-bg); }
+.node-main-login > .main #maincontent { background: var(--m3-bg); }
+.node-main-login .cbi-section {
+	background: var(--m3-surface);
+	border: 1px solid var(--m3-outline);
+	border-radius: var(--m3-radius-l);
+	box-shadow: 0 12px 40px rgba(0,0,0,.18);
+}
+.node-main-login > .main .cbi-value-title { color: var(--m3-text); }
+.node-main-login > .main .cbi-input-text { background: var(--m3-surface-3); }
+
+/* package manager / misc pages that used light panels */
+[data-page="admin-system-package-manager"] #maincontent > .container { color: var(--m3-text); }
+.controls > * > label { color: var(--m3-text-2); }
+.commandbox { background: var(--m3-surface-2); border: 1px solid var(--m3-outline); border-radius: var(--m3-radius-m); color: var(--m3-text-2); }
+.commandbox h3 { color: var(--m3-text); }
+.commandbox code { background: var(--m3-surface-3); }
+
+/* realtime / zone colours stay recognisable but muted on light */
+.zone-forwards .zone-src { background: #e6f4ea; color: #0d3318; border-radius: 8px; }
+.zone-forwards .zone-dest { background: #fef7e0; color: #4d3800; border-radius: 8px; }
+
+/* ---------- responsive ---------- */
+@media screen and (max-width: 1152px) {
+	.main-left { background: var(--menu-bg-color); box-shadow: 2px 0 18px rgba(0,0,0,.18); }
+	.cbi-section { border-radius: var(--m3-radius-m); }
+	header > .fill > .container > .brand { color: var(--m3-text); }
+}
+@media screen and (max-width: 600px) {
+	.td[data-title]::before { color: var(--m3-text-muted); }
+}
+
+/* ==========================================================================
+   GRADIENT LAYER  (luci-theme-boundless, added 2026-10-27)
+   --------------------------------------------------------------------------
+   Syamsul's feedback on v1: "jangan polos harus ada gradien" - flat solid
+   surfaces looked too plain. This block is loaded LAST and only paints
+   background-image gradients (tokens in custom.css, --m3-grad-*) over the
+   flat background-colors of the override block above. Gradients are kept
+   subtle and tonal - one blue accent family, matching his long-standing
+   preference against busy/rame visuals. Layout, radii and text colours are
+   untouched.
+   ========================================================================== */
+
+/* page background: soft diagonal fall-off instead of flat #F4F6FA;
+   the layout containers go transparent so the gradient shows through */
+body { background-image: var(--m3-grad-body); background-attachment: fixed; }
+.main, .main-right, .main-right > #maincontent { background-color: transparent; background-image: none; }
+
+/* header / top bar */
+header, header > .fill { background-image: var(--m3-grad-header); }
+
+/* left sidebar */
+.main-left { background-image: var(--m3-grad-sidebar); }
+@media screen and (max-width: 1152px) { .main-left { background-image: var(--m3-grad-sidebar); } }
+
+/* cards / sections */
+.cbi-section, .cbi-section-error, #iptables, .Firewall form,
+#cbi-network > .cbi-section-node, #cbi-wireless > .cbi-section-node,
+#wifi_assoclist_table, .network-status-table { background-image: var(--m3-grad-surface); }
+.cbi-section .cbi-section, .ifacebox, .network-status-table .ifacebox,
+.commandbox { background-image: var(--m3-grad-surface-2); }
+.ifacebox-head { background-image: var(--m3-grad-surface-2); }
+.modal, .node-main-login .cbi-section { background-image: var(--m3-grad-surface-2); }
+
+/* active / filled states: accent gradient (menu, tabs, pills, badges)
+   v4: selector li.active / li.slide.active (container sidebar yang TINGGI)
+   DICABUT dari sini juga - gradien aksen di container itu ikut membuat
+   oval biru di belakang submenu. Sisanya elemen satu baris semua. */
+.main > .main-left > .nav > li.active:not(.slide) > a,
+.main > .main-left > .nav > .slide > .slide-menu > .active,
+.tabs > li[class~="active"], .cbi-tabmenu > li[class~="cbi-tab"],
+#modemenu > li > a.active, #modemenu > li > a:hover,
+.ifacebox-head.active,
+.cbi-dropdown[open] > ul.dropdown > li[selected],
+.label.notice { background-image: var(--m3-grad-accent); }
+
+/* inputs: SENGAJA tidak diberi gradien lagi sejak v3 - halaman app/service
+   banyak yang menggambar kontrolnya sendiri; permukaan input tetap flat
+   tonal dari blok override di atas. Token --m3-grad-input dipertahankan di
+   custom.css untuk pemakaian manual. */
+
+/* primary action: light blue gradient pill */
+.btn.primary,
+.cbi-page-actions .cbi-button-save,
+.cbi-page-actions .cbi-button-apply + .cbi-button-save { background-image: var(--m3-grad-primary); }
+.btn.primary:hover, .cbi-page-actions .cbi-button-save:hover { filter: brightness(1.06); }
+
+/* apply / edit: accent-container gradient.
+   v26 (STB report 2026-10-28): the text colour must be white -
+   the M3 override block pairs these buttons with the pale container
+   colour and dark on-container text, but this rule paints the DARK
+   accent gradient over them, leaving dark text on a dark button
+   (the sysauth "Log in" button was unreadable). */
+.cbi-page-actions .cbi-button-apply,
+.cbi-section-actions .cbi-button-edit, .cbi-button-edit,
+.cbi-page-actions .cbi-button-apply + .cbi-button-reload { background-image: var(--m3-grad-accent); color: #ffffff !important; }
+
+/* v16 (STB report 2026-10-28): "Save & Apply" is a ui.ComboButton -
+   ONE .cbi-dropdown.btn.cbi-button-apply element, not two buttons.
+   The generic dropdown rules paint its inner label <li> with the
+   form-field surface colour, so the pill rendered split: pale label
+   zone on the left, gradient caret zone on the right. Make the combo
+   a single unified gradient pill: transparent label, white text and
+   white caret. The negative mode ("Apply unchecked") gets the same
+   treatment so it stays one pill too. */
+.cbi-page-actions .cbi-dropdown.cbi-button-apply > ul > li,
+.cbi-page-actions .cbi-dropdown.cbi-button-negative > ul > li {
+	background: transparent;
+	color: #ffffff;
+}
+.cbi-page-actions .cbi-dropdown.cbi-button-apply > .open,
+.cbi-page-actions .cbi-dropdown.cbi-button-apply > .more,
+.cbi-page-actions .cbi-dropdown.cbi-button-negative > .open,
+.cbi-page-actions .cbi-dropdown.cbi-button-negative > .more {
+	color: #ffffff;
+}
+.cbi-page-actions .cbi-dropdown.cbi-button-apply,
+.cbi-page-actions .cbi-dropdown.cbi-button-negative {
+	border-color: transparent;
+}
+
+/* semantic buttons */
+.cbi-button-success, .cbi-button-download,
+.cbi-button[name="backup"], .cbi-button[value="Download"] { background-image: var(--m3-grad-success); }
+.btn.danger, .cbi-section-remove > .cbi-button, .cbi-button-remove,
+.cbi-button-reset, .cbi-button-negative,
+.label.danger { background-image: var(--m3-grad-danger); }
+.btn[value="Dismiss"], .cbi-button[value="Terminate"],
+.cbi-button[value="Reset"], .cbi-button[value="Disable"],
+.label.warning { background-image: var(--m3-grad-warning); }
+.label.success { background-image: var(--m3-grad-success); }
+
+/* alerts: tonal gradient washes over their flat tints */
+.alert-message.notice { background-image: linear-gradient(135deg, rgba(11,87,208,.12), rgba(211,227,253,.45)); }
+.alert-message.success { background-image: linear-gradient(135deg, rgba(24,128,56,.14), rgba(230,244,234,.55)); }
+.alert-message.warning { background-image: linear-gradient(135deg, rgba(249,171,0,.28), rgba(254,247,224,.55)); }
+.alert-message.danger, .alert-message.error { background-image: linear-gradient(135deg, rgba(197,34,31,.12), rgba(253,236,234,.55)); }
+
+/* progress bars: accent sweep */
+.cbi-progressbar > div { background-image: var(--m3-grad-progress); }
+
+/* scrollbar thumb */
+::-webkit-scrollbar-thumb { background-image: linear-gradient(180deg, #c9ccd1, #aeb3ba); }
+
+/* ==========================================================================
+   PUN YETA ADAPTATIONS (v12; was SUNSET ADAPTATIONS v10, trimmed in v11)
+   Pun Yeta now lives only on the header, the #menu bar (inline style in
+   header.ut), accent states, primary buttons, progress bars, and
+   notice alerts; body and sidebar are white again (v11, user call),
+   and card/section surfaces are neutral white-grey (v12, user call).
+   What remains here: white text on the elements that still carry the
+   vivid gradient (active pills/tabs, apply buttons, notice labels and
+   notice alerts), the inverted hamburger icon on the Pun Yeta header,
+   and an inset white ring on the active sidebar pill so it reads on
+   the white sidebar.
+   ========================================================================== */
+header .showSide { filter: invert(1); opacity: .9; }
+.main > .main-left > .nav > li.active:not(.slide) > a,
+.main > .main-left > .nav > .slide > .slide-menu > .active > a { color: #ffffff; }
+.main > .main-left > .nav > li.active:not(.slide) > a,
+.main > .main-left > .nav > .slide > .slide-menu > .active { box-shadow: inset 0 0 0 2px rgba(255,255,255,.55); }
+.tabs > li[class~="active"] > a, .cbi-tabmenu > li[class~="cbi-tab"] > a,
+#modemenu > li > a.active,
+.cbi-page-actions .cbi-button-apply, .cbi-page-actions .cbi-button-edit,
+.label.notice { color: #ffffff; }
+.alert-message.notice { background-image: var(--m3-grad-accent); color: #ffffff; }
+
+/* Release-RAM confirmation (v12, fixed v15): the firmware template
+   admin_status/index.ut builds this alert in JS as
+   "alert-message success" (or "warning" on failure) with an INLINE
+   hard-coded navy gradient. It is NOT a .notice alert.
+   v12 scoped it with :has(+ #view) assuming the JS inserts the alert
+   directly before #view - wrong in practice (STB report 2026-10-28):
+   the script runs while the page is still parsing, BEFORE the #view
+   div exists, so getElementById('view') returns null and the fallback
+   branch inserts the alert as a DIRECT CHILD OF <body> instead.
+   The selectors below match exactly that: a success/warning
+   .alert-message sitting at body level. Normal LuCI alerts always
+   render nested inside #view/content, never as body children, so no
+   other alert is affected. !important beats the inline style. */
+body > .alert-message.success,
+body > .alert-message.warning {
+	background-image: var(--m3-grad-accent) !important;
+	color: #ffffff !important;
+}
+
+/* v17 (STB report 2026-10-28): on some pages the top menu (tabmenu
+   tabs, e.g. Modem(s) / Diagnostics / Configuration) sat too high and
+   was slightly covered by the header. Cause: this theme's header
+   carries the firmware's extra rows (navbar icon row + #menu bar)
+   inside the stock fixed 4rem header box, but the rows together are
+   ~4.45rem tall - so the #menu bar spilled about half a rem over the
+   top of .main and clipped the first content row. Pages starting with
+   a section title begin lower and hid the problem; tabbed pages sit
+   flush at the top and showed it. Grow the header box to fit its rows
+   and shift content, sidebar and the modal overlay down to match.
+   v18: user asked for more drop ("turunin lagi") - 4.5rem -> 5rem,
+   i.e. a full 1rem below the stock offset. */
+header { height: 5rem; }
+.main { top: 5rem; height: calc(100% - 5rem); }
+.main-left { top: 5rem; height: calc(100% - 5rem); }
+#modal_overlay { top: 5rem; }
+
+/* v25 (user pick, 2026-10-28): the firmware shortcut bar (#menu -
+   Modem/Terminal/Yacd/Youtube/About/Clear) leaves the header flow
+   and becomes a floating bottom dock, macOS-style. position:fixed
+   takes it out of the header entirely, so the header returns to the
+   stock single-row 4rem (superseding the v17/v18 height overrides
+   above) and tab clipping cannot come back. The bar's own styles
+   live in a <style> block inside header.ut, so geometry-critical
+   properties here carry !important. Content gets bottom clearance
+   so the dock never covers the last row (Save & Apply) of a page. */
+header { height: 4rem; }
+.main { top: 4rem; height: calc(100% - 4rem); }
+.main-left { top: 4rem; height: calc(100% - 4rem); }
+#modal_overlay { top: 4rem; }
+
+#menu {
+	position: fixed !important;
+	top: auto !important;
+	right: auto !important;
+	left: 50% !important;
+	bottom: 1rem;
+	transform: translateX(-50%);
+	width: auto !important;
+	height: auto !important;
+	padding: .35rem !important;
+	background: rgba(20, 24, 31, .92) !important;
+	border-radius: 999px !important;
+	box-shadow: 0 10px 30px rgba(0, 0, 0, .35);
+	backdrop-filter: blur(8px);
+	z-index: 800;
+}
+#menu ul { display: flex; width: auto !important; gap: .15rem; }
+#menu li { float: none; }
+#menu a {
+	line-height: 1.2 !important;
+	padding: .55rem 1rem !important;
+	font-size: .85rem !important;
+	border-radius: 999px;
+	color: #fff !important;
+}
+#menu li a:hover { background: rgba(255, 255, 255, .16) !important; color: #fff !important; }
+#menu a p { margin: 0 !important; display: inline; }
+#maincontent { padding-bottom: 5rem; }
+
+@media (max-width: 640px) {
+	#menu a { padding: .5rem .6rem !important; font-size: .78rem !important; }
+}
+
+/* v22 (STB report 2026-10-28): the save-status popup ("There are no
+   changes to apply" etc.) is a .modal that also carries
+   .alert-message (ui.js displayStatus), so it picked up the generic
+   alert rule's 1px outline border - a pale frame around the gradient
+   box that reads as a stray white border on the dark overlay. Status
+   modals keep their shadow for definition and drop the border. */
+.modal.alert-message { border: none; }
+
+/* v26 (STB report 2026-10-28): progress bar text. The ::after label
+   sits on top of the whole bar; since v12 the fill is the dark
+   accent gradient, so the dark label colour from the override block
+   above washes out (at 100% the text sat on burgundy, unreadable).
+   White text + a soft dark shadow keeps it readable on the dark
+   fill and on the pale track at low percentages. */
+.cbi-progressbar::after { color: #ffffff; text-shadow: 0 1px 2px rgba(0,0,0,.65); }
+
+/* v27 (STB report 2026-10-28): white progress text alone (v26) only
+   works at 100% - the ::after label is centred across the WHOLE bar,
+   so at partial fill most of it sits on the pale track and vanishes
+   (his screenshot: 16% / 0% / 4% bars unreadable). No single text
+   colour survives both backgrounds, so the label gets its own dark
+   glass chip: shrink the ::after box to the text, centre it, and
+   paint a translucent dark pill behind it. Readable at every %. */
+.cbi-progressbar::after {
+	left: 50%;
+	right: auto;
+	transform: translateX(-50%);
+	width: max-content;
+	max-width: calc(100% - 8px);
+	padding: 0 .7em;
+	background: rgba(20,24,31,.55);
+	border-radius: 999px;
+	color: #ffffff;
+	text-shadow: none;
+}
+
+/* v28 (STB report 2026-10-28): the login page's Reset button stayed
+   orange. It matches two semantic groups at once - .cbi-button-reset
+   (danger red) and [value="Reset"] (warning orange) - and the later
+   warning paint wins. A login reset only clears two fields; beside
+   the filled primary Log in it should be a quiet neutral tonal pill,
+   like the theme's other secondary buttons. Scoped to the login
+   page so Reset buttons elsewhere keep their warning colour. */
+.node-main-login .cbi-button-reset {
+	background-color: var(--m3-surface-3) !important;
+	background-image: none !important;
+	border-color: var(--m3-outline) !important;
+	color: var(--m3-text) !important;
+}
+
+/* v29 (user request 2026-10-28, delivery HELD - he is still
+   bug-hunting and wants one bundled script later): the bottom dock
+   trades its dark glass for the accent gradient, same family as the
+   header and primary buttons. White labels and the translucent
+   white hover keep working on it. */
+#menu {
+	background-color: #29445e !important;
+	background-image: var(--m3-grad-accent) !important;
+}
+
+/* v30 (user pick 2026-10-28, delivery HELD with v29): the Release
+   RAM result alert (body-level .alert-message from the firmware's
+   status template, see v15) becomes a floating toast at the
+   bottom-right, stacked above the dock, instead of a banner that
+   shoves the page content down for its 2-second lifetime. It also
+   takes the semantic gradients - green for success, amber for
+   warning - instead of the accent sweep v15 gave both. */
+body > .alert-message.success,
+body > .alert-message.warning {
+	position: fixed;
+	right: 1rem;
+	bottom: 5rem;
+	left: auto;
+	width: max-content;
+	max-width: min(360px, calc(100vw - 2rem));
+	margin: 0;
+	border-radius: var(--m3-radius-m);
+	box-shadow: 0 10px 30px rgba(0, 0, 0, .35);
+	z-index: 1000;
+}
+body > .alert-message.success { background-image: var(--m3-grad-success) !important; }
+body > .alert-message.warning { background-image: var(--m3-grad-warning) !important; }
+
+/* v31 (user correction 2026-10-28): the Release RAM toast moves
+   from the bottom-right corner to sit centred directly above the
+   dock - "toast di atas dock". The Clear action lives in the dock,
+   so its feedback lands right where the click happened. Position
+   and sizing from the v30 block still apply; this only re-anchors
+   it horizontally. */
+body > .alert-message.success,
+body > .alert-message.warning {
+	right: auto;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+/* ==========================================================================
+   v32 - Material 3 component pass (user 2026-10-28: "coba all opsi
+   langsung"). Six features, all scoped to standard LuCI controls in
+   the content area so app-drawn widgets keep their own rendering:
+   1) M3 switch for form checkboxes + M3 radio, 2) floating action
+   bar, 3) M3 dialog, 4) filled text fields, 5) progress end-stop
+   dot, 6) CSS press ripple + state transitions (a JS ripple would
+   track the click point; this one radiates from the centre).
+   ========================================================================== */
+
+/* --- 1) M3 switch + radio -------------------------------------------
+   Direct-child scoping is deliberate: checkboxes inside dropdown
+   option lists live deeper (ul > li > form > input) and keep the
+   native look, as do the header menu toggle and modal content. */
+#maincontent .cbi-value-field > input[type="checkbox"],
+#maincontent .cbi-value-field > label > input[type="checkbox"] {
+	appearance: none;
+	-webkit-appearance: none;
+	width: 46px;
+	height: 26px;
+	min-height: 26px;
+	flex: none;
+	border-radius: 999px;
+	border: 2px solid var(--m3-outline-strong);
+	background-color: var(--m3-surface-3);
+	background-image: none;
+	position: relative;
+	cursor: pointer;
+	vertical-align: middle;
+	transition: background-color .2s ease, border-color .2s ease;
+}
+#maincontent .cbi-value-field > input[type="checkbox"]::after,
+#maincontent .cbi-value-field > label > input[type="checkbox"]::after {
+	content: "";
+	position: absolute;
+	top: 50%;
+	left: 4px;
+	width: 13px;
+	height: 13px;
+	border-radius: 50%;
+	background: var(--m3-outline-strong);
+	transform: translateY(-50%);
+	transition: left .2s ease, width .15s ease, height .15s ease, background-color .2s ease;
+}
+#maincontent .cbi-value-field > input[type="checkbox"]:checked,
+#maincontent .cbi-value-field > label > input[type="checkbox"]:checked {
+	background-color: var(--m3-primary);
+	background-image: var(--m3-grad-accent);
+	border-color: transparent;
+}
+#maincontent .cbi-value-field > input[type="checkbox"]:checked::after,
+#maincontent .cbi-value-field > label > input[type="checkbox"]:checked::after {
+	left: calc(100% - 21px);
+	width: 17px;
+	height: 17px;
+	background: #ffffff;
+}
+#maincontent .cbi-value-field > input[type="checkbox"]:disabled,
+#maincontent .cbi-value-field > label > input[type="checkbox"]:disabled { opacity: .4; cursor: default; }
+
+#maincontent .cbi-value-field > input[type="radio"],
+#maincontent .cbi-value-field > label > input[type="radio"] {
+	appearance: none;
+	-webkit-appearance: none;
+	width: 20px;
+	height: 20px;
+	min-height: 20px;
+	flex: none;
+	border-radius: 50%;
+	border: 2px solid var(--m3-outline-strong);
+	background-color: #ffffff;
+	position: relative;
+	cursor: pointer;
+	vertical-align: middle;
+}
+#maincontent .cbi-value-field > input[type="radio"]::after,
+#maincontent .cbi-value-field > label > input[type="radio"]::after {
+	content: "";
+	position: absolute;
+	inset: 3px;
+	border-radius: 50%;
+	background: var(--m3-primary);
+	transform: scale(0);
+	transition: transform .15s ease;
+}
+#maincontent .cbi-value-field > input[type="radio"]:checked,
+#maincontent .cbi-value-field > label > input[type="radio"]:checked { border-color: var(--m3-primary); }
+#maincontent .cbi-value-field > input[type="radio"]:checked::after,
+#maincontent .cbi-value-field > label > input[type="radio"]:checked::after { transform: scale(1); }
+
+/* --- 2) Floating action bar ------------------------------------------
+   The Save/Apply row sticks as a frosted pill while the form
+   scrolls; at the natural end of the page it settles into the 5rem
+   clearance the dock already leaves below the content (v25). */
+#maincontent .cbi-page-actions {
+	position: sticky;
+	bottom: .9rem;
+	z-index: 60;
+	margin: 1rem .25rem 0;
+	padding: .55rem .8rem;
+	background: rgba(255, 255, 255, .88);
+	backdrop-filter: blur(10px);
+	border: 1px solid var(--m3-outline);
+	border-radius: 999px;
+	box-shadow: 0 10px 28px rgba(0, 0, 0, .16);
+}
+
+/* --- 3) M3 dialog ----------------------------------------------------- */
+.modal {
+	border-radius: 28px !important;
+	padding: 1.5rem;
+	box-shadow: 0 24px 60px rgba(0, 0, 0, .30), 0 4px 16px rgba(0, 0, 0, .18);
+}
+.modal > h4 { font-size: 1.25rem; font-weight: 600; }
+#modal_overlay .modal { animation: m3-dialog-in .18s ease-out; }
+@keyframes m3-dialog-in {
+	from { opacity: 0; transform: translateY(8px) scale(.98); }
+	to { opacity: 1; transform: none; }
+}
+
+/* --- 4) Filled text fields --------------------------------------------
+   Tonal fill, quiet sides, one active indicator line underneath
+   (drawn as an inset shadow on focus so nothing shifts by 1px). */
+#maincontent .cbi-value-field :is(input[type="text"], input[type="password"], input[type="number"], input[type="email"], input[type="search"], textarea, select) {
+	background-color: var(--m3-surface-3);
+	border-color: transparent;
+	border-bottom: 1px solid var(--m3-outline-strong);
+	border-radius: 10px 10px 0 0;
+	box-shadow: none;
+}
+#maincontent .cbi-value-field :is(input[type="text"], input[type="password"], input[type="number"], input[type="email"], input[type="search"], textarea, select):focus {
+	background-color: var(--m3-surface-4);
+	box-shadow: inset 0 -2px 0 var(--m3-primary);
+	outline: none;
+}
+
+/* --- 5) Progress: M3 end-stop dot on the fill ------------------------- */
+.cbi-progressbar > div { position: relative; }
+.cbi-progressbar > div::after {
+	content: "";
+	position: absolute;
+	right: 3px;
+	top: 50%;
+	width: 6px;
+	height: 6px;
+	border-radius: 50%;
+	background: rgba(255, 255, 255, .9);
+	transform: translateY(-50%);
+}
+
+/* --- 6) Press ripple (CSS) + state transitions -------------------------
+   The combo dropdown button is excluded on purpose: overflow:hidden
+   would clip its open menu (see v16). */
+.btn:not(.cbi-dropdown), .cbi-button:not(.cbi-dropdown), #menu a { position: relative; overflow: hidden; }
+.btn:not(.cbi-dropdown)::after, .cbi-button:not(.cbi-dropdown)::after, #menu a::after {
+	content: "";
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	width: 12px;
+	height: 12px;
+	margin: -6px 0 0 -6px;
+	border-radius: 50%;
+	background: rgba(128, 128, 128, .45);
+	transform: scale(0);
+	opacity: 0;
+	pointer-events: none;
+}
+.btn:not(.cbi-dropdown):active::after, .cbi-button:not(.cbi-dropdown):active::after, #menu a:active::after {
+	animation: m3-ripple .5s ease-out;
+}
+@keyframes m3-ripple {
+	0% { transform: scale(0); opacity: .5; }
+	100% { transform: scale(22); opacity: 0; }
+}
+.btn, .cbi-button, #menu a, .tabs > li > a, #modemenu > li > a {
+	transition: background-color .18s ease, border-color .18s ease, box-shadow .18s ease, filter .18s ease;
+}
+
+/* v34: header content vertically centred (user feedback 2026-10-28).
+   The stock material header has no centring at all: the container used
+   margin-top + padding-top with plain inline flow, so the brand logo
+   and the navbar shortcut icons sat visibly low in the bar, and the
+   brand img's -.5rem pull-up hack put the logo on a different centre
+   line than the icons. The container becomes a flex row centred in the
+   bar, the pull-up hack is removed, and both images become block-level
+   so the centring is exact. Header-scoped only. */
+header > .fill { height: 100%; }
+header > .fill > .container {
+	display: flex;
+	align-items: center;
+	height: 100%;
+	margin-top: 0;
+	padding: 0 1rem;
+	box-sizing: border-box;
+}
+header > .fill > .container > #logo > img {
+	margin-top: 0;
+	display: block;
+}
+header > .fill > .container > a:not(#logo) {
+	display: inline-flex;
+	align-items: center;
+	margin: 0 .2rem;
+}
+header > .fill > .container > a:not(#logo) > img { display: block; }
+
+/* v35: brand logo precision nudge (user choice 2026-10-28). Pixel
+   measurement of the user's STB screenshot: bar centre 62.5, icons off
+   by +1.5px (fine), logo content centre off by +3px. The brand.png
+   artwork is full-bleed (alpha bbox = whole canvas), so the offset
+   lives in the artwork composition itself; a pure visual transform
+   shifts the logo up exactly 3px without disturbing the flex layout. */
+header > .fill > .container > #logo > img { transform: translateY(-3px); }
+
+/* v36: navbar icons pinned next to the logo (user report 2026-10-28:
+   after the v34 flex landed via fix-v35, the icon row rendered in the
+   middle of the bar). Two-part fix: (1) header.ut no longer wraps the
+   icons in the firmware's stray <tr><td> markup - they now live in a
+   single .navbar-icons flex item; (2) that item gets margin-right:auto,
+   which in flex layout absorbs ALL free space after it, so the icons
+   stay glued to the logo no matter what justify-content anything else
+   may set. Explicit justify-content:flex-start states the intent. */
+header > .fill > .container { justify-content: flex-start; }
+header > .fill > .container > .navbar-icons {
+	display: inline-flex;
+	align-items: center;
+	flex: 0 0 auto;
+	margin-right: auto;
+}
+header > .fill > .container > .navbar-icons > a {
+	display: inline-flex;
+	align-items: center;
+	margin: 0 .2rem;
+}
+header > .fill > .container > .navbar-icons > a > img { display: block; }
+
+/* v37: logo box width pinned (root cause found 2026-10-28 via the
+   user's devtools measurements: the #logo flex item was 882px wide -
+   the brand.png intrinsic width - while the image itself rendered at
+   only 160px, so the icon row started at x=978 and looked "centred").
+   The stock rule width:calc(0% + 10rem) contains a percentage; in flex
+   intrinsic sizing a percentage width behaves as auto, so the item
+   took the image's intrinsic width. (The v14 width:12rem in custom.css
+   never won either: @import places custom.css before cascade.css's own
+   rules, so the stock rule won the specificity tie - the logo has been
+   rendering at 10rem all along.) Pin a definite, percentage-free width
+   here at the end of cascade.css: the item becomes 12rem wide and the
+   image finally renders at the intended v14 size. */
+header > .fill > .container > #logo { flex: 0 0 auto; }
+header > .fill > .container > #logo > img { width: 12rem; }
+
+/* v38: hover animations combined (user pick 2026-10-28: lift + shine).
+   1) Lift: every .btn/.cbi-button rises 1px with a deeper shadow on
+      hover (transform added to the v32 transition list). The
+      .cbi-dropdown ComboButton is excluded from the lift - moving it
+      would jitter at the cursor edge and shift its open menu; it gets
+      a brightness glow instead, which changes no geometry.
+   2) Shine: gradient action buttons (apply/edit/positive/negative,
+      non-dropdown) get a light sweep via ::before on hover. Input-type
+      buttons cannot render pseudo-elements, so they keep just the
+      lift - graceful per-element degradation. */
+.btn:not(.cbi-dropdown), .cbi-button:not(.cbi-dropdown) {
+	transition: background-color .18s ease, border-color .18s ease, box-shadow .18s ease, filter .18s ease, transform .18s ease;
+}
+.btn:not(.cbi-dropdown):hover, .cbi-button:not(.cbi-dropdown):hover {
+	transform: translateY(-1px);
+	box-shadow: 0 4px 14px rgba(20, 24, 31, .22);
+}
+.cbi-dropdown.btn:hover, .cbi-dropdown.cbi-button:hover { filter: brightness(1.07); }
+.cbi-button-apply:not(.cbi-dropdown), .cbi-button-edit:not(.cbi-dropdown),
+.cbi-button-positive:not(.cbi-dropdown), .cbi-button-negative:not(.cbi-dropdown) {
+	position: relative;
+	overflow: hidden;
+}
+.cbi-button-apply:not(.cbi-dropdown)::before, .cbi-button-edit:not(.cbi-dropdown)::before,
+.cbi-button-positive:not(.cbi-dropdown)::before, .cbi-button-negative:not(.cbi-dropdown)::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(115deg, transparent 30%, rgba(255, 255, 255, .35) 50%, transparent 70%);
+	transform: translateX(-120%);
+	pointer-events: none;
+}
+.cbi-button-apply:not(.cbi-dropdown):hover::before, .cbi-button-edit:not(.cbi-dropdown):hover::before,
+.cbi-button-positive:not(.cbi-dropdown):hover::before, .cbi-button-negative:not(.cbi-dropdown):hover::before {
+	transform: translateX(120%);
+	transition: transform .6s ease;
+}

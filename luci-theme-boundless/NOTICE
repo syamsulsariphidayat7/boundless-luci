@@ -1,0 +1,26 @@
+luci-theme-boundless
+=========================
+
+Tema LuCI Material 3 untuk OpenWrt 24.10 (gelap di v1-v4, terang sejak v5), dibuat oleh
+Syamsul Sarip Hidayat (Boundless) pada 2026.
+
+Karya ini adalah karya turunan (derivative work) dari:
+
+  luci-theme-material
+  Copyright 2015-2017 Lutty Yang <lutty@wcan.in>
+  Berbasis luci-theme-bootstrap dan MUI.
+  Sumber: repo openwrt/luci, folder themes/luci-theme-material
+  (branch openwrt-24.10), dilisensikan di bawah Apache License 2.0.
+
+Bagian yang diturunkan meliputi struktur tema, template ucode
+header.ut/footer.ut, menu-material.js, cascade.css (dipakai utuh sebagai
+basis, dengan blok override "MATERIAL3 LIGHT OVERRIDES" dan "GRADIENT
+LAYER" ditambahkan di akhir), custom.css (nama variabel sama, nilai
+diganti palet Material 3), serta aset logo/ikon bawaan tema asli.
+
+Modifikasi dalam tema ini: palet gelap Material 3 (tonal surface,
+radius besar, state pill), layer gradien, penamaan ulang tema menjadi
+boundless, installer manual (install.sh/uninstall.sh), dan
+dokumentasi Bahasa Indonesia.
+
+Lihat berkas LICENSE untuk teks penuh Apache License 2.0.

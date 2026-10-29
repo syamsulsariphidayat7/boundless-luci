@@ -1,0 +1,146 @@
+/**
+	Boundless - colour variables.
+
+	Same variable names as the official luci-theme-material custom.css:
+	that file declares these variables a public API, so cascade.css of this
+	theme keeps using exactly the same names - only the values are the
+	light Material 3 tonal palette of this theme.
+
+	History: since v5 (2026-10-28, Syamsul's direction) this file holds
+	the LIGHT Material 3 palette; in v8 the whole theme - package name,
+	static folder, UCI registration, file names - was renamed to match
+	(boundless), and the git history was rewritten accordingly.
+
+	Palette (light):
+	  background        #F4F6FA
+	  surface steps     #FFFFFF -> #F7F9FC -> #EFF3F8 (tonal elevation)
+	  ONE primary accent: Material 3 light blue
+	    primary           #0B57D0   (links / focus / filled buttons)
+	    primary container #D3E3FD   (pill / filled states, near-black text)
+*/
+:root {
+	/** General colors - semantics kept, values remapped for a light UI */
+	--white-color: #ffffff;
+	--white-color-low: #f1f3f4;
+	--black-color: #1f1f1f;
+	--black-color-low: #3c4043;
+	--yellow-color: #f9ab00;
+	--yellow-color-high: #e37400;
+	--on-yellow-color: #202124;
+	--red-color: #c5221f;
+	--red-color-high: #a50e0e;
+	--on-red-color: var(--white-color);
+	--green-color: #188038;
+	--green-color-high: #146c2e;
+	--on-green-color: var(--white-color);
+	--dark-blue-color: #0b57d0;
+	--dark-blue-color-high: #0842a0;
+	--on-dark-blue-color: var(--white-color);
+	--gray-color: #dadce0;
+	--gray-color-high: #80868b;
+	--light-blue-color: #4285f4;
+	--light-blue-color-high: #1a73e8;
+	--on-light-blue-color: var(--white-color);
+
+	--main-color: #0b486b;
+	--secondary-color: #a76327;
+
+	--header-bg: #0b486b;
+	--header-color: #ffffff;
+	--bar-bg: #e8eaed;
+	--menu-bg-color: #f8f9fa;
+	--menu-color: #3c4043;
+	--menu-color-hover: #1f1f1f;
+	--main-menu-color: #1f1f1f;
+	--submenu-bg-hover: #e8eaed;
+	--submenu-bg-hover-active: #d7edf9;
+
+	--notice-color: #d7edf9;
+	--on-notice-color: #084a68;
+
+	--danger-color: var(--red-color);
+	--on-danger-color: var(--on-red-color);
+
+	--warning-color: #f9ab00;
+	--on-warning-color: #202124;
+
+	--success-color: var(--green-color);
+	--on-success-color: var(--on-green-color);
+
+	--error-color: #b3261e;
+	--on-error-color: #ffffff;
+
+	/** Material 3 light tokens used by the override section of cascade.css.
+	    Accent family follows "Pun Yeta" (uigradients): bright blue
+	    #0b486b + orange #EF8E38 (v12, replacing v9-v11 "Sunset"). The
+	    GRADIENTS below used Pun Yeta pure until v19; v20 (user pick)
+	    replaces the blue end of every gradient with the deep-sea
+	    #0B486B, keeping Pun Yeta's orange end - so gradients now run
+	    #0B486B -> #EF8E38. v21 (user: "coba" the recommendation):
+	    gradients switch to uiGradients "Aqua Marine" #1A2980 ->
+	    #26D0CE (dark navy to bright cyan, dark-to-light); progress
+	    keeps a third stop, a whitened cyan #78E2E1. v23 (user link):
+	    gradients switch again to uiGradients "Love Couple" #3A6186
+	    -> #89253E (steel blue to burgundy); progress third stop is a
+	    whitened burgundy #B67887. v24 (user: "birunya gelapin"): the
+	    blue end darkened ~30% to #29445E; burgundy end unchanged, so
+	    the pair is no longer stock Love Couple. Flat primary
+	    stays #0B486B. FLAT uses of the family are
+	    darkened a step so text/links stay readable on white:
+	    secondary flat #A76327 (darkened orange, contrast 4.71).
+	    Primary flat was #0D77A9 until v18; v19 (user pick) changes it
+	    to the deep-sea blue #0B486B (Sunset's blue; contrast ~9.3 on
+	    white) for --main-color, --header-bg and --m3-primary.
+	    Since v11 the body and sidebar are white again (user
+	    preference); Pun Yeta lives on the header, the #menu bar,
+	    accent states, primary buttons, progress bars, and notices. */
+	--m3-bg: #f4f6fa;
+	--m3-surface: #ffffff;
+	--m3-surface-2: #f7f9fc;
+	--m3-surface-3: #eff3f8;
+	--m3-surface-4: #e3e8ef;
+	--m3-outline: #dadce0;
+	--m3-outline-strong: #80868b;
+	--m3-text: #1f1f1f;
+	--m3-text-2: #3c4043;
+	--m3-text-muted: #80868b;
+	--m3-primary: #0b486b;
+	--m3-on-primary: #ffffff;
+	--m3-primary-container: #d7edf9;
+	--m3-on-primary-container: #084a68;
+	--m3-radius-s: 12px;
+	--m3-radius-m: 16px;
+	--m3-radius-l: 20px;
+	--m3-radius-pill: 999px;
+
+	/** Gradients - "Pun Yeta" from uigradients.com: #0b486b ->
+	    #EF8E38, PURE (v12). v10 put its predecessor everywhere; v11
+	    (user feedback from the STB screenshot) pulled it back off
+	    the body and sidebar, which are white again. Pun Yeta remains
+	    on the header, accent states, primary buttons, and notices.
+	    Progress keeps a third, lightened-orange stop #FBC169 (user
+	    call). Card/section surfaces are NEUTRAL white-grey since
+	    v12 (no more peach tints). Used by the GRADIENT LAYER at the
+	    end of cascade.css. */
+	--m3-grad-body: linear-gradient(160deg, #ffffff 0%, #f7f9fc 55%, #eef2f7 100%);
+	--m3-grad-header: linear-gradient(90deg, #29445e 0%, #89253e 100%);
+	--m3-grad-sidebar: linear-gradient(180deg, #ffffff 0%, #f4f6fa 100%);
+	--m3-grad-surface: linear-gradient(180deg, #ffffff 0%, #f1f3f4 100%);
+	--m3-grad-surface-2: linear-gradient(180deg, #ffffff 0%, #e8eaed 100%);
+	--m3-grad-input: linear-gradient(180deg, #ffffff 0%, #f1f3f4 100%);
+	--m3-grad-accent: linear-gradient(135deg, #29445e 0%, #89253e 100%);
+	--m3-grad-primary: linear-gradient(135deg, #29445e 0%, #89253e 100%);
+	--m3-grad-progress: linear-gradient(90deg, #29445e 0%, #89253e 55%, #b67887 100%);
+	--m3-grad-success: linear-gradient(135deg, #1d7a3d 0%, #146c2e 100%);
+	--m3-grad-danger: linear-gradient(135deg, #c5221f 0%, #a50e0e 100%);
+	--m3-grad-warning: linear-gradient(135deg, #e37400 0%, #b06000 100%);
+
+	--font-body: Roboto, "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+/* v14 (user feedback 2026-10-28): teks logo header kurang besar.
+   Lockup brand.png diganti versi tanpa tagline (ikon + BOUNDLESS bold),
+   dan lebar tampil logo dinaikkan dari 10rem bawaan cascade.css. */
+header > .fill > .container > #logo > img {
+	width: 12rem;
+}

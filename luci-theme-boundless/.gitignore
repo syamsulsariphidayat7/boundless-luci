@@ -1,0 +1,17 @@
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+*~
+.idea/
+.vscode/
+
+# Archives & build artifacts
+*.tar.gz
+*.zip
+*.ipk
+*.apk
+
+# Local scratch / reference clones
+.ref/
+tmp/

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta name="theme-color" content="#f4f6fa">
+<title>Preview — luci-theme-boundless</title>
+<!-- Preview ini memakai cascade.css ASLI tema ini, persis seperti di STB.
+     Markup di bawah meniru DOM yang dihasilkan LuCI + menu-boundless.js
+     (kelas .nav/.slide/.slide-menu, .cbi-section, .table, .cbi-value, dst)
+     supaya tampilannya sedekat mungkin dengan LuCI beneran. -->
+<link rel="stylesheet" href="htdocs/luci-static/boundless/cascade.css">
+<link rel="icon" href="htdocs/luci-static/boundless/logo_48.png" sizes="48x48">
+</head>
+<body class="lang_id logged-in node-admin-status-overview" data-page="admin-status-overview">
+<header>
+	<div class="fill">
+		<div class="container">
+			<span class="showSide"></span>
+			<a id="logo" href="#"><img src="htdocs/luci-static/boundless/brand.png" alt="OpenWrt"></a>
+			<a class="brand" href="#">OpenWrt-HG680P</a>
+			<span class="status" id="indicators">
+				<span data-indicator="poll-status" data-style="active">Poll: ok</span>
+				<span data-indicator="uci-changes">UCI: 0</span>
+			</span>
+		</div>
+	</div>
+</header>
+<div class="main">
+	<div class="main-left" id="mainmenu">
+		<ul class="nav">
+			<li class="slide active">
+				<a class="menu active" href="#">Status</a>
+				<ul class="slide-menu">
+					<li class="active"><a href="#" data-title="Overview">Overview</a></li>
+					<li><a href="#" data-title="Routes">Routes</a></li>
+					<li><a href="#" data-title="System Log">System Log</a></li>
+					<li><a href="#" data-title="Processes">Processes</a></li>
+					<li><a href="#" data-title="Realtime Graphs">Realtime Graphs</a></li>
+				</ul>
+			</li>
+			<li class="slide">
+				<a class="menu" href="#">System</a>
+				<ul class="slide-menu">
+					<li><a href="#">System</a></li>
+					<li><a href="#">Administration</a></li>
+					<li><a href="#">Software</a></li>
+					<li><a href="#">Startup</a></li>
+					<li><a href="#">Reboot</a></li>
+				</ul>
+			</li>
+			<li class="slide">
+				<a class="menu" href="#">Services</a>
+				<ul class="slide-menu">
+					<li><a href="#">HG680PCLS</a></li>
+				</ul>
+			</li>
+			<li class="slide">
+				<a class="menu" href="#">Network</a>
+				<ul class="slide-menu">
+					<li><a href="#">Interfaces</a></li>
+					<li><a href="#">Wireless</a></li>
+					<li><a href="#">Firewall</a></li>
+					<li><a href="#">Diagnostics</a></li>
+				</ul>
+			</li>
+			<li><a href="#">Logout</a></li>
+		</ul>
+	</div>
+	<div class="main-right">
+		<div class="modemenu-buttons">
+			<ul id="modemenu">
+				<li><a class="active" href="#">Status</a></li>
+				<li class="divider"><span></span></li>
+				<li><a href="#">System</a></li>
+				<li class="divider"><span></span></li>
+				<li><a href="#">Network</a></li>
+			</ul>
+		</div>
+		<div class="darkMask"></div>
+		<div id="maincontent">
+			<div class="container">
+
+				<div class="alert-message warning">
+					<h4>Ini cuma preview statis</h4>
+					<p>Semua angka di halaman ini contoh. Buka file ini di browser untuk menilai tampilan tema tanpa install ke STB.</p>
+				</div>
+
+				<div id="tabmenu">
+					<ul class="tabs">
+						<li class="tabmenu-item-overview active"><a href="#">Overview</a></li>
+						<li class="tabmenu-item-routes"><a href="#">Routes</a></li>
+						<li class="tabmenu-item-syslog"><a href="#">System Log</a></li>
+					</ul>
+				</div>
+
+				<h2>Status — Overview</h2>
+
+				<div class="cbi-section">
+					<h3>System</h3>
+					<table class="table">
+						<tr class="tr"><td class="td left" width="33%">Hostname</td><td class="td left">OpenWrt-HG680P</td></tr>
+						<tr class="tr cbi-rowstyle-2"><td class="td left">Model</td><td class="td left">HG680P (contoh)</td></tr>
+						<tr class="tr"><td class="td left">Firmware</td><td class="td left">OpenWrt 24.10.x</td></tr>
+						<tr class="tr cbi-rowstyle-2"><td class="td left">Uptime</td><td class="td left">3d 04:12:55 &nbsp;·&nbsp; Load: 0.08 / 0.12 / 0.09</td></tr>
+					</table>
+					<p>Memory</p>
+					<div class="cbi-progressbar" title="42%"><div style="width:42%"></div></div>
+					<p>Storage</p>
+					<div class="cbi-progressbar" title="67%"><div style="width:67%"></div></div>
+				</div>
+
+				<div class="cbi-section">
+					<h3>Network</h3>
+					<div class="network-status-table">
+						<div class="ifacebox">
+							<div class="ifacebox-head active"><strong>lan</strong></div>
+							<div class="ifacebox-body">
+								<span><strong>Type:</strong> bridge</span><br>
+								<span><strong>Address:</strong> 192.168.1.1/24</span><br>
+								<span class="ifacebadge">br-lan · up</span>
+							</div>
+						</div>
+						<div class="ifacebox">
+							<div class="ifacebox-head"><strong>wan</strong></div>
+							<div class="ifacebox-body">
+								<span><strong>Type:</strong> ethernet</span><br>
+								<span><strong>Address:</strong> 192.168.8.100/24</span><br>
+								<span class="ifacebadge">eth0 · up</span>
+							</div>
+						</div>
+						<div class="ifacebox">
+							<div class="ifacebox-head"><strong>wwan</strong></div>
+							<div class="ifacebox-body">
+								<span><strong>Type:</strong> modem</span><br>
+								<span><strong>Address:</strong> —</span><br>
+								<span class="ifacebadge zonebadge-empty">down</span>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<form class="cbi-section" onsubmit="return false">
+					<h3>Contoh Form (System Properties)</h3>
+					<div class="cbi-value">
+						<label class="cbi-value-title">Hostname</label>
+						<div class="cbi-value-field">
+							<input type="text" class="cbi-input-text" value="OpenWrt-HG680P">
+							<div class="cbi-value-description">Nama perangkat di jaringan lokal.</div>
+						</div>
+					</div>
+					<div class="cbi-value">
+						<label class="cbi-value-title">Timezone</label>
+						<div class="cbi-value-field">
+							<select class="cbi-input-select">
+								<option selected>Asia/Jakarta</option>
+								<option>Asia/Singapore</option>
+								<option>UTC</option>
+							</select>
+						</div>
+					</div>
+					<div class="cbi-value">
+						<label class="cbi-value-title">Mode LED</label>
+						<div class="cbi-value-field">
+							<div class="cbi-dropdown" placeholder="select">
+								<ul><li>On — hijau solid</li></ul>
+								<div class="open">&#9662;</div>
+							</div>
+						</div>
+					</div>
+					<div class="cbi-value">
+						<label class="cbi-value-title">Aktifkan</label>
+						<div class="cbi-value-field">
+							<input type="checkbox" class="cbi-input-checkbox" checked> <label>Service berjalan otomatis</label>
+						</div>
+					</div>
+					<div class="cbi-value">
+						<label class="cbi-value-title">Catatan</label>
+						<div class="cbi-value-field">
+							<textarea class="cbi-input-textarea" rows="3">Contoh textarea dengan gaya Material 3 terang.</textarea>
+						</div>
+					</div>
+					<div class="alert-message success"><h4>Tersimpan</h4><p>Contoh alert sukses (tonal hijau terang).</p></div>
+					<div class="alert-message danger"><h4>Gagal</h4><p>Contoh alert error (tonal merah terang).</p></div>
+					<div class="cbi-page-actions">
+						<button class="btn cbi-button cbi-button-apply">Apply</button>
+						<button class="btn cbi-button cbi-button-save">Save &amp; Apply</button>
+						<button class="btn cbi-button cbi-button-edit">Edit</button>
+						<button class="btn cbi-button cbi-button-reset">Reset</button>
+						<button class="btn cbi-button cbi-button-remove">Delete</button>
+						<button class="btn cbi-button" disabled>Disabled</button>
+					</div>
+				</form>
+
+			</div>
+			<footer class="mobile-hide">
+				<a href="https://github.com/openwrt/luci" target="_blank" rel="noreferrer">Powered by LuCI (preview)</a> / OpenWrt 24.10.x — luci-theme-boundless
+			</footer>
+		</div>
+	</div>
+</div>
+</body>
+</html>

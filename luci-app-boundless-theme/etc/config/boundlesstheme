@@ -1,0 +1,3 @@
+# luci-app-boundless-theme - file penanda aplikasi.
+# Menu LuCI "System -> Boundless Theme" hanya tampil bila file ini ada
+# (pola yang sama seperti /etc/config/hg680pcls di hg680pcls).
