@@ -34,6 +34,7 @@
 .btw-statusline.ok{color:var(--btw-green);font-weight:600}
 .btw-statusline.err{color:var(--btw-red);font-weight:600}
 .btw-notes{display:none;background:#f7f9fc;border:1px solid var(--btw-border);border-radius:12px;padding:10px 14px;font-size:12.5px;white-space:pre-wrap;margin-top:10px;max-height:180px;overflow:auto}
+.btw-sep{border-top:1px solid var(--btw-border);margin:18px 0 14px}
 .btw-notes.show{display:block}
 .btw-foot{text-align:center;color:var(--btw-muted);font-size:12px;margin-top:6px}
 .btw-select{appearance:auto;border:1px solid var(--btw-border);background:#fff;color:var(--btw-text);border-radius:10px;padding:9px 12px;font-size:13.5px;font-weight:600;min-width:230px;cursor:pointer}
@@ -43,7 +44,7 @@
   <div class="btw-top">
     <div>
       <h1 class="btw-title"><span class="btw-mark">&#8734;</span> BOUNDLESS THEME</h1>
-      <p class="btw-sub">Panel kelola tema LuCI <b>luci-theme-boundless</b> &mdash; install, update, rollback, hapus.</p>
+      <p class="btw-sub">Panel kelola tema LuCI <b>Boundless</b>.</p>
     </div>
     <span class="btw-pill" id="btw-pill"><span class="btw-dot"></span><span id="btw-pill-text">Memuat...</span></span>
   </div>
@@ -60,7 +61,7 @@
 
   <div class="btw-card">
     <h2>Ganti Tema</h2>
-    <p class="btw-note">Pilih tema terdaftar lalu klik <b>Aktifkan</b> &mdash; sama seperti dropdown <b>Design</b> di System &rarr; Language and Style, tanpa pindah halaman. LuCI restart sebentar setelah tema diganti. Saat yang dipilih <b>Boundless</b>, pilihan <b>skema warna</b>nya muncul di samping &mdash; skema disimpan di perangkat (berlaku untuk semua browser), dan halaman LuCI yang sedang terbuka perlu hard refresh (<b>Ctrl+F5</b>) untuk melihat perubahan skema.</p>
+    <p class="btw-note">Pilih tema lalu <b>Aktifkan</b>. Saat <b>Boundless</b> dipilih, pilihan skema warnanya muncul di samping &mdash; skema tersimpan di perangkat.</p>
     <div class="btw-btnrow" style="align-items:center">
       <select class="btw-select" id="btw-theme-select"></select>
       <button class="btw-btn primary" id="btw-btn-activate" type="button">Aktifkan Tema</button>
@@ -75,8 +76,8 @@
   </div>
 
   <div class="btw-card">
-    <h2>Install / Update</h2>
-    <p class="btw-note" id="btw-update-text">Tema <b>dan aplikasi pengelola ini</b> dipasang &amp; diperbarui dari repo GitHub <b>boundless-luci</b> (rilis terbaru). Versi dibandingkan otomatis saat halaman dibuka — tombol Install / Update hanya muncul bila ada versi baru.</p>
+    <h2>Install / Update, Rollback &amp; Hapus</h2>
+    <p class="btw-note" id="btw-update-text">Tema + aplikasi diperbarui dari rilis terbaru di <b>GitHub</b>. Tombol Install hanya muncul bila ada versi baru.</p>
     <div class="btw-notes" id="btw-notes"></div>
     <div class="btw-btnrow">
       <button class="btw-btn" id="btw-btn-check" type="button">Cek Update</button>
@@ -84,11 +85,8 @@
     </div>
     <div class="btw-statusline" id="btw-update-status"></div>
     <pre class="btw-log" id="btw-update-log"></pre>
-  </div>
-
-  <div class="btw-card danger">
-    <h2>Rollback &amp; Hapus</h2>
-    <p class="btw-note"><b>Rollback</b>: aktifkan lagi tema yang dipakai sebelum Boundless (file tema tetap ada). <b>Hapus Tema</b>: rollback + hapus semua file Boundless dari perangkat. Selama proses, LuCI akan restart &mdash; halaman ini ikut terputus sebentar, itu normal.</p>
+    <div class="btw-sep"></div>
+    <p class="btw-note"><b>Rollback</b>: aktifkan tema sebelumnya (file tetap ada). <b>Hapus</b>: rollback + hapus semua file Boundless. LuCI restart sebentar selama proses.</p>
     <div class="btw-btnrow">
       <button class="btw-btn" id="btw-btn-rollback" type="button">Rollback</button>
       <button class="btw-btn danger" id="btw-btn-remove" type="button">Hapus Tema</button>

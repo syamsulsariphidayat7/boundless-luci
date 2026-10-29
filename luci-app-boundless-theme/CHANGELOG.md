@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.7.0] - 2026-10-30
+
+### Changed
+
+- **Kartu Install / Update dan Rollback & Hapus digabung** jadi
+  satu kartu "Install / Update, Rollback & Hapus" (garis pemisah
+  di antara dua bagiannya) — halaman lebih ringkas; semua tombol,
+  status, dan log tetap dengan fungsi yang sama persis. Bingkai
+  merah kartu lama hilang; tombol Hapus tetap merah.
+- **Deskripsi tiap kartu dipangkas** jadi satu-dua kalimat pendek
+  (subjudul halaman, catatan Ganti Tema, catatan update, catatan
+  rollback) — fungsi tetap dijelaskan status baris per aksi.
+
 ## [1.6.0] - 2026-10-30
 
 ### Changed
