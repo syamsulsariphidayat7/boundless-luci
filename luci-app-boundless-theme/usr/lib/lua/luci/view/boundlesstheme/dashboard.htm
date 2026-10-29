@@ -187,6 +187,15 @@ function fillSchemes(s){
 }
 $("btw-scheme-select").addEventListener("change", schemePreview);
 
+/* Panel ikut skema yang AKTIF (bukan yang lagi diintip di dropdown):
+   gradien + warna primer .btw-wrap diganti dari data status. */
+function applyPanelScheme(id){
+  var s = schemeData[id], w = document.querySelector(".btw-wrap");
+  if (!s || !w) return;
+  w.style.setProperty("--btw-grad", "linear-gradient(135deg," + s.c1 + "," + s.c2 + ")");
+  if (s.primary) w.style.setProperty("--btw-primary", s.primary);
+}
+
 /* Grup skema hanya tampil saat tema yang dipilih di dropdown
    adalah Boundless - menyatu ringkas di kartu Ganti Tema. */
 function syncSchemeRow(){
@@ -210,6 +219,7 @@ function refresh(){
     $("btw-foot-ver").textContent = "v" + (s.app_version || "?");
     fillThemes(s);
     fillSchemes(s);
+    applyPanelScheme(s.scheme);
     syncSchemeRow();
   }).catch(function(){ /* STB mungkin sedang restart; abaikan */ });
 }
@@ -257,7 +267,7 @@ $("btw-btn-scheme").addEventListener("click", function(){
     }
     lastSchemesKey = "";
     st.className = "btw-statusline ok";
-    st.textContent = "Skema " + name + " diterapkan. Hard refresh (Ctrl+F5) halaman LuCI lain untuk melihatnya.";
+    st.textContent = "Skema " + name + " diterapkan. Refresh halaman LuCI lain untuk melihatnya.";
     refresh();
   }).catch(function(e){
     setBusy(false);

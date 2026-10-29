@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.3.0] - 2026-10-30
+
+### Changed
+
+- **Panel kini mengikuti skema aktif**: gradien + warna primer panel
+  (judul, ikon kartu, tombol) memakai skema yang sedang diterapkan —
+  bukan lagi selalu bawaan. Panel berubah seketika habis skema
+  diterapkan (dari data status, tanpa refresh); warna semantik
+  (hijau aktif, merah hapus) tetap.
+- Pesan selesai terapkan skema: redaksi "hard refresh" dilunakkan
+  menjadi "refresh" (refresh biasa memang cukup).
+
 ## [1.2.0] - 2026-10-29
 
 ### Changed

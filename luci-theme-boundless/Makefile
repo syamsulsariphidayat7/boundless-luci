@@ -1,6 +1,6 @@
 #
 # luci-theme-boundless - Material 3 (light) derivative of luci-theme-material
-# Version: 1.2.0 (see VERSION file; component of the boundless-luci bundle)
+# Version: 1.3.0 (see VERSION file; component of the boundless-luci bundle)
 # Based on luci-theme-material, Copyright 2015-2017 Lutty Yang <lutty@wcan.in>
 # Licensed under the Apache License, Version 2.0
 #

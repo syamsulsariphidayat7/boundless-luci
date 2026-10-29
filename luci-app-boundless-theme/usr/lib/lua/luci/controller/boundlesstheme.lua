@@ -335,7 +335,7 @@ function action_status()
 	local st = theme_state()
 	local schemes = {}
 	for _, s in ipairs(SCHEMES) do
-		schemes[#schemes + 1] = { id = s.id, name = s.name, c1 = s.c1, c2 = s.c2 }
+		schemes[#schemes + 1] = { id = s.id, name = s.name, c1 = s.c1, c2 = s.c2, primary = s.primary }
 	end
 	luci.http.prepare_content("application/json")
 	luci.http.write(luci.jsonc.stringify({
