@@ -4,6 +4,13 @@ Semua perubahan penting tema ini dicatat di sini.
 Format mengikuti [Keep a Changelog](https://keepachangelog.com/),
 versi mengikuti [Semantic Versioning](https://semver.org/).
 
+## [1.8.0] - 2026-10-30
+
+Tidak ada perubahan kode tema pada rilis ini — nomor versi mengikuti
+rilis gabungan 1.8.0 (perubahan ada di aplikasi pengelola: skema
+Custom dengan editor warna + terapkan ulang skema otomatis habis
+update).
+
 ## [1.7.1] - 2026-10-30
 
 Tidak ada perubahan kode tema pada rilis ini — nomor versi mengikuti

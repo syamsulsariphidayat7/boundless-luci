@@ -19,9 +19,13 @@ dashboard-nya hanya kulit tipis di atas script tema yang sudah ada.
   Aktifkan — pengganti dropdown *Design* di Language and Style,
   tanpa pindah halaman.
 - **Skema Warna**: grup pilihan skema di kartu Ganti Tema (muncul
-  saat Boundless yang dipilih): 5 skema — Love Couple (bawaan),
-  Pun Yeta, Sand to Blue, Purplepine, Deep Space. Pilihan disimpan
-  di UCI dan diterapkan lewat `scheme.css` tema.
+  saat Boundless yang dipilih): 5 skema preset — Love Couple
+  (bawaan), Pun Yeta, Sand to Blue, Purplepine, Deep Space — plus
+  **Custom**: klik strip pratinjau untuk membuka editor warna
+  (warna awal/akhir gradien + primer), tersimpan di UCI perangkat.
+  Pilihan skema disimpan di UCI dan diterapkan lewat `scheme.css`
+  tema; habis Install / Update, skema terakhir diterapkan ulang
+  otomatis.
 - **Cek Update**: bandingkan versi terpasang dengan tag rilis terbaru
   di GitHub + tampilkan catatan rilis dari `CHANGELOG.md` tema.
 - **Install / Update**: mengunduh tarball rilis terbaru repo

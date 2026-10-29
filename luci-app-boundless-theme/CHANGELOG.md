@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.8.0] - 2026-10-30
+
+### Added
+
+- **Skema Custom**: entri keenam di dropdown skema. Klik **strip
+  pratinjau** untuk membuka modal editor warna — tiga color picker
+  (awal gradien, akhir gradien, primer) dengan pratinjau langsung;
+  modal terisi awal dari skema yang sedang dipilih di dropdown.
+  Warna tersimpan di UCI (`settings.custom_c1/custom_c2/
+  custom_primary`), divalidasi hex di controller; stop ketiga
+  gradien diturunkan otomatis dari warna akhir (diterangkan 35%).
+
+### Changed
+
+- Habis **Install / Update** selesai, skema terakhir yang tercatat
+  di UCI **diterapkan ulang otomatis** (scheme.css ditulis ulang)
+  sebelum halaman dimuat ulang — skema, termasuk custom, langsung
+  balik habis pasang ulang tanpa klik Terapkan manual.
+
 ## [1.7.1] - 2026-10-30
 
 ### Changed

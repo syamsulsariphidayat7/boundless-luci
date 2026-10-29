@@ -33,6 +33,13 @@
 .btw-statusline{font-size:13px;margin-top:10px;min-height:18px}
 .btw-statusline.ok{color:var(--btw-green);font-weight:600}
 .btw-statusline.err{color:var(--btw-red);font-weight:600}
+#btw-scheme-preview{cursor:pointer}
+.btw-modal{position:fixed;inset:0;background:rgba(15,20,28,.45);align-items:center;justify-content:center;z-index:1200}
+.btw-modal-box{background:#fff;border-radius:20px;padding:20px;width:min(92vw,360px);box-shadow:0 18px 50px rgba(16,24,40,.3)}
+.btw-modal-box h3{margin:0 0 12px;font-size:16px}
+.btw-modal-preview{height:46px;border-radius:12px;border:1px solid var(--btw-border);margin-bottom:14px}
+.btw-crow{display:flex;align-items:center;justify-content:space-between;padding:6px 0;font-size:13.5px}
+.btw-crow input[type=color]{width:72px;height:34px;border:1px solid var(--btw-border);border-radius:9px;background:#fff;padding:2px;cursor:pointer}
 .btw-notes{display:none;background:#f7f9fc;border:1px solid var(--btw-border);border-radius:12px;padding:10px 14px;font-size:12.5px;white-space:pre-wrap;margin-top:10px;max-height:180px;overflow:auto}
 .btw-notes.show{display:block}
 .btw-foot{text-align:center;color:var(--btw-muted);font-size:12px;margin-top:6px}
@@ -66,7 +73,7 @@
       <button class="btw-btn primary" id="btw-btn-activate" type="button">Aktifkan Tema</button>
       <span id="btw-scheme-group" style="display:none;align-items:center;gap:10px;flex-wrap:wrap">
         <select class="btw-select" id="btw-scheme-select"></select>
-        <span id="btw-scheme-preview" style="width:110px;height:26px;border-radius:999px;border:1px solid var(--btw-border);display:inline-block;flex:none"></span>
+        <span id="btw-scheme-preview" title="Klik untuk warna custom" style="width:110px;height:26px;border-radius:999px;border:1px solid var(--btw-border);display:inline-block;flex:none"></span>
         <button class="btw-btn primary" id="btw-btn-scheme" type="button">Terapkan Skema</button>
       </span>
     </div>
@@ -87,6 +94,21 @@
     <pre class="btw-log" id="btw-update-log"></pre>
     <div class="btw-statusline" id="btw-manage-status"></div>
     <pre class="btw-log" id="btw-manage-log"></pre>
+  </div>
+
+  <div class="btw-modal" id="btw-modal" style="display:none">
+    <div class="btw-modal-box">
+      <h3>Warna Custom</h3>
+      <div class="btw-modal-preview" id="btw-modal-preview"></div>
+      <div class="btw-crow"><span>Warna Awal</span><input type="color" id="btw-c-c1" value="#29445e"></div>
+      <div class="btw-crow"><span>Warna Akhir</span><input type="color" id="btw-c-c2" value="#89253e"></div>
+      <div class="btw-crow"><span>Warna Primer</span><input type="color" id="btw-c-primary" value="#0b486b"></div>
+      <div class="btw-statusline" id="btw-modal-status"></div>
+      <div class="btw-btnrow">
+        <button class="btw-btn" id="btw-modal-cancel" type="button">Batal</button>
+        <button class="btw-btn primary" id="btw-modal-save" type="button">Simpan &amp; Terapkan</button>
+      </div>
+    </div>
   </div>
 
   <p class="btw-foot">luci-app-boundless-theme <span id="btw-foot-ver"></span> &middot; Syamsul Sarip Hidayat &middot; Boundless</p>
@@ -267,6 +289,62 @@ $("btw-btn-scheme").addEventListener("click", function(){
   });
 });
 
+/* ---------- Warna custom (modal, klik strip pratinjau) ---------- */
+function modalPreview(){
+  $("btw-modal-preview").style.background =
+    "linear-gradient(90deg," + $("btw-c-c1").value + "," + $("btw-c-c2").value + ")";
+}
+function openCustom(){
+  if (busy) return;
+  var s = schemeData[$("btw-scheme-select").value] || {};
+  $("btw-c-c1").value = s.c1 || "#29445e";
+  $("btw-c-c2").value = s.c2 || "#89253e";
+  $("btw-c-primary").value = s.primary || "#0b486b";
+  var st = $("btw-modal-status");
+  st.className = "btw-statusline"; st.textContent = "";
+  modalPreview();
+  $("btw-modal").style.display = "flex";
+}
+function closeCustom(){ $("btw-modal").style.display = "none"; }
+$("btw-scheme-preview").addEventListener("click", openCustom);
+["btw-c-c1", "btw-c-c2", "btw-c-primary"].forEach(function(id){ $(id).addEventListener("input", modalPreview); });
+$("btw-modal-cancel").addEventListener("click", closeCustom);
+$("btw-modal").addEventListener("click", function(e){ if (e.target === this) closeCustom(); });
+$("btw-modal-save").addEventListener("click", function(){
+  if (busy) return;
+  var st = $("btw-modal-status");
+  setBusy(true);
+  st.className = "btw-statusline"; st.textContent = "Menyimpan...";
+  postJSON(URL_SCHEME, { scheme: "custom",
+    c1: $("btw-c-c1").value, c2: $("btw-c-c2").value, primary: $("btw-c-primary").value
+  }).then(function(r){
+    setBusy(false);
+    if (!r.ok) {
+      st.className = "btw-statusline err";
+      st.textContent = "Gagal: " + (r.error || "tidak diketahui");
+      return;
+    }
+    closeCustom();
+    lastSchemesKey = "";
+    var ss = $("btw-scheme-status");
+    ss.className = "btw-statusline ok";
+    ss.textContent = "Skema Custom diterapkan. Refresh halaman LuCI lain untuk melihatnya.";
+    refresh();
+  }).catch(function(e){
+    setBusy(false);
+    st.className = "btw-statusline err"; st.textContent = "Gagal menghubungi STB: " + e.message;
+  });
+});
+
+/* Tulis ulang scheme.css dari skema yang tercatat di UCI - dipakai
+   habis Install / Update supaya skema terakhir (termasuk custom)
+   langsung balik tanpa klik Terapkan manual. */
+function reapplyScheme(){
+  return getJSON(URL_STATUS).then(function(s){
+    if (s && s.scheme) return postJSON(URL_SCHEME, { scheme: s.scheme }).catch(function(){});
+  }).catch(function(){});
+}
+
 /* ---------- Update ---------- */
 var POLL_MS = 1500, MAX_MS = 180000;
 
@@ -338,8 +416,11 @@ $("btw-btn-update").addEventListener("click", function(){
       setBusy(false);
       if (okDone) {
         st.className = "btw-statusline ok";
-        st.textContent = "Selesai. Tema + aplikasi Boundless v" + ((r && r["local"]) || "?") + " terpasang. Halaman dimuat ulang...";
-        refresh(); setTimeout(function(){ location.reload(); }, 3000);
+        st.textContent = "Selesai. Tema + aplikasi Boundless v" + ((r && r["local"]) || "?") + " terpasang. Menerapkan ulang skema terakhir...";
+        refresh();
+        reapplyScheme().then(function(){
+          setTimeout(function(){ location.reload(); }, 1500);
+        });
       } else {
         st.className = "btw-statusline err";
         st.textContent = why === "timeout" ? "Proses terlalu lama; cek log di atas." : "Pemasangan gagal (kode " + (r ? r.code : "?") + "). Lihat log di atas.";
@@ -397,7 +478,7 @@ doCheck();
       setBusy(true);
       st.textContent = "Pemasangan sedang berjalan...";
       log.className = "btw-log show"; log.textContent = r.log || "";
-      pollLog(URL_UPDATELOG, log, st, function(){ setBusy(false); refresh(); });
+      pollLog(URL_UPDATELOG, log, st, function(){ setBusy(false); refresh(); reapplyScheme(); });
     }
   }).catch(function(){});
   getJSON(URL_MANAGELOG).then(function(r){

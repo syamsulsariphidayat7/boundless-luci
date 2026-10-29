@@ -189,10 +189,46 @@ local SCHEMES = {
 	  c1 = "#000000", c2 = "#434343", third = "#858585", primary = "#000000" },
 }
 
+local function valid_hex(v)
+	return type(v) == "string" and v:match("^#%x%x%x%x%x%x$") ~= nil
+end
+
+-- Stop ketiga gradien (progress) diturunkan dari c2: diterangkan
+-- 35% ke arah putih - pola turunan yang sama seperti skema
+-- uiGradients (terverifikasi: #decba4 -> #eaddc4).
+local function derive_third(hex)
+	local r = tonumber(hex:sub(2, 3), 16) or 0
+	local g = tonumber(hex:sub(4, 5), 16) or 0
+	local b = tonumber(hex:sub(6, 7), 16) or 0
+	local function mix(v) return math.floor(v + (255 - v) * 0.35 + 0.5) end
+	return string.format("#%02x%02x%02x", mix(r), mix(g), mix(b))
+end
+
+-- Skema "custom": warnanya bukan hardcoded - tersimpan di UCI
+-- (settings.custom_c1 / custom_c2 / custom_primary), diedit lewat
+-- modal editor di dashboard (klik strip pratinjau skema). Belum
+-- pernah diatur = warna skema bawaan.
+local function custom_scheme()
+	local uci = luci.model.uci.cursor()
+	local function get(k, fb)
+		local v = uci:get("boundlesstheme", "settings", k)
+		if v and valid_hex(v) then return v:lower() end
+		return fb
+	end
+	local c2 = get("custom_c2", "#89253e")
+	return {
+		id = "custom", name = "Custom",
+		c1 = get("custom_c1", "#29445e"), c2 = c2,
+		third = derive_third(c2),
+		primary = get("custom_primary", "#0b486b"),
+	}
+end
+
 local function scheme_by_id(id)
 	for _, s in ipairs(SCHEMES) do
 		if s.id == id then return s end
 	end
+	if id == "custom" then return custom_scheme() end
 	return nil
 end
 
@@ -337,6 +373,8 @@ function action_status()
 	for _, s in ipairs(SCHEMES) do
 		schemes[#schemes + 1] = { id = s.id, name = s.name, c1 = s.c1, c2 = s.c2, primary = s.primary }
 	end
+	local cs = custom_scheme()
+	schemes[#schemes + 1] = { id = cs.id, name = cs.name, c1 = cs.c1, c2 = cs.c2, primary = cs.primary }
 	luci.http.prepare_content("application/json")
 	luci.http.write(luci.jsonc.stringify({
 		ok = true,
@@ -385,7 +423,29 @@ function action_scheme()
 	if not require_post() then return end
 	local http = luci.http
 	http.prepare_content("application/json")
-	local s = scheme_by_id(http.formvalue("scheme") or "")
+	local id = http.formvalue("scheme") or ""
+	-- Skema custom boleh datang membawa warna baru (dari modal
+	-- editor): ketiganya wajib hex valid, disimpan ke UCI dulu,
+	-- baru skema diterapkan seperti biasa. Tanpa warna (klik
+	-- Terapkan / terapkan ulang otomatis) = pakai yang tersimpan.
+	if id == "custom" then
+		local c1, c2, pr = http.formvalue("c1"), http.formvalue("c2"), http.formvalue("primary")
+		if c1 or c2 or pr then
+			if not (valid_hex(c1) and valid_hex(c2) and valid_hex(pr)) then
+				http.status(400, "Bad Request")
+				return http.write(luci.jsonc.stringify({ ok = false, error = "format warna tidak valid (harus #rrggbb)" }))
+			end
+			local uci0 = luci.model.uci.cursor()
+			if not uci0:get_first("boundlesstheme", "settings") then
+				uci0:section("boundlesstheme", "settings", "settings")
+			end
+			uci0:set("boundlesstheme", "settings", "custom_c1", c1:lower())
+			uci0:set("boundlesstheme", "settings", "custom_c2", c2:lower())
+			uci0:set("boundlesstheme", "settings", "custom_primary", pr:lower())
+			uci0:commit("boundlesstheme")
+		end
+	end
+	local s = scheme_by_id(id)
 	if not s then
 		http.status(400, "Bad Request")
 		return http.write(luci.jsonc.stringify({ ok = false, error = "skema tidak dikenal" }))
