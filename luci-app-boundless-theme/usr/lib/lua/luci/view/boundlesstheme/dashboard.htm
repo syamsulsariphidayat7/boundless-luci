@@ -34,7 +34,6 @@
 .btw-statusline.ok{color:var(--btw-green);font-weight:600}
 .btw-statusline.err{color:var(--btw-red);font-weight:600}
 .btw-notes{display:none;background:#f7f9fc;border:1px solid var(--btw-border);border-radius:12px;padding:10px 14px;font-size:12.5px;white-space:pre-wrap;margin-top:10px;max-height:180px;overflow:auto}
-.btw-sep{border-top:1px solid var(--btw-border);margin:18px 0 14px}
 .btw-notes.show{display:block}
 .btw-foot{text-align:center;color:var(--btw-muted);font-size:12px;margin-top:6px}
 .btw-select{appearance:auto;border:1px solid var(--btw-border);background:#fff;color:var(--btw-text);border-radius:10px;padding:9px 12px;font-size:13.5px;font-weight:600;min-width:230px;cursor:pointer}
@@ -76,21 +75,16 @@
   </div>
 
   <div class="btw-card">
-    <h2>Install / Update, Rollback &amp; Hapus</h2>
-    <p class="btw-note" id="btw-update-text">Tema + aplikasi diperbarui dari rilis terbaru di <b>GitHub</b>. Tombol Install hanya muncul bila ada versi baru.</p>
+    <h2>Install / Update &amp; Hapus</h2>
+    <p class="btw-note" id="btw-update-text">Tema + aplikasi diperbarui dari rilis terbaru di <b>GitHub</b>; tombol Install hanya muncul bila ada versi baru. <b>Hapus</b> mencopot Boundless dan mengembalikan tema bawaan.</p>
     <div class="btw-notes" id="btw-notes"></div>
     <div class="btw-btnrow">
       <button class="btw-btn" id="btw-btn-check" type="button">Cek Update</button>
       <button class="btw-btn primary" id="btw-btn-update" type="button" style="display:none">Install / Update Sekarang</button>
+      <button class="btw-btn danger" id="btw-btn-remove" type="button">Hapus Tema</button>
     </div>
     <div class="btw-statusline" id="btw-update-status"></div>
     <pre class="btw-log" id="btw-update-log"></pre>
-    <div class="btw-sep"></div>
-    <p class="btw-note"><b>Rollback</b>: aktifkan tema sebelumnya (file tetap ada). <b>Hapus</b>: rollback + hapus semua file Boundless. LuCI restart sebentar selama proses.</p>
-    <div class="btw-btnrow">
-      <button class="btw-btn" id="btw-btn-rollback" type="button">Rollback</button>
-      <button class="btw-btn danger" id="btw-btn-remove" type="button">Hapus Tema</button>
-    </div>
     <div class="btw-statusline" id="btw-manage-status"></div>
     <pre class="btw-log" id="btw-manage-log"></pre>
   </div>
@@ -134,7 +128,7 @@ function postJSON(url, data){
 var busy = false;
 function setBusy(b){
   busy = b;
-  ["btw-btn-check","btw-btn-update","btw-btn-rollback","btw-btn-remove","btw-btn-activate","btw-btn-scheme"].forEach(function(id){ $(id).disabled = b; });
+  ["btw-btn-check","btw-btn-update","btw-btn-remove","btw-btn-activate","btw-btn-scheme"].forEach(function(id){ $(id).disabled = b; });
 }
 
 var lastThemesKey = "";
@@ -357,7 +351,7 @@ $("btw-btn-update").addEventListener("click", function(){
   });
 });
 
-/* ---------- Rollback / Hapus ---------- */
+/* ---------- Hapus ---------- */
 function doManage(action, confirmMsg){
   if (busy) return;
   if (!window.confirm(confirmMsg)) return;
@@ -371,7 +365,7 @@ function doManage(action, confirmMsg){
       st.textContent = "Gagal memulai: " + (r.error || "tidak diketahui");
       setBusy(false); return;
     }
-    st.textContent = (action === "rollback" ? "Rollback" : "Penghapusan") + " berjalan...";
+    st.textContent = "Penghapusan berjalan...";
     pollLog(URL_MANAGELOG, log, st, function(okDone, r, why){
       setBusy(false);
       if (okDone) {
@@ -389,9 +383,6 @@ function doManage(action, confirmMsg){
   });
 }
 
-$("btw-btn-rollback").addEventListener("click", function(){
-  doManage("rollback", "Rollback ke tema sebelumnya?\nTema aktif akan diganti, file Boundless tetap ada.");
-});
 $("btw-btn-remove").addEventListener("click", function(){
   doManage("remove", "HAPUS tema Boundless dari perangkat?\nTema aktif diganti ke tema bawaan dan semua file Boundless dihapus. Aplikasi pengelola ini TIDAK ikut terhapus.");
 });

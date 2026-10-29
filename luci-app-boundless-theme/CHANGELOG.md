@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.7.1] - 2026-10-30
+
+### Changed
+
+- **Tombol Rollback dihapus** (redundan: pindah tema sudah bisa
+  dari kartu Ganti Tema) dan tombol **Hapus pindah sebaris** dengan
+  Cek Update / Install; judul kartu gabungan jadi
+  "Install / Update & Hapus". (Perubahan ini sempat tersiapkan
+  untuk 1.7.0 tapi tidak ikut terbit di tag itu — dirilis di sini.)
+
 ## [1.7.0] - 2026-10-30
 
 ### Changed

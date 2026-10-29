@@ -29,11 +29,11 @@ dashboard-nya hanya kulit tipis di atas script tema yang sudah ada.
   ini sendiri** (update diri) di latar belakang; kemajuannya
   dipantau lewat log langsung di halaman (proses tahan restart
   `uhttpd` di tengah jalan).
-- **Rollback**: menjalankan `uninstall.sh` tema — tema sebelumnya
-  diaktifkan lagi, file Boundless tetap ada.
-- **Hapus Tema**: `uninstall.sh --remove-files` — semua file tema
-  dihapus. Bila unduhan script gagal (offline), controller memakai
-  fallback lokal yang setara supaya tombol tetap berfungsi.
+- **Hapus Tema**: `uninstall.sh --remove-files` — tema bawaan
+  diaktifkan lagi dan semua file tema dihapus. (Pindah tema biasa
+  cukup lewat kartu Ganti Tema; tidak ada tombol rollback khusus.)
+  Bila unduhan script gagal (offline), controller memakai fallback
+  lokal yang setara supaya tombol tetap berfungsi.
 
 Semua aksi tulis wajib POST + token CSRF LuCI. Aplikasi ini sendiri
 **tidak** ikut terhapus oleh tombol Hapus Tema; kelola aplikasinya
