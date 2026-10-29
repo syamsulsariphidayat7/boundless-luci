@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.2.0] - 2026-10-29
+
+### Changed
+
+- **Install / Update kini memasang dua-duanya**: unduh tarball rilis
+  boundless-luci, jalankan `install.sh` tema lalu `install.sh`
+  aplikasi ini sendiri (**update diri**, pola hg680pcls) — ke
+  depannya semua update cukup dari dashboard; one-liner curl tinggal
+  untuk pasang pertama / pemulihan. Kegagalan salah satu komponen
+  membuat keseluruhan proses ditandai gagal di log.
+
+### Fixed
+
+- README aplikasi: daftar fitur dilengkapi (Ganti Tema + Skema
+  Warna) dan paragraf pembuka yang rusak tersambung diperbaiki.
+
 ## [1.1.0] - 2026-10-29
 
 ### Added

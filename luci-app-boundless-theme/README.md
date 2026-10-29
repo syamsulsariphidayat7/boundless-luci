@@ -3,8 +3,8 @@
 Panel kelola untuk tema **luci-theme-boundless** — keduanya tinggal
 di repo gabungan [boundless-luci](https://github.com/syamsulsariphidayat7/boundless-luci)
 (tema di subfolder `luci-theme-boundless`), dan panel ini mengambil
-update tema dari repo itu.
-langsung dari dalam LuCI: **System → Boundless Theme**.
+update untuk dua-duanya dari repo itu. Dipakai langsung dari dalam
+LuCI: **System → Boundless Theme**.
 
 Tema LuCI sendiri tidak bisa punya halaman, jadi pengelolaannya tinggal
 di aplikasi pendamping kecil ini — pola yang sama seperti
@@ -15,10 +15,18 @@ dashboard-nya hanya kulit tipis di atas script tema yang sudah ada.
 
 - **Status tema**: versi terpasang (dari stempel `Version:` di
   `cascade.css`), tema aktif saat ini, ketersediaan installer lokal.
+- **Ganti Tema**: dropdown tema terdaftar (`luci.themes`) + tombol
+  Aktifkan — pengganti dropdown *Design* di Language and Style,
+  tanpa pindah halaman.
+- **Skema Warna**: grup pilihan skema di kartu Ganti Tema (muncul
+  saat Boundless yang dipilih): 5 skema — Love Couple (bawaan),
+  Pun Yeta, Sand to Blue, Purplepine, Deep Space. Pilihan disimpan
+  di UCI dan diterapkan lewat `scheme.css` tema.
 - **Cek Update**: bandingkan versi terpasang dengan tag rilis terbaru
   di GitHub + tampilkan catatan rilis dari `CHANGELOG.md` tema.
-- **Install / Update**: mengunduh `online-install.sh` tema dari ref
-  rilis terbaru dan menjalankannya di latar belakang; kemajuannya
+- **Install / Update**: mengunduh tarball rilis terbaru repo
+  boundless-luci lalu menjalankan `install.sh` **tema dan aplikasi
+  ini sendiri** (update diri) di latar belakang; kemajuannya
   dipantau lewat log langsung di halaman (proses tahan restart
   `uhttpd` di tengah jalan).
 - **Rollback**: menjalankan `uninstall.sh` tema — tema sebelumnya

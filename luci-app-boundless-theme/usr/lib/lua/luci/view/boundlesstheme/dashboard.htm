@@ -76,7 +76,7 @@
 
   <div class="btw-card">
     <h2>Install / Update</h2>
-    <p class="btw-note" id="btw-update-text">Tema dipasang &amp; diperbarui dari repo GitHub <b>boundless-luci</b> (rilis terbaru). Klik <b>Cek Update</b> untuk membandingkan versi.</p>
+    <p class="btw-note" id="btw-update-text">Tema <b>dan aplikasi pengelola ini</b> dipasang &amp; diperbarui dari repo GitHub <b>boundless-luci</b> (rilis terbaru). Klik <b>Cek Update</b> untuk membandingkan versi.</p>
     <div class="btw-notes" id="btw-notes"></div>
     <div class="btw-btnrow">
       <button class="btw-btn" id="btw-btn-check" type="button">Cek Update</button>
@@ -312,7 +312,7 @@ $("btw-btn-check").addEventListener("click", function(){
 
 $("btw-btn-update").addEventListener("click", function(){
   if (busy) return;
-  if (!window.confirm("Pasang / perbarui tema Boundless dari rilis GitHub terbaru?\nLuCI akan restart di tengah proses.")) return;
+  if (!window.confirm("Pasang / perbarui tema + aplikasi Boundless dari rilis GitHub terbaru?\nLuCI akan restart di tengah proses.")) return;
   var st = $("btw-update-status"), log = $("btw-update-log");
   setBusy(true);
   st.className = "btw-statusline"; st.textContent = "Memulai pemasangan...";
@@ -328,7 +328,7 @@ $("btw-btn-update").addEventListener("click", function(){
       setBusy(false);
       if (okDone) {
         st.className = "btw-statusline ok";
-        st.textContent = "Selesai. Tema Boundless v" + ((r && r["local"]) || "?") + " terpasang. Halaman dimuat ulang...";
+        st.textContent = "Selesai. Tema + aplikasi Boundless v" + ((r && r["local"]) || "?") + " terpasang. Halaman dimuat ulang...";
         refresh(); setTimeout(function(){ location.reload(); }, 3000);
       } else {
         st.className = "btw-statusline err";

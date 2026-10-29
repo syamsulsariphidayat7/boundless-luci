@@ -432,10 +432,13 @@ function action_update()
 	end
 	local _, ref = remote_version()
 	if not ref or ref == "" then ref = "main" end
-	-- Unduh tarball repo gabungan pada ref rilis, ambil subfolder tema,
-	-- simpan ke /root/luci-theme-boundless, jalankan install.sh dari
-	-- sana (detached). Baris terakhir menentukan exit code wrapper:
-	-- kegagalan diakhiri `false`, BUKAN `exit`, supaya rc tetap ditulis.
+	-- Unduh tarball repo gabungan pada ref rilis, lalu pasang DUA
+	-- komponennya: tema (dari subfoldernya, ke /root/luci-theme-
+	-- boundless) lalu aplikasi pengelola ini sendiri (update diri,
+	-- pola hg680pcls - prosesnya detached jadi aman walau uhttpd
+	-- restart di tengah). Baris terakhir menentukan exit code
+	-- wrapper: kegagalan diakhiri nilai false, BUKAN `exit`, supaya
+	-- rc tetap ditulis.
 	local tarball
 	if ref == "main" then
 		tarball = "https://github.com/" .. BUNDLE_SLUG .. "/archive/refs/heads/main.tar.gz"
@@ -448,16 +451,29 @@ rm -rf "$TMPD"
 mkdir -p "$TMPD"
 if curl -fsSL --connect-timeout 10 --max-time 120 %s -o "$TMPD/b.tar.gz" 2>/dev/null || wget -q --timeout=120 %s -O "$TMPD/b.tar.gz" 2>/dev/null; then
     tar -xzf "$TMPD/b.tar.gz" -C "$TMPD"
-    SRC=$(find "$TMPD" -maxdepth 3 -type d -name luci-theme-boundless | head -1)
-    if [ -n "$SRC" ] && [ -f "$SRC/install.sh" ]; then
+    TSRC=$(find "$TMPD" -maxdepth 3 -type d -name luci-theme-boundless | head -1)
+    ASRC=$(find "$TMPD" -maxdepth 3 -type d -name luci-app-boundless-theme | head -1)
+    OK=1
+    if [ -n "$TSRC" ] && [ -f "$TSRC/install.sh" ]; then
+        echo "[boundless] Memasang tema..."
         rm -rf /root/luci-theme-boundless
-        cp -r "$SRC" /root/luci-theme-boundless
-        rm -rf "$TMPD"
-        cd /root/luci-theme-boundless && sh install.sh
+        cp -r "$TSRC" /root/luci-theme-boundless
+        ( cd /root/luci-theme-boundless && sh install.sh ) || OK=0
     else
         echo "[boundless] Folder tema tidak ditemukan di dalam paket boundless-luci"
-        false
+        OK=0
     fi
+    if [ -n "$ASRC" ] && [ -f "$ASRC/install.sh" ]; then
+        echo "[boundless] Memasang aplikasi pengelola (update diri)..."
+        rm -rf /root/luci-app-boundless-theme
+        cp -r "$ASRC" /root/luci-app-boundless-theme
+        ( cd /root/luci-app-boundless-theme && sh install.sh ) || OK=0
+    else
+        echo "[boundless] Folder aplikasi tidak ditemukan di dalam paket boundless-luci"
+        OK=0
+    fi
+    rm -rf "$TMPD"
+    [ "$OK" = "1" ]
 else
     echo "[boundless] Gagal mengunduh paket boundless-luci dari GitHub"
     false
