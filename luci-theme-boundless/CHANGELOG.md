@@ -4,6 +4,18 @@ Semua perubahan penting tema ini dicatat di sini.
 Format mengikuti [Keep a Changelog](https://keepachangelog.com/),
 versi mengikuti [Semantic Versioning](https://semver.org/).
 
+## [1.4.0] - 2026-10-30
+
+### Added
+
+- **Tanda titik di dock bawah**: item dock yang halamannya sedang
+  dibuka (Terminal, About, Clear, Tema) kini punya titik putih
+  kecil di bawah labelnya; item lain tetap teks polos. Penanda
+  berupa class `on` yang dipasang script kecil di template header
+  (mencocokkan alamat halaman dengan href item); titiknya digambar
+  CSS di `<li>` (karena `a::after` sudah dipakai ripple). Link
+  eksternal (Modem, Yacd, Youtube) tidak pernah ditandai.
+
 ## [1.3.0] - 2026-10-30
 
 Tidak ada perubahan kode tema pada rilis ini — nomor versi mengikuti

@@ -159,7 +159,7 @@ header > .fill > .container > #logo > img {
 
 /**
  *	luci-theme-boundless - cascade.css
- *	Version: 1.3.0 (see the VERSION file and CHANGELOG.md; check the
+ *	Version: 1.4.0 (see the VERSION file and CHANGELOG.md; check the
  *	installed version on a device with: grep -m1 "Version:" cascade.css)
  *
  *	DERIVATIVE WORK: everything up to the "MATERIAL3 LIGHT OVERRIDES" block
@@ -4014,6 +4014,27 @@ header { height: 4rem; }
 }
 #menu li a:hover { background: rgba(255, 255, 255, .16) !important; color: #fff !important; }
 #menu a p { margin: 0 !important; display: inline; }
+
+/* v1.4.0 (user pick, 2026-10-30): active dock item gets a small dot
+   under its label (variant 2 from the mock); inactive items stay
+   plain text. The marker class "on" is set by a tiny script in
+   header.ut/header.htm matching location.pathname against the
+   item hrefs. The dot lives on the <li> because #menu a::after is
+   already the ripple. It sits inside the link's bottom padding,
+   so the dock geometry does not change. */
+#menu li { position: relative; }
+#menu li.on::after {
+	content: "";
+	position: absolute;
+	left: 50%;
+	bottom: 2px;
+	transform: translateX(-50%);
+	width: 5px;
+	height: 5px;
+	border-radius: 50%;
+	background: #fff;
+	pointer-events: none;
+}
 #maincontent { padding-bottom: 5rem; }
 
 @media (max-width: 640px) {

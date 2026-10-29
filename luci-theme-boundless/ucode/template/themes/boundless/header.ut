@@ -95,6 +95,18 @@
 	<li><a href='/cgi-bin/luci/admin/status/release_ram'>Clear</a></li>
 	<li><a href='/cgi-bin/luci/admin/system/boundlesstheme'>Tema</a></li>
 	<script>document.getElementById("yacd").setAttribute("href", "http://" + window.location.hostname + ":9090/ui/yacd/",);</script>
+	<script>
+	/* Boundless: tandai item dock yang halamannya sedang dibuka
+	   dengan class "on" (titik putih di bawah label, dari cascade.css).
+	   Hanya link LuCI lokal yang dibandingkan; link eksternal
+	   (Modem/Yacd/Youtube) tidak pernah aktif. */
+	(function(){
+		var p = window.location.pathname;
+		document.querySelectorAll("#menu a[href^='/cgi-bin/luci/']").forEach(function(a){
+			if (a.getAttribute("href") === p) a.parentNode.classList.add("on");
+		});
+	})();
+	</script>
   </ul>
 </nav>
 </header>
