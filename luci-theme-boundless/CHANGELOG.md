@@ -4,6 +4,15 @@ Semua perubahan penting tema ini dicatat di sini.
 Format mengikuti [Keep a Changelog](https://keepachangelog.com/),
 versi mengikuti [Semantic Versioning](https://semver.org/).
 
+## [1.5.0] - 2026-10-30
+
+### Changed
+
+- **Tanda titik dock kini di semua item** (menyempurnakan 1.4.0):
+  item tidak aktif bertitik putih redup (35%), item aktif putih
+  penuh dan sedikit lebih besar — semua tombol seragam bertanda,
+  yang aktif tetap langsung ketahuan.
+
 ## [1.4.0] - 2026-10-30
 
 ### Added

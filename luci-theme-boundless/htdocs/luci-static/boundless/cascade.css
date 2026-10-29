@@ -1,6 +1,6 @@
 /**
  *	luci-theme-boundless - cascade.css
- *	Version: 1.4.0 (see the VERSION file and CHANGELOG.md; check the
+ *	Version: 1.5.0 (see the VERSION file and CHANGELOG.md; check the
  *	installed version on a device with: grep -m1 "Version:" cascade.css)
  *
  *	DERIVATIVE WORK: everything up to the "MATERIAL3 LIGHT OVERRIDES" block
@@ -3856,15 +3856,18 @@ header { height: 4rem; }
 #menu li a:hover { background: rgba(255, 255, 255, .16) !important; color: #fff !important; }
 #menu a p { margin: 0 !important; display: inline; }
 
-/* v1.4.0 (user pick, 2026-10-30): active dock item gets a small dot
-   under its label (variant 2 from the mock); inactive items stay
-   plain text. The marker class "on" is set by a tiny script in
-   header.ut/header.htm matching location.pathname against the
-   item hrefs. The dot lives on the <li> because #menu a::after is
-   already the ripple. It sits inside the link's bottom padding,
-   so the dock geometry does not change. */
+/* v1.4.0 (user pick, 2026-10-30): dock item whose page is open gets
+   a marker (class "on", set by a tiny script in header.ut/header.htm
+   matching location.pathname against the item hrefs). The dot lives
+   on the <li> because #menu a::after is already the ripple, and it
+   sits inside the link's bottom padding, so the dock geometry does
+   not change.
+   v1.5.0 (user revision, same day): EVERY item carries the dot -
+   inactive items at 35% white, the active one full white and
+   slightly larger. External items (Modem/Yacd/Youtube) simply
+   never get "on". */
 #menu li { position: relative; }
-#menu li.on::after {
+#menu li::after {
 	content: "";
 	position: absolute;
 	left: 50%;
@@ -3873,8 +3876,13 @@ header { height: 4rem; }
 	width: 5px;
 	height: 5px;
 	border-radius: 50%;
-	background: #fff;
+	background: rgba(255, 255, 255, .35);
 	pointer-events: none;
+}
+#menu li.on::after {
+	width: 6px;
+	height: 6px;
+	background: #fff;
 }
 #maincontent { padding-bottom: 5rem; }
 

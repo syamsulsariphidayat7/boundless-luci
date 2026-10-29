@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.5.0] - 2026-10-30
+
+Tidak ada perubahan kode aplikasi pada rilis ini — nomor versi
+mengikuti rilis gabungan 1.5.0 (perubahan ada di tema: tanda titik
+dock kini di semua item, tidak aktif redup).
+
 ## [1.4.0] - 2026-10-30
 
 Tidak ada perubahan kode aplikasi pada rilis ini — nomor versi
