@@ -18,6 +18,19 @@ keduanya, diambil dari tag rilis repo ini.
 Terpasang dan terverifikasi di STB HG680P dengan firmware REYRE-WRT
 (OpenWrt 24.10.8).
 
+## Stack
+
+| Lapisan | Teknologi |
+| --- | --- |
+| Tema | Turunan `luci-theme-material` resmi (OpenWrt 24.10): template **ucode**, CSS vanilla tanpa build step |
+| Sistem desain | **Material 3** (Material You): token warna CSS, skala radius, komponen switch/radio, dialog, filled field, bar aksi melayang, progress, ripple |
+| Skema warna | 5 skema lewat `scheme.css` yang ditulis dashboard; pilihan tersimpan di UCI (`boundlesstheme.settings.scheme`) |
+| Dashboard | Controller + view LuCI klasik (**Lua**), endpoint JSON, aksi latar detached (log/rc/pid di `/tmp`), token CSRF |
+| Installer | Shell POSIX (`sh`/`ash`): `install.sh`/`uninstall.sh` per komponen + one-liner curl/wget |
+| Konfigurasi | UCI: `luci.themes`, `luci.main.mediaurlbase`, `boundlesstheme` |
+
+Detail stack tema ada di README folder `luci-theme-boundless/`.
+
 ## Pasang
 
 Satu baris — via SSH di STB (repo ini harus sudah di-push & Public):

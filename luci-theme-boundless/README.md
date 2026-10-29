@@ -1,27 +1,27 @@
 # luci-theme-boundless
 
 Tema LuCI **full** (semua halaman) untuk OpenWrt 24.10: layout resmi
-`luci-theme-material` yang dimodernisasi ke **Material 3 terang**
-(terang sejak v5; di v8 seluruh tema — nama paket, folder statis,
-registrasi UCI, nama file — diganti total mengikuti varian terang ini,
-dan riwayat git ditulis ulang).
+`luci-theme-material` yang dimodernisasi ke **Material 3 terang**,
+dengan identitas Boundless (nama tema, logo, dan dock bawah).
 
 - **Referensi:** `luci-theme-material` resmi dari repo `openwrt/luci`
   (`themes/luci-theme-material`) — top bar + sidebar kiri, template
   header/footer, `cascade.css`, dan menu JS-nya dipakai sebagai basis.
 - **Modernisasi Material 3:** sudut membulat besar (card / tombol / input
   radius 12–20px, state aktif berbentuk pill), permukaan tonal bertingkat.
-- **Palet saat ini (v1.0.0):** background `#F4F6FA`, teks gelap kontras
-  tinggi, warna primer datar `#0B486B`, dan **gradien khas** biru baja →
-  burgundy `#29445E → #89253E` di header, tombol utama, state aktif,
-  progress bar, dan dock bawah (token `--m3-grad-*` di `custom.css`).
+- **Palet:** background `#F4F6FA`, teks gelap kontras tinggi, warna
+  primer datar `#0B486B`, dan **gradien khas** biru baja → burgundy
+  `#29445E → #89253E` (skema bawaan *Love Couple*) di header, tombol
+  utama, state aktif, progress bar, dan dock bawah (token `--m3-grad-*`
+  di `custom.css`). Sejak 1.1.0 warna bisa diganti-ganti lewat
+  **skema warna** dari dashboard — lihat bagian *Stack teknologi*.
 - **Komponen Material 3:** switch & radio M3, dialog (radius 28px),
   filled text field, bar aksi melayang, progress bar M3 dengan label
   chip, ripple saat klik, animasi hover (angkat + kilau) di tombol.
 - **Sentuhan layout:** header ter-center vertikal presisi dengan logo
   Boundless; bar `#menu` menjadi **dock mengambang** di tengah bawah;
   notifikasi Release RAM tampil sebagai toast di atas dock.
-- **Kompatibilitas REYRE-WRT (v6–v7):** footer memuat placeholder
+- **Kompatibilitas REYRE-WRT:** footer memuat placeholder
   `<div id="tempcpu">` + `<div id="cpuusage">` (baris Temperature & CPU
   Usage di Status → Overview firmware REYRE-WRT); header memuat baris
   ikon shortcut navbar dan bar menu `#menu` (Modem / Terminal /
@@ -35,6 +35,43 @@ dan riwayat git ditulis ulang).
 > 2026-10-28. Untuk perangkat/firmware lain, tetap jaga jalur rollback:
 > biarkan tema `bootstrap` terpasang dan pastikan kamu bisa SSH ke STB
 > sebelum mengaktifkan tema ini.
+
+---
+
+## Stack teknologi
+
+- **Basis tema:** `luci-theme-material` resmi dari repo `openwrt/luci`
+  (branch `openwrt-24.10`) — layout top bar + sidebar, template, dan
+  `cascade.css`-nya dipakai sebagai fondasi; tema ini karya turunan
+  berlisensi Apache-2.0 (lihat `NOTICE`).
+- **Platform:** LuCI di OpenWrt 24.10, disajikan `uhttpd`. Template
+  **ucode** (`.ut`) adalah jalur utama 24.10; template legacy Lua
+  (`.htm`) disertakan sebagai port klasik. Registrasi & aktivasi tema
+  lewat **UCI** (`luci.themes.Boundless`, `luci.main.mediaurlbase`).
+- **Sistem desain: Material 3** (Material You dari Google), skema
+  terang. Token warna sebagai CSS custom properties (primer,
+  container, tingkatan *surface*, *outline*), skala bentuk (radius
+  12/16/20px, dialog 28px, state aktif berbentuk *pill*), dan komponen
+  khas M3: switch & radio, dialog, *filled text field*, bar aksi
+  melayang, *progress indicator* berlabel chip, ripple saat klik,
+  dan state hover (angkat + kilau) pada tombol.
+- **CSS vanilla, tanpa build step** — tidak ada preprocessor atau
+  bundler. `cascade.css` bawaan material dibiarkan utuh supaya
+  selector tetap cocok dengan markup LuCI; restyle hidup di
+  `custom.css` (nilai token) + blok `MATERIAL3 OVERRIDES` di akhir
+  `cascade.css`. Urutan cascade itulah mekanismenya.
+- **JavaScript vanilla:** `menu-boundless.js` (turunan
+  `menu-material.js` resmi) untuk perilaku menu/sidebar; tanpa
+  framework.
+- **Skema warna:** lapisan override terakhir, `scheme.css`, di-*import*
+  `cascade.css` setelah `custom.css`. File itu terpasang kosong
+  (= skema bawaan) dan ditulis ulang oleh dashboard **Boundless
+  Theme** (System → Boundless Theme, dari repo gabungan
+  `boundless-luci`) saat skema dipilih — 5 skema: Love Couple
+  (bawaan), Pun Yeta, Sand to Blue, Purplepine, Deep Space. Pilihan
+  tersimpan di UCI (`boundlesstheme.settings.scheme`).
+- **Installer:** script shell POSIX (`sh`/`ash`) — `install.sh`,
+  `uninstall.sh`, dan `online-install.sh` (satu baris dari GitHub).
 
 ---
 
@@ -74,8 +111,9 @@ luci-theme-boundless/
 ├── uninstall.sh                    # rollback ke tema sebelumnya (+ --remove-files)
 ├── htdocs/luci-static/
 │   ├── boundless/
-│   │   ├── cascade.css             # basis: cascade.css resmi material + blok override "MATERIAL3 LIGHT"
-│   │   ├── custom.css              # nama variabel SAMA seperti resmi, nilainya palet terang M3 (v5)
+│   │   ├── cascade.css             # basis: cascade.css resmi material + blok override MATERIAL3 di akhir file
+│   │   ├── custom.css              # token warna (nama variabel sama seperti resmi, nilainya palet terang M3)
+│   │   ├── scheme.css              # override skema warna (terpasang kosong; ditulis dashboard Boundless Theme)
 │   │   ├── logo.svg, logo_48.png, brand.png, icons/   # aset resmi material
 │   └── resources/
 │       └── menu-boundless.js   # salinan menu-material.js resmi, nama disesuaikan
@@ -92,7 +130,9 @@ luci-theme-boundless/
 Kenapa CSS-nya begitu? `cascade.css` resmi dibiarkan utuh supaya semua
 selector tetap cocok dengan markup yang dihasilkan LuCI. Restyle
 Material 3 ditambahkan sebagai satu blok besar di bagian paling akhir file
-itu (`MATERIAL3 OVERRIDES`) plus nilai variabel di `custom.css`.
+itu (`MATERIAL3 OVERRIDES`) plus nilai variabel di `custom.css`, dan
+lapisan paling akhir adalah `scheme.css` untuk skema warna (lihat
+*Stack teknologi*).
 
 Di STB, file-file di atas terpasang ke:
 
