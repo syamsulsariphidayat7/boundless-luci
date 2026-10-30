@@ -4,6 +4,12 @@ Semua perubahan penting tema ini dicatat di sini.
 Format mengikuti [Keep a Changelog](https://keepachangelog.com/),
 versi mengikuti [Semantic Versioning](https://semver.org/).
 
+## [1.8.4] - 2026-10-30
+
+Tidak ada perubahan kode tema pada rilis ini — nomor versi mengikuti
+rilis gabungan 1.8.4 (perubahan ada di aplikasi pengelola: installer
+aplikasi tanpa folder backup lagi).
+
 ## [1.8.3] - 2026-10-30
 
 Tidak ada perubahan kode tema pada rilis ini — nomor versi mengikuti

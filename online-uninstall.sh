@@ -65,5 +65,5 @@ fi
 echo ""
 echo "[copot] SELESAI. LuCI sekarang memakai tema bawaan ($FALLBACK)."
 echo "[copot] Catatan: folder backup /root/*-backup/ TIDAK ikut dihapus."
-echo "[copot] Kalau mau bersih total: rm -rf /root/*-backup /root/luci-app-boundless-theme-backup"
+echo "[copot] Kalau mau bersih total: rm -rf /root/*-backup"
 echo "[copot] Pasang lagi: curl -fsSL https://raw.githubusercontent.com/syamsulsariphidayat7/boundless-luci/main/online-install.sh | sh"

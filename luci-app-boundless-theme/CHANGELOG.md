@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.8.4] - 2026-10-30
+
+### Removed
+
+- **Backup file di installer aplikasi dihapus**: `install.sh`
+  tidak lagi membuat `/root/luci-app-boundless-theme-backup/` —
+  file lama langsung ditimpa, /root tetap bersih (permintaan
+  Syamsul). Config yang sudah ada tetap selalu dipertahankan.
+  Rollback aplikasi bila perlu = pasang ulang rilis yang diinginkan
+  dari GitHub.
+
 ## [1.8.3] - 2026-10-30
 
 ### Removed

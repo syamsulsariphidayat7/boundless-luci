@@ -4,8 +4,8 @@
 #  Jalankan DARI DALAM folder aplikasi ini di STB, contoh:
 #     cd /tmp/luci-app-boundless-theme && sh install.sh
 #  Memasang panel kelola tema Boundless di LuCI (System -> Boundless
-#  Theme). File lama yang ditimpa dibackup ke
-#  /root/luci-app-boundless-theme-backup/.
+#  Theme). File lama langsung ditimpa (tanpa folder backup,
+#  biar /root bersih); config yang sudah ada selalu dipertahankan.
 # ==========================================================================
 if [ ! -f /etc/openwrt_release ]; then
   echo "STOP: script ini untuk DI DALAM STB (OpenWrt), bukan di PC/laptop."
@@ -29,16 +29,6 @@ fi
 VER=$(cat "$DIR/VERSION" 2>/dev/null || echo "?")
 echo "[boundless-app] luci-app-boundless-theme v$VER"
 
-BK=/root/luci-app-boundless-theme-backup
-mkdir -p "$BK"
-for f in "/$CTL" "/$VIEW/dashboard.htm" "/$VIEW/VERSION" "/etc/config/boundlesstheme"; do
-  if [ -f "$f" ]; then
-    mkdir -p "$BK$(dirname "$f")"
-    cp -f "$f" "$BK$f"
-    echo "[boundless-app] Backup file lama: $f"
-  fi
-done
-
 echo "[boundless-app] Menyalin file..."
 mkdir -p /usr/lib/lua/luci/controller "/$VIEW"
 cp -f "$DIR/$CTL" "/$CTL"
@@ -60,4 +50,3 @@ echo "[boundless-app] Verifikasi:"
 grep -q "luci.controller.boundlesstheme" "/$CTL" && echo "[boundless-app] controller OK"
 [ -f /etc/config/boundlesstheme ] && echo "[boundless-app] config OK"
 echo "[boundless-app] SELESAI. Buka LuCI -> System -> Boundless Theme (hard refresh: Ctrl+F5)."
-echo "[boundless-app] Rollback: salin kembali file dari $BK lalu restart uhttpd."

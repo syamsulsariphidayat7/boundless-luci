@@ -56,9 +56,8 @@ ssh root@192.168.1.1 'cd /tmp/luci-app-boundless-theme && sh install.sh'
 ```
 
 Lalu buka LuCI → **System → Boundless Theme** (hard refresh `Ctrl+F5`).
-
-File yang ditimpa selama install dibackup ke
-`/root/luci-app-boundless-theme-backup/` di STB.
+File lama langsung ditimpa tanpa folder backup; config yang sudah
+ada selalu dipertahankan.
 
 ## Uninstall aplikasi
 
@@ -76,7 +75,7 @@ menghapus controller, view, dan config penanda, lalu restart `uhttpd`.)
 | `usr/lib/lua/luci/controller/boundlesstheme.lua` | Routing + endpoint JSON (status/check/update/manage) |
 | `usr/lib/lua/luci/view/boundlesstheme/dashboard.htm` | Halaman panel (CSS/JS mandiri, tampil baik di tema LuCI apa pun) |
 | `etc/config/boundlesstheme` | File penanda — menu tampil bila file ini ada |
-| `install.sh` / `uninstall.sh` | Installer aplikasi (dengan backup + verifikasi) |
+| `install.sh` / `uninstall.sh` | Installer aplikasi (dengan verifikasi) |
 
 ## Kredit & lisensi
 
