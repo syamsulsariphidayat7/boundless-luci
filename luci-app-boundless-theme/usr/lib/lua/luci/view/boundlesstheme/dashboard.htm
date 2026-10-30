@@ -93,6 +93,7 @@
           <span class="btw-switch"><input type="checkbox" id="btw-material-toggle"><span class="btw-track"></span></span>
           <b>Efek Glass</b>
         </label>
+        <button class="btw-btn primary" id="btw-glass-reset" type="button" style="display:none" title="Kembalikan opacity Header, Dock, Sidebar &amp; Kartu ke nilai bawaan">Reset Opacity</button>
       </span>
     </div>
     <div class="btw-glass-sliders" id="btw-glass-sliders">
@@ -100,10 +101,7 @@
       <div class="btw-grow"><label for="btw-glass-dock">Dock</label><input type="range" id="btw-glass-dock" min="40" max="95" step="1"><span class="gv" id="btw-glass-dock-v"></span></div>
       <div class="btw-grow"><label for="btw-glass-side">Sidebar</label><input type="range" id="btw-glass-side" min="20" max="85" step="1"><span class="gv" id="btw-glass-side-v"></span></div>
       <div class="btw-grow"><label for="btw-glass-card">Kartu</label><input type="range" id="btw-glass-card" min="30" max="90" step="1"><span class="gv" id="btw-glass-card-v"></span></div>
-      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
-        <p class="btw-note" style="margin:0">Opacity Efek Glass per permukaan &mdash; geser untuk pratinjau, lepas untuk menyimpan. Tersimpan di perangkat.</p>
-        <button class="btw-btn" id="btw-glass-reset" type="button">Reset ke Default</button>
-      </div>
+      <p class="btw-note">Opacity Efek Glass per permukaan &mdash; geser untuk pratinjau, lepas untuk menyimpan. Tersimpan di perangkat.</p>
     </div>
     <div class="btw-statusline" id="btw-theme-status"></div>
     <div class="btw-statusline" id="btw-scheme-status"></div>
@@ -296,6 +294,7 @@ function previewGlass(){
 function syncGlassSliders(){
   var on = $("btw-material-toggle").checked && $("btw-theme-select").value === "/luci-static/boundless";
   $("btw-glass-sliders").className = "btw-glass-sliders" + (on ? " show" : "");
+  $("btw-glass-reset").style.display = on ? "" : "none";
 }
 GLASS_KEYS.forEach(function(k){
   var el = $("btw-glass-" + k);
@@ -330,7 +329,9 @@ $("btw-glass-reset").addEventListener("click", function(){
   GLASS_KEYS.forEach(function(k){ $("btw-glass-" + k).value = def[k]; });
   previewGlass();
   st.className = "btw-statusline"; st.textContent = "Mereset opacity Glass ke default...";
-  postJSON(URL_MATERIAL, glassPayload()).then(function(r){
+  var p = glassPayload();
+  p.material = $("btw-material-toggle").checked ? "glass" : "standar";
+  postJSON(URL_MATERIAL, p).then(function(r){
     if (!r.ok) {
       st.className = "btw-statusline err";
       st.textContent = "Gagal: " + (r.error || "tidak diketahui");

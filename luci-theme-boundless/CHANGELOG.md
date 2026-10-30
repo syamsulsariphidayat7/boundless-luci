@@ -4,6 +4,13 @@ Semua perubahan penting tema ini dicatat di sini.
 Format mengikuti [Keep a Changelog](https://keepachangelog.com/),
 versi mengikuti [Semantic Versioning](https://semver.org/).
 
+## [2.1.2] - 2026-10-30
+
+Tidak ada perubahan kode tema pada rilis ini — nomor versi mengikuti
+rilis gabungan 2.1.2 (perubahan ada di aplikasi: tombol reset slider
+Efek Glass dipindah ke samping saklar, diganti nama "Reset Opacity",
+dan diberi gaya tombol primer).
+
 ## [2.1.1] - 2026-10-30
 
 Tidak ada perubahan kode tema pada rilis ini — nomor versi mengikuti

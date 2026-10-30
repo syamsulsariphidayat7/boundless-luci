@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.1.2] - 2026-10-30
+
+### Changed
+
+- Tombol reset slider Efek Glass dipindah ke samping saklar
+  **Efek Glass** (sebaris dengan Terapkan Skema), bergaya tombol
+  primer bergradien seperti tombol lain, dan namanya dipendekkan
+  jadi **"Reset Opacity"** (permintaan Syamsul). Tombol hanya
+  tampil saat Efek Glass menyala, sejalan dengan slidernya;
+  fungsi tidak berubah (kembali ke 68 / 68 / 42 / 50, pratinjau
+  + simpan otomatis).
+
 ## [2.1.1] - 2026-10-30
 
 ### Added
