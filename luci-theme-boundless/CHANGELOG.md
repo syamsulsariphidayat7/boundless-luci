@@ -4,6 +4,15 @@ Semua perubahan penting tema ini dicatat di sini.
 Format mengikuti [Keep a Changelog](https://keepachangelog.com/),
 versi mengikuti [Semantic Versioning](https://semver.org/).
 
+## [1.8.2] - 2026-10-30
+
+### Added
+
+- **Ikon di dock bawah**: tiap item kini punya ikon Material
+  Symbols inline (SVG, `currentColor`) di kiri labelnya — router
+  (Modem), terminal (Terminal), dashboard (Zsb), memory (Clear),
+  palette (Tema). Tanpa file gambar tambahan.
+
 ## [1.8.1] - 2026-10-30
 
 ### Removed

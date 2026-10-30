@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.8.2] - 2026-10-30
+
+Tidak ada perubahan kode aplikasi pada rilis ini — nomor versi
+mengikuti rilis gabungan 1.8.2 (perubahan ada di tema: ikon di
+dock bawah).
+
 ## [1.8.1] - 2026-10-30
 
 Tidak ada perubahan kode aplikasi pada rilis ini — nomor versi

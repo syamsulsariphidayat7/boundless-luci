@@ -159,7 +159,7 @@ header > .fill > .container > #logo > img {
 
 /**
  *	luci-theme-boundless - cascade.css
- *	Version: 1.8.1 (see the VERSION file and CHANGELOG.md; check the
+ *	Version: 1.8.2 (see the VERSION file and CHANGELOG.md; check the
  *	installed version on a device with: grep -m1 "Version:" cascade.css)
  *
  *	DERIVATIVE WORK: everything up to the "MATERIAL3 LIGHT OVERRIDES" block
@@ -4042,6 +4042,17 @@ header { height: 4rem; }
 	width: 6px;
 	height: 6px;
 	background: #fff;
+}
+
+/* v1.8.2: inline Material Symbols icon on every dock item
+   (router/terminal/dashboard/memory/palette), coloured by
+   currentColor so it follows the link's white text. */
+#menu a svg.bicon {
+	width: 15px;
+	height: 15px;
+	fill: currentColor;
+	vertical-align: -2px;
+	margin-right: 6px;
 }
 #maincontent { padding-bottom: 5rem; }
 
