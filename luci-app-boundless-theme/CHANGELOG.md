@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.0.2] - 2026-10-30
+
+Tidak ada perubahan kode aplikasi pada rilis ini — nomor versi
+mengikuti rilis gabungan 2.0.2 (perubahan ada di tema: Efek Glass
+dikuatkan).
+
 ## [2.0.1] - 2026-10-30
 
 ### Changed

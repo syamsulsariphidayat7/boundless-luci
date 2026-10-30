@@ -4,6 +4,17 @@ Semua perubahan penting tema ini dicatat di sini.
 Format mengikuti [Keep a Changelog](https://keepachangelog.com/),
 versi mengikuti [Semantic Versioning](https://semver.org/).
 
+## [2.0.2] - 2026-10-30
+
+### Changed
+
+- **Efek Glass dikuatkan** (permintaan Syamsul; pengukuran piksel
+  screenshot 2.0.1 membuktikan glass bekerja tapi terlalu halus
+  di latar pucat): gradien header/dock turun ke 68% opacity,
+  sidebar putih 42%, kartu putih 50%, blur naik ke 16–18px.
+  Di halaman berlatar wallpaper efeknya kini kentara; teks tetap
+  terbaca karena blur + saturasi ikut naik.
+
 ## [2.0.1] - 2026-10-30
 
 ### Fixed
