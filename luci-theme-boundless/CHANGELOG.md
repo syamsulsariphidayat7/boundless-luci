@@ -4,6 +4,19 @@ Semua perubahan penting tema ini dicatat di sini.
 Format mengikuti [Keep a Changelog](https://keepachangelog.com/),
 versi mengikuti [Semantic Versioning](https://semver.org/).
 
+## [1.8.1] - 2026-10-30
+
+### Removed
+
+- Item **About** dan **Youtube** di dock bawah dihapus (permintaan
+  Syamsul) — dock kini: Modem, Terminal, Zsb, Clear, Tema.
+
+### Changed
+
+- Item **Yacd** di dock diganti **Zsb** — tautan ke
+  `http://<host>:9090/ui/zsb` (Zashboard; host mengikuti alamat
+  LuCI yang sedang dibuka, pola yang sama seperti Yacd dulu).
+
 ## [1.8.0] - 2026-10-30
 
 Tidak ada perubahan kode tema pada rilis ini — nomor versi mengikuti

@@ -74,7 +74,7 @@
 	</div>
 	{#-
 		REYRE-WRT compatibility (v7): thin #menu shortcut bar (Modem /
-		Terminal / Yacd / Youtube / About / Clear RAM), style + script +
+		Terminal / Zsb / Clear / Tema), style + script +
 		nav ported 1:1 from the firmware's patched material header.ut.
 	-#}
 <style>
@@ -89,17 +89,15 @@
   <ul>
     <li><a href='http://192.168.8.1/' target='_blank'>Modem</a></li>    
     <li><a href='/cgi-bin/luci/admin/services/ttyd'>Terminal</a></li>
-	<li><a id="yacd" target='_blank'><p>Yacd</p></a></li>
-	<li><a href='https://www.youtube.com/c/IndonesianTechChannel/videos' target='_blank'>Youtube</a></li>
-	<li><a href='/cgi-bin/luci/admin/status/about'>About</a></li>
+	<li><a id="zsb" target='_blank'><p>Zsb</p></a></li>
 	<li><a href='/cgi-bin/luci/admin/status/release_ram'>Clear</a></li>
 	<li><a href='/cgi-bin/luci/admin/system/boundlesstheme'>Tema</a></li>
-	<script>document.getElementById("yacd").setAttribute("href", "http://" + window.location.hostname + ":9090/ui/yacd/",);</script>
+	<script>document.getElementById("zsb").setAttribute("href", "http://" + window.location.hostname + ":9090/ui/zsb",);</script>
 	<script>
 	/* Boundless: tandai item dock yang halamannya sedang dibuka
 	   dengan class "on" (titik putih di bawah label, dari cascade.css).
 	   Hanya link LuCI lokal yang dibandingkan; link eksternal
-	   (Modem/Yacd/Youtube) tidak pernah aktif. */
+	   (Modem/Zsb) tidak pernah aktif. */
 	(function(){
 		var p = window.location.pathname;
 		document.querySelectorAll("#menu a[href^='/cgi-bin/luci/']").forEach(function(a){

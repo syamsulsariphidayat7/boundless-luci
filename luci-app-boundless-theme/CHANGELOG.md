@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.8.1] - 2026-10-30
+
+Tidak ada perubahan kode aplikasi pada rilis ini — nomor versi
+mengikuti rilis gabungan 1.8.1 (perubahan ada di tema: item About +
+Youtube di dock dihapus).
+
 ## [1.8.0] - 2026-10-30
 
 ### Added
