@@ -32,6 +32,8 @@ function index()
 		post("action_activate")).leaf = true
 	entry({"admin", "system", "boundlesstheme", "scheme"},
 		post("action_scheme")).leaf = true
+	entry({"admin", "system", "boundlesstheme", "material"},
+		post("action_material")).leaf = true
 end
 
 local BUNDLE_SLUG = "syamsulsariphidayat7/boundless-luci"
@@ -41,6 +43,7 @@ local THEME_SUB  = "luci-theme-boundless"
 
 local CASCADE    = "/www/luci-static/boundless/cascade.css"
 local SCHEME_CSS = "/www/luci-static/boundless/scheme.css"
+local MATERIAL_CSS = "/www/luci-static/boundless/material.css"
 local PREV_FILE  = "/etc/boundless-previous-theme"
 local INSTALLER_DIR = "/root/luci-theme-boundless"
 local APP_VERSION_FILE = "/usr/lib/lua/luci/view/boundlesstheme/VERSION"
@@ -249,6 +252,8 @@ local function write_scheme_css(s)
 			"/* Skema aktif: %s - ditulis dashboard Boundless Theme; jangan diedit manual. */\n"
 			.. ":root {\n"
 			.. "\t--m3-primary: %s;\n"
+			.. "\t--m3-c1: %s;\n"
+			.. "\t--m3-c2: %s;\n"
 			.. "\t--m3-grad-header: linear-gradient(90deg, %s 0%%, %s 100%%);\n"
 			.. "\t--m3-grad-accent: linear-gradient(135deg, %s 0%%, %s 100%%);\n"
 			.. "\t--m3-grad-primary: linear-gradient(135deg, %s 0%%, %s 100%%);\n"
@@ -256,8 +261,34 @@ local function write_scheme_css(s)
 			.. "}\n"
 			.. "#menu { background-color: %s !important; }\n",
 			s.name, s.primary,
+			s.c1, s.c2,
 			s.c1, s.c2, s.c1, s.c2, s.c1, s.c2,
 			s.c1, s.c2, s.third, s.c1))
+	end
+	f:close()
+	return true
+end
+
+-- Efek Glass (2.0.0): pilihan user disimpan di UCI
+-- (settings.material = standar|glass) dan ditulis dashboard ke
+-- material.css, yang di-link template header SESUDAH cascade.css.
+-- "glass" = file berisi @import ke glass.css milik tema; selain
+-- itu file komentar saja (tampilan standar).
+local function current_material()
+	local uci = luci.model.uci.cursor()
+	if uci:get("boundlesstheme", "settings", "material") == "glass" then
+		return "glass"
+	end
+	return "standar"
+end
+
+local function write_material_css(id)
+	local f = io.open(MATERIAL_CSS, "w")
+	if not f then return false end
+	if id == "glass" then
+		f:write("/* Efek Glass aktif - ditulis dashboard Boundless Theme; jangan diedit manual. */\n@import url(\"glass.css\");\n")
+	else
+		f:write("/* Material standar: tanpa lapisan efek - ditulis dashboard Boundless Theme. */\n")
 	end
 	f:close()
 	return true
@@ -387,6 +418,7 @@ function action_status()
 		themes = theme_list(),
 		scheme = current_scheme(),
 		schemes = schemes,
+		material = current_material(),
 	}))
 end
 
@@ -461,6 +493,30 @@ function action_scheme()
 		return http.write(luci.jsonc.stringify({ ok = false, error = "gagal menulis scheme.css - tema belum terpasang?" }))
 	end
 	http.write(luci.jsonc.stringify({ ok = true, scheme = s.id }))
+end
+
+-- POST /material — nyala/matikan Efek Glass (simpan UCI + tulis
+-- material.css). Sinkron seperti /scheme.
+function action_material()
+	if not require_post() then return end
+	local http = luci.http
+	http.prepare_content("application/json")
+	local id = http.formvalue("material") or ""
+	if id ~= "glass" and id ~= "standar" then
+		http.status(400, "Bad Request")
+		return http.write(luci.jsonc.stringify({ ok = false, error = "material tidak dikenal" }))
+	end
+	local uci = luci.model.uci.cursor()
+	if not uci:get_first("boundlesstheme", "settings") then
+		uci:section("boundlesstheme", "settings", "settings")
+	end
+	uci:set("boundlesstheme", "settings", "material", id)
+	uci:commit("boundlesstheme")
+	if not write_material_css(id) then
+		http.status(500, "Internal Server Error")
+		return http.write(luci.jsonc.stringify({ ok = false, error = "gagal menulis material.css - tema belum terpasang?" }))
+	end
+	http.write(luci.jsonc.stringify({ ok = true, material = id }))
 end
 
 function action_check()

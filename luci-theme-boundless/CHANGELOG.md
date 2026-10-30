@@ -4,6 +4,20 @@ Semua perubahan penting tema ini dicatat di sini.
 Format mengikuti [Keep a Changelog](https://keepachangelog.com/),
 versi mengikuti [Semantic Versioning](https://semver.org/).
 
+## [2.0.0] - 2026-10-30
+
+### Added
+
+- **Efek Glass**: gaya material kaca buram yang bisa dinyalakan
+  dari dashboard pengelola (saklar "Efek Glass" di kartu Ganti
+  Tema). Header + dock memakai gradien skema semi-transparan +
+  blur latar; sidebar + kartu konten jadi kaca terang. Tint
+  mengikuti skema warna aktif (termasuk Skema Custom) lewat
+  variabel `--m3-c1`/`--m3-c2` + `color-mix`. Mekanismenya sama
+  seperti skema: pilihan tersimpan di perangkat dan ditulis ke
+  `material.css` (di-link template header sesudah cascade.css),
+  awet lewat install ulang.
+
 ## [1.9.1] - 2026-10-30
 
 ### Fixed

@@ -34,6 +34,12 @@
 .btw-statusline.ok{color:var(--btw-green);font-weight:600}
 .btw-statusline.err{color:var(--btw-red);font-weight:600}
 #btw-scheme-preview{cursor:pointer}
+.btw-switch{position:relative;display:inline-block;width:40px;height:22px;flex:none}
+.btw-switch input{opacity:0;width:0;height:0;position:absolute}
+.btw-track{position:absolute;inset:0;border-radius:999px;background:#c9d2dc;transition:.18s;cursor:pointer}
+.btw-track:before{content:"";position:absolute;left:3px;top:3px;width:16px;height:16px;border-radius:50%;background:#fff;transition:.18s;box-shadow:0 1px 3px rgba(16,24,40,.35)}
+.btw-switch input:checked + .btw-track{background:var(--btw-primary)}
+.btw-switch input:checked + .btw-track:before{transform:translateX(18px)}
 .btw-modal{position:fixed;inset:0;background:rgba(15,20,28,.45);align-items:center;justify-content:center;z-index:1200}
 .btw-modal-box{background:#fff;border-radius:20px;padding:20px;width:min(92vw,360px);box-shadow:0 18px 50px rgba(16,24,40,.3)}
 .btw-modal-box h3{margin:0 0 12px;font-size:16px}
@@ -78,6 +84,13 @@
     </div>
     <div class="btw-statusline" id="btw-theme-status"></div>
     <div class="btw-statusline" id="btw-scheme-status"></div>
+    <div id="btw-material-row" style="display:none;margin-top:10px">
+      <label style="display:flex;align-items:center;gap:10px;cursor:pointer">
+        <span class="btw-switch"><input type="checkbox" id="btw-material-toggle"><span class="btw-track"></span></span>
+        <span><b>Efek Glass</b> &mdash; header, sidebar, dock &amp; kartu jadi kaca buram</span>
+      </label>
+    </div>
+    <div class="btw-statusline" id="btw-material-status"></div>
   </div>
 
   <div class="btw-card">
@@ -125,6 +138,7 @@ var URL_MANAGE = "<%=luci.dispatcher.build_url("admin", "system", "boundlessthem
 var URL_MANAGELOG = "<%=luci.dispatcher.build_url("admin", "system", "boundlesstheme", "managelog")%>";
 var URL_ACTIVATE = "<%=luci.dispatcher.build_url("admin", "system", "boundlesstheme", "activate")%>";
 var URL_SCHEME = "<%=luci.dispatcher.build_url("admin", "system", "boundlesstheme", "scheme")%>";
+var URL_MATERIAL = "<%=luci.dispatcher.build_url("admin", "system", "boundlesstheme", "material")%>";
 
 function $(id){ return document.getElementById(id); }
 function esc(s){ return String(s == null ? "" : s).replace(/&/g,"&amp;").replace(/</g,"&lt;"); }
@@ -214,8 +228,30 @@ function applyPanelScheme(id){
 function syncSchemeRow(){
   var isB = $("btw-theme-select").value === "/luci-static/boundless";
   $("btw-scheme-group").style.display = isB ? "inline-flex" : "none";
+  $("btw-material-row").style.display = isB ? "block" : "none";
 }
 $("btw-theme-select").addEventListener("change", syncSchemeRow);
+
+/* ---------- Efek Glass ---------- */
+$("btw-material-toggle").addEventListener("change", function(){
+  var on = this.checked, st = $("btw-material-status"), cb = this;
+  st.className = "btw-statusline"; st.textContent = on ? "Menyalakan Efek Glass..." : "Mematikan Efek Glass...";
+  postJSON(URL_MATERIAL, { material: on ? "glass" : "standar" }).then(function(r){
+    if (!r.ok) {
+      cb.checked = !on;
+      st.className = "btw-statusline err";
+      st.textContent = "Gagal: " + (r.error || "tidak diketahui");
+      return;
+    }
+    st.className = "btw-statusline ok";
+    st.textContent = on ? "Efek Glass aktif. Refresh halaman LuCI lain untuk melihatnya."
+                        : "Efek Glass mati. Refresh halaman LuCI lain untuk melihatnya.";
+  }).catch(function(){
+    cb.checked = !on;
+    st.className = "btw-statusline err";
+    st.textContent = "Gagal menghubungi server.";
+  });
+});
 
 function refresh(){
   return getJSON(URL_STATUS).then(function(s){
@@ -232,6 +268,7 @@ function refresh(){
     fillThemes(s);
     fillSchemes(s);
     applyPanelScheme(s.scheme);
+    $("btw-material-toggle").checked = (s.material === "glass");
     syncSchemeRow();
   }).catch(function(){ /* STB mungkin sedang restart; abaikan */ });
 }
@@ -339,7 +376,11 @@ $("btw-modal-save").addEventListener("click", function(){
    langsung balik tanpa klik Terapkan manual. */
 function reapplyScheme(){
   return getJSON(URL_STATUS).then(function(s){
-    if (s && s.scheme) return postJSON(URL_SCHEME, { scheme: s.scheme }).catch(function(){});
+    if (s && s.scheme) return postJSON(URL_SCHEME, { scheme: s.scheme })
+      .then(function(){
+        if (s.material) return postJSON(URL_MATERIAL, { material: s.material }).catch(function(){});
+      })
+      .catch(function(){});
   }).catch(function(){});
 }
 

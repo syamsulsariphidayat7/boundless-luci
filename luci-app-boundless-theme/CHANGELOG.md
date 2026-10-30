@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.0.0] - 2026-10-30
+
+### Added
+
+- **Saklar Efek Glass** di kartu Ganti Tema (sebaris di bawah
+  kontrol skema): menyalakan/mematikan gaya kaca buram tema
+  Boundless. Endpoint baru `POST /material` (standar|glass,
+  tersimpan di UCI `boundlesstheme.settings.material`, ditulis
+  ke `material.css` di folder statis tema); endpoint status
+  melaporkan pilihan aktif, dan habis Install/Update pilihan
+  material diterapkan ulang otomatis seperti skema.
+
 ## [1.9.1] - 2026-10-30
 
 Tidak ada perubahan kode aplikasi pada rilis ini — nomor versi

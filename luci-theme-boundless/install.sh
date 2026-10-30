@@ -35,6 +35,12 @@ if [ -f /www/luci-static/boundless/scheme.css ]; then
 	SCHEME_BAK=$(mktemp)
 	cp -f /www/luci-static/boundless/scheme.css "$SCHEME_BAK" 2>/dev/null || SCHEME_BAK=""
 fi
+# Pilihan Efek Glass user (material.css) diperlakukan sama.
+MATERIAL_BAK=""
+if [ -f /www/luci-static/boundless/material.css ]; then
+	MATERIAL_BAK=$(mktemp)
+	cp -f /www/luci-static/boundless/material.css "$MATERIAL_BAK" 2>/dev/null || MATERIAL_BAK=""
+fi
 # Static files (CSS / logo / icon) -> /www/luci-static/...
 mkdir -p /www/luci-static/boundless /www/luci-static/resources
 cp -r "$DIR/htdocs/luci-static/boundless/." /www/luci-static/boundless/
@@ -44,6 +50,10 @@ cp -f "$DIR/htdocs/luci-static/resources/menu-boundless.js" /www/luci-static/res
 if [ -n "$SCHEME_BAK" ] && [ -f "$SCHEME_BAK" ]; then
 	cp -f "$SCHEME_BAK" /www/luci-static/boundless/scheme.css
 	rm -f "$SCHEME_BAK"
+fi
+if [ -n "$MATERIAL_BAK" ] && [ -f "$MATERIAL_BAK" ]; then
+	cp -f "$MATERIAL_BAK" /www/luci-static/boundless/material.css
+	rm -f "$MATERIAL_BAK"
 fi
 
 # Ikon navbar REYRE-WRT (v7): header tema ini menampilkan baris ikon
