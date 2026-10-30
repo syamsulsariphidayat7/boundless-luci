@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.8.3] - 2026-10-30
+
+### Removed
+
+- Baris **Aplikasi Pengelola** di kartu Status dihapus — sejak
+  versi gabungan, nomornya selalu sama dengan versi tema, jadi
+  cuma duplikat. Stempel versi aplikasi tetap ada internal
+  (footer halaman + endpoint status untuk diagnosis).
+
 ## [1.8.2] - 2026-10-30
 
 Tidak ada perubahan kode aplikasi pada rilis ini — nomor versi

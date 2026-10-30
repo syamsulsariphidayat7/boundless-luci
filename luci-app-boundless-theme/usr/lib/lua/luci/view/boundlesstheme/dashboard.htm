@@ -61,7 +61,6 @@
       <div class="btw-kv"><div class="k">Versi Terpasang</div><div class="v" id="btw-ver">&mdash;</div></div>
       <div class="btw-kv"><div class="k">Tema Aktif Saat Ini</div><div class="v" id="btw-active">&mdash;</div></div>
       <div class="btw-kv"><div class="k">Installer Lokal (/root)</div><div class="v" id="btw-installer">&mdash;</div></div>
-      <div class="btw-kv"><div class="k">Aplikasi Pengelola</div><div class="v" id="btw-appver">&mdash;</div></div>
     </div>
   </div>
 
@@ -229,7 +228,6 @@ function refresh(){
     var base = (s.mediaurlbase || "").replace("/luci-static/", "") || "-";
     $("btw-active").textContent = base;
     $("btw-installer").textContent = s.has_installer ? "Tersedia" : "Tidak ada";
-    $("btw-appver").textContent = "v" + (s.app_version || "?");
     $("btw-foot-ver").textContent = "v" + (s.app_version || "?");
     fillThemes(s);
     fillSchemes(s);
