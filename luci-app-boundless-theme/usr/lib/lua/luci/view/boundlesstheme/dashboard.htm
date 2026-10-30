@@ -50,6 +50,12 @@
 .btw-notes.show{display:block}
 .btw-foot{text-align:center;color:var(--btw-muted);font-size:12px;margin-top:6px}
 .btw-select{appearance:auto;border:1px solid var(--btw-border);background:#fff;color:var(--btw-text);border-radius:10px;padding:9px 12px;font-size:13.5px;font-weight:600;min-width:230px;cursor:pointer}
+.btw-glass-sliders{display:none;margin-top:14px;border-top:1px solid var(--btw-border);padding-top:12px}
+.btw-glass-sliders.show{display:block}
+.btw-grow{display:flex;align-items:center;gap:12px;padding:5px 0;font-size:13.5px}
+.btw-grow label{width:80px;flex:none;font-weight:600}
+.btw-grow input[type=range]{flex:1;accent-color:var(--btw-primary,#0b486b);cursor:pointer}
+.btw-grow .gv{width:46px;flex:none;text-align:right;font-family:ui-monospace,Menlo,monospace;font-weight:700}
 </style>
 
 <div class="btw-wrap">
@@ -87,6 +93,13 @@
           <b>Efek Glass</b>
         </label>
       </span>
+    </div>
+    <div class="btw-glass-sliders" id="btw-glass-sliders">
+      <div class="btw-grow"><label for="btw-glass-header">Header</label><input type="range" id="btw-glass-header" min="40" max="95" step="1"><span class="gv" id="btw-glass-header-v"></span></div>
+      <div class="btw-grow"><label for="btw-glass-dock">Dock</label><input type="range" id="btw-glass-dock" min="40" max="95" step="1"><span class="gv" id="btw-glass-dock-v"></span></div>
+      <div class="btw-grow"><label for="btw-glass-side">Sidebar</label><input type="range" id="btw-glass-side" min="20" max="85" step="1"><span class="gv" id="btw-glass-side-v"></span></div>
+      <div class="btw-grow"><label for="btw-glass-card">Kartu</label><input type="range" id="btw-glass-card" min="30" max="90" step="1"><span class="gv" id="btw-glass-card-v"></span></div>
+      <p class="btw-note">Opacity Efek Glass per permukaan &mdash; geser untuk pratinjau, lepas untuk menyimpan. Tersimpan di perangkat.</p>
     </div>
     <div class="btw-statusline" id="btw-theme-status"></div>
     <div class="btw-statusline" id="btw-scheme-status"></div>
@@ -229,6 +242,7 @@ function syncSchemeRow(){
   var isB = $("btw-theme-select").value === "/luci-static/boundless";
   $("btw-scheme-group").style.display = isB ? "inline-flex" : "none";
   $("btw-material-row").style.display = isB ? "inline-flex" : "none";
+  syncGlassSliders();
 }
 $("btw-theme-select").addEventListener("change", syncSchemeRow);
 
@@ -246,12 +260,64 @@ $("btw-material-toggle").addEventListener("change", function(){
     st.className = "btw-statusline ok";
     st.textContent = on ? "Efek Glass aktif. Refresh halaman LuCI lain untuk melihatnya."
                         : "Efek Glass mati. Refresh halaman LuCI lain untuk melihatnya.";
+    syncGlassSliders();
   }).catch(function(){
     cb.checked = !on;
     st.className = "btw-statusline err";
     st.textContent = "Gagal menghubungi server.";
+    syncGlassSliders();
   });
 });
+
+/* ---------- Slider opacity Glass (2.1.0) ----------
+   Empat slider (header & dock terpisah), tampil hanya saat
+   tema Boundless dipilih DAN Efek Glass menyala. Geser =
+   pratinjau langsung (variabel CSS di <html>; efektif bila
+   glass.css memang sedang termuat di halaman ini), lepas =
+   POST simpan ke server (rentang divalidasi ulang di sana). */
+var GLASS_KEYS = ["header", "dock", "side", "card"];
+function glassPayload(){
+  var p = { material: "glass" };
+  GLASS_KEYS.forEach(function(k){ p["glass_" + k] = $("btw-glass-" + k).value; });
+  return p;
+}
+function previewGlass(){
+  var r = document.documentElement.style;
+  r.setProperty("--glass-header", $("btw-glass-header").value + "%");
+  r.setProperty("--glass-dock", $("btw-glass-dock").value + "%");
+  r.setProperty("--glass-side", $("btw-glass-side").value / 100);
+  r.setProperty("--glass-card", $("btw-glass-card").value / 100);
+  GLASS_KEYS.forEach(function(k){ $("btw-glass-" + k + "-v").textContent = $("btw-glass-" + k).value + "%"; });
+}
+function syncGlassSliders(){
+  var on = $("btw-material-toggle").checked && $("btw-theme-select").value === "/luci-static/boundless";
+  $("btw-glass-sliders").className = "btw-glass-sliders" + (on ? " show" : "");
+}
+GLASS_KEYS.forEach(function(k){
+  var el = $("btw-glass-" + k);
+  el.addEventListener("input", previewGlass);
+  el.addEventListener("change", function(){
+    var st = $("btw-material-status");
+    st.className = "btw-statusline"; st.textContent = "Menyimpan opacity Glass...";
+    postJSON(URL_MATERIAL, glassPayload()).then(function(r){
+      if (!r.ok) {
+        st.className = "btw-statusline err";
+        st.textContent = "Gagal: " + (r.error || "tidak diketahui");
+        return;
+      }
+      st.className = "btw-statusline ok";
+      st.textContent = "Opacity Glass tersimpan. Refresh halaman LuCI lain untuk melihatnya.";
+    }).catch(function(){
+      st.className = "btw-statusline err";
+      st.textContent = "Gagal menghubungi server.";
+    });
+  });
+});
+function fillGlass(g){
+  if (!g) return;
+  GLASS_KEYS.forEach(function(k){ if (g[k] != null) $("btw-glass-" + k).value = g[k]; });
+  previewGlass();
+}
 
 function refresh(){
   return getJSON(URL_STATUS).then(function(s){
@@ -269,6 +335,7 @@ function refresh(){
     fillSchemes(s);
     applyPanelScheme(s.scheme);
     $("btw-material-toggle").checked = (s.material === "glass");
+    fillGlass(s.glass);
     syncSchemeRow();
   }).catch(function(){ /* STB mungkin sedang restart; abaikan */ });
 }

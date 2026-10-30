@@ -282,11 +282,47 @@ local function current_material()
 	return "standar"
 end
 
+-- Opacity Efek Glass per permukaan (2.1.0): slider dashboard.
+-- Nilai disimpan di UCI sebagai persen utuh; rentang min/max
+-- dijaga di sini (server) DAN di slider (client). Header dan
+-- dock terpisah walau sumber gradiennya sama. Nilai UCI yang
+-- hilang / rusak / di luar rentang jatuh ke default-nya.
+local GLASS_RANGES = {
+	header = { min = 40, max = 95, def = 68, key = "glass_header" },
+	dock   = { min = 40, max = 95, def = 68, key = "glass_dock" },
+	side   = { min = 20, max = 85, def = 42, key = "glass_side" },
+	card   = { min = 30, max = 90, def = 50, key = "glass_card" },
+}
+
+local function glass_value(uci, name)
+	local r = GLASS_RANGES[name]
+	local v = tonumber(uci:get("boundlesstheme", "settings", r.key) or "")
+	if not v or v < r.min or v > r.max then return r.def end
+	return math.floor(v)
+end
+
+local function current_glass()
+	local uci = luci.model.uci.cursor()
+	return {
+		header = glass_value(uci, "header"),
+		dock = glass_value(uci, "dock"),
+		side = glass_value(uci, "side"),
+		card = glass_value(uci, "card"),
+	}
+end
+
 local function write_material_css(id)
 	local f = io.open(MATERIAL_CSS, "w")
 	if not f then return false end
 	if id == "glass" then
+		local g = current_glass()
 		f:write("/* Efek Glass aktif - ditulis dashboard Boundless Theme; jangan diedit manual. */\n@import url(\"glass.css\");\n")
+		-- Variabel opacity untuk glass.css; ditulis SESUDAH
+		-- @import supaya menimpa fallback di file tema.
+		f:write(string.format(":root{--glass-header:%d%%;--glass-dock:%d%%;--glass-side:%s;--glass-card:%s}\n",
+			g.header, g.dock,
+			string.format("%g", g.side / 100),
+			string.format("%g", g.card / 100)))
 	else
 		f:write("/* Material standar: tanpa lapisan efek - ditulis dashboard Boundless Theme. */\n")
 	end
@@ -419,6 +455,7 @@ function action_status()
 		scheme = current_scheme(),
 		schemes = schemes,
 		material = current_material(),
+		glass = current_glass(),
 	}))
 end
 
@@ -496,7 +533,11 @@ function action_scheme()
 end
 
 -- POST /material — nyala/matikan Efek Glass (simpan UCI + tulis
--- material.css). Sinkron seperti /scheme.
+-- material.css). Sinkron seperti /scheme. Sejak 2.1.0 juga
+-- menerima nilai slider opacity (glass_header / glass_dock /
+-- glass_side / glass_card, persen) — opsional: yang tidak
+-- dikirim mempertahankan nilai tersimpan; yang dikirim tapi di
+-- luar rentang ditolak 400.
 function action_material()
 	if not require_post() then return end
 	local http = luci.http
@@ -506,17 +547,32 @@ function action_material()
 		http.status(400, "Bad Request")
 		return http.write(luci.jsonc.stringify({ ok = false, error = "material tidak dikenal" }))
 	end
+	local sent = {}
+	for name, r in pairs(GLASS_RANGES) do
+		local raw = http.formvalue(r.key)
+		if raw ~= nil then
+			local v = tonumber(raw)
+			if not v or v < r.min or v > r.max then
+				http.status(400, "Bad Request")
+				return http.write(luci.jsonc.stringify({ ok = false, error = "opacity " .. name .. " di luar rentang " .. r.min .. "-" .. r.max }))
+			end
+			sent[name] = math.floor(v)
+		end
+	end
 	local uci = luci.model.uci.cursor()
 	if not uci:get_first("boundlesstheme", "settings") then
 		uci:section("boundlesstheme", "settings", "settings")
 	end
 	uci:set("boundlesstheme", "settings", "material", id)
+	for name, v in pairs(sent) do
+		uci:set("boundlesstheme", "settings", GLASS_RANGES[name].key, tostring(v))
+	end
 	uci:commit("boundlesstheme")
 	if not write_material_css(id) then
 		http.status(500, "Internal Server Error")
 		return http.write(luci.jsonc.stringify({ ok = false, error = "gagal menulis material.css - tema belum terpasang?" }))
 	end
-	http.write(luci.jsonc.stringify({ ok = true, material = id }))
+	http.write(luci.jsonc.stringify({ ok = true, material = id, glass = current_glass() }))
 end
 
 function action_check()

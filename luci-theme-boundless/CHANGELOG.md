@@ -4,6 +4,17 @@ Semua perubahan penting tema ini dicatat di sini.
 Format mengikuti [Keep a Changelog](https://keepachangelog.com/),
 versi mengikuti [Semantic Versioning](https://semver.org/).
 
+## [2.1.0] - 2026-10-30
+
+### Changed
+
+- **Opacity Efek Glass kini variabel CSS** — `--glass-header`,
+  `--glass-dock`, `--glass-side`, `--glass-card` — yang ditulis
+  dashboard (slider, lihat changelog aplikasi) ke `material.css`
+  sesudah `@import` file ini. Fallback di `glass.css` tetap nilai
+  2.0.2 (68% / 68% / 42% / 50%), dan header sekarang bisa beda
+  opacity dari dock walau sumber gradiennya sama.
+
 ## [2.0.2] - 2026-10-30
 
 ### Changed

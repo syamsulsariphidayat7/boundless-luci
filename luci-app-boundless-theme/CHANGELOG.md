@@ -1,5 +1,21 @@
 # Changelog
 
+## [2.1.0] - 2026-10-30
+
+### Added
+
+- **4 slider opacity Efek Glass** di kartu Ganti Tema — Header
+  40–95%, Dock 40–95%, Sidebar 20–85%, Kartu 30–90% (default
+  nilai 2.0.2: 68 / 68 / 42 / 50; header & dock sengaja terpisah
+  atas permintaan Syamsul) — tampil hanya saat Efek Glass
+  menyala. Geser = pratinjau langsung di halaman, lepas =
+  tersimpan otomatis ke UCI (`glass_header` / `glass_dock` /
+  `glass_side` / `glass_card`). Endpoint `POST /material`
+  memvalidasi rentang di server (di luar rentang = 400) dan
+  menulis variabel opacity ke `material.css`; endpoint status
+  melaporkan nilai aktif, dan habis Install/Update nilai slider
+  diterapkan ulang otomatis bersama pilihan material.
+
 ## [2.0.2] - 2026-10-30
 
 Tidak ada perubahan kode aplikasi pada rilis ini — nomor versi
