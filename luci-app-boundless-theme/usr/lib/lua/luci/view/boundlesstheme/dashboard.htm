@@ -31,6 +31,7 @@
 .btw-log{display:none;background:#141a22;color:#c9e4d4;border-radius:12px;padding:12px 14px;font-family:ui-monospace,Menlo,monospace;font-size:12px;line-height:1.5;white-space:pre-wrap;word-break:break-word;max-height:260px;overflow:auto;margin-top:12px}
 .btw-log.show{display:block}
 .btw-statusline{font-size:13px;margin-top:10px;min-height:18px}
+.btw-statusline:empty{display:none}
 .btw-statusline.ok{color:var(--btw-green);font-weight:600}
 .btw-statusline.err{color:var(--btw-red);font-weight:600}
 #btw-scheme-preview{cursor:pointer}
@@ -99,7 +100,10 @@
       <div class="btw-grow"><label for="btw-glass-dock">Dock</label><input type="range" id="btw-glass-dock" min="40" max="95" step="1"><span class="gv" id="btw-glass-dock-v"></span></div>
       <div class="btw-grow"><label for="btw-glass-side">Sidebar</label><input type="range" id="btw-glass-side" min="20" max="85" step="1"><span class="gv" id="btw-glass-side-v"></span></div>
       <div class="btw-grow"><label for="btw-glass-card">Kartu</label><input type="range" id="btw-glass-card" min="30" max="90" step="1"><span class="gv" id="btw-glass-card-v"></span></div>
-      <p class="btw-note">Opacity Efek Glass per permukaan &mdash; geser untuk pratinjau, lepas untuk menyimpan. Tersimpan di perangkat.</p>
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+        <p class="btw-note" style="margin:0">Opacity Efek Glass per permukaan &mdash; geser untuk pratinjau, lepas untuk menyimpan. Tersimpan di perangkat.</p>
+        <button class="btw-btn" id="btw-glass-reset" type="button">Reset ke Default</button>
+      </div>
     </div>
     <div class="btw-statusline" id="btw-theme-status"></div>
     <div class="btw-statusline" id="btw-scheme-status"></div>
@@ -318,6 +322,27 @@ function fillGlass(g){
   GLASS_KEYS.forEach(function(k){ if (g[k] != null) $("btw-glass-" + k).value = g[k]; });
   previewGlass();
 }
+
+/* Reset opacity Glass ke default bawaan — angka ini harus sama
+   dengan GLASS_RANGES.def di controller (68/68/42/50). */
+$("btw-glass-reset").addEventListener("click", function(){
+  var def = { header: 68, dock: 68, side: 42, card: 50 }, st = $("btw-material-status");
+  GLASS_KEYS.forEach(function(k){ $("btw-glass-" + k).value = def[k]; });
+  previewGlass();
+  st.className = "btw-statusline"; st.textContent = "Mereset opacity Glass ke default...";
+  postJSON(URL_MATERIAL, glassPayload()).then(function(r){
+    if (!r.ok) {
+      st.className = "btw-statusline err";
+      st.textContent = "Gagal: " + (r.error || "tidak diketahui");
+      return;
+    }
+    st.className = "btw-statusline ok";
+    st.textContent = "Opacity Glass direset ke default (Header 68%, Dock 68%, Sidebar 42%, Kartu 50%).";
+  }).catch(function(){
+    st.className = "btw-statusline err";
+    st.textContent = "Gagal menghubungi server.";
+  });
+});
 
 function refresh(){
   return getJSON(URL_STATUS).then(function(s){

@@ -1,5 +1,23 @@
 # Changelog
 
+## [2.1.1] - 2026-10-30
+
+### Added
+
+- **Tombol "Reset ke Default"** di blok slider Efek Glass:
+  mengembalikan keempat opacity ke nilai bawaan (Header 68%,
+  Dock 68%, Sidebar 42%, Kartu 50%) — pratinjau langsung lalu
+  tersimpan otomatis, sama seperti menggeser slider.
+
+### Fixed
+
+- **Ruang kosong besar di bawah kartu dashboard**: baris status
+  (`.btw-statusline`) selalu menyisakan tempat walau kosong
+  (min-height 18px + margin, ×3 baris di kartu Ganti Tema ≈
+  84px). Baris status kosong sekarang tidak ditampilkan
+  (`:empty`), jadi kartu rapat mengikuti isinya; pesan status
+  tetap muncul seperti biasa saat ada isinya.
+
 ## [2.1.0] - 2026-10-30
 
 ### Added
