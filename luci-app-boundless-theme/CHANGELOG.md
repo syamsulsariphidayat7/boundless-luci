@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.9.1] - 2026-10-30
+
+Tidak ada perubahan kode aplikasi pada rilis ini — nomor versi
+mengikuti rilis gabungan 1.9.1 (perbaikan di tema: sudut header
+yang belum rounded).
+
 ## [1.9.0] - 2026-10-30
 
 Tidak ada perubahan kode aplikasi pada rilis ini — nomor versi

@@ -4,6 +4,16 @@ Semua perubahan penting tema ini dicatat di sini.
 Format mengikuti [Keep a Changelog](https://keepachangelog.com/),
 versi mengikuti [Semantic Versioning](https://semver.org/).
 
+## [1.9.1] - 2026-10-30
+
+### Fixed
+
+- **Sudut header tidak rounded di perangkat**: gradien header
+  dicat juga oleh elemen anak `header > .fill` yang sudutnya
+  kotak dan menutupi radius header. Sekarang `.fill` ikut
+  `border-radius: 1rem` + `height: 100%`, jadi keempat sudut
+  header benar-benar bulat.
+
 ## [1.9.0] - 2026-10-30
 
 ### Added

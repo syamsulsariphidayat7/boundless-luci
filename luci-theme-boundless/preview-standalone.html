@@ -159,7 +159,7 @@ header > .fill > .container > #logo > img {
 
 /**
  *	luci-theme-boundless - cascade.css
- *	Version: 1.9.0 (see the VERSION file and CHANGELOG.md; check the
+ *	Version: 1.9.1 (see the VERSION file and CHANGELOG.md; check the
  *	installed version on a device with: grep -m1 "Version:" cascade.css)
  *
  *	DERIVATIVE WORK: everything up to the "MATERIAL3 LIGHT OVERRIDES" block
@@ -4461,6 +4461,16 @@ header > .fill > .container > #logo > img { width: 12rem; }
 		width: auto;
 		border-radius: 1rem;
 		box-shadow: 0 10px 24px rgba(20, 24, 40, .20);
+	}
+
+	/* v1.9.1: the gradient is painted by header > .fill as well,
+	   and .fill's square corners covered the header's rounded
+	   ones — so the radius must live on .fill too. (No
+	   overflow:hidden on header: the fixed dock is its child
+	   and would be clipped away.) */
+	header > .fill {
+		border-radius: 1rem;
+		height: 100%;
 	}
 
 	.main {
