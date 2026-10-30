@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.9.0] - 2026-10-30
+
+Tidak ada perubahan kode aplikasi pada rilis ini — nomor versi
+mengikuti rilis gabungan 1.9.0 (perubahan ada di tema: header +
+sidebar rounded melayang).
+
 ## [1.8.4] - 2026-10-30
 
 ### Removed

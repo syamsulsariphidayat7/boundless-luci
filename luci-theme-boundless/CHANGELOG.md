@@ -4,6 +4,17 @@ Semua perubahan penting tema ini dicatat di sini.
 Format mengikuti [Keep a Changelog](https://keepachangelog.com/),
 versi mengikuti [Semantic Versioning](https://semver.org/).
 
+## [1.9.0] - 2026-10-30
+
+### Added
+
+- **Header + sidebar rounded melayang**: di layout desktop, header
+  dan sidebar kiri kini berjarak dari tepi layar dengan sudut
+  rounded dan bayangan lembut — satu bahasa visual dengan dock
+  bawah. Offset konten digeser sepadan dan tepi kanan sidebar
+  tetap di posisi semula, jadi area konten tidak berubah.
+  Layout mobile tetap seperti bawaan.
+
 ## [1.8.4] - 2026-10-30
 
 Tidak ada perubahan kode tema pada rilis ini — nomor versi mengikuti

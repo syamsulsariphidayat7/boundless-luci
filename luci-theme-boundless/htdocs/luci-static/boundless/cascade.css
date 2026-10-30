@@ -1,6 +1,6 @@
 /**
  *	luci-theme-boundless - cascade.css
- *	Version: 1.8.4 (see the VERSION file and CHANGELOG.md; check the
+ *	Version: 1.9.0 (see the VERSION file and CHANGELOG.md; check the
  *	installed version on a device with: grep -m1 "Version:" cascade.css)
  *
  *	DERIVATIVE WORK: everything up to the "MATERIAL3 LIGHT OVERRIDES" block
@@ -4285,4 +4285,36 @@ header > .fill > .container > #logo > img { width: 12rem; }
 .cbi-button-positive:not(.cbi-dropdown):hover::before, .cbi-button-negative:not(.cbi-dropdown):hover::before {
 	transform: translateX(120%);
 	transition: transform .6s ease;
+}
+
+/* ================= v1.9.0: floating rounded chrome =================
+   Header dan sidebar kiri ikut melayang kayak dock bawah: berjarak
+   dari tepi viewport, sudut rounded, bayangan lembut. Cuma layout
+   desktop; layout mobile bertumpuk tetap flush seperti bawaan.
+   Offset .main digeser sebesar jarak header supaya tidak ada yang
+   tertutup, dan lebar sidebar dikurangi sebesar jarak kirinya —
+   tepi kanannya tetap persis di 15rem, area konten tidak bergeser. */
+@media screen and (min-width: 1153px) {
+	header {
+		top: .625rem;
+		left: .625rem;
+		right: .625rem;
+		width: auto;
+		border-radius: 1rem;
+		box-shadow: 0 10px 24px rgba(20, 24, 40, .20);
+	}
+
+	.main {
+		top: 5.125rem;
+		height: calc(100% - 5.125rem);
+	}
+
+	.main-left {
+		top: 5.125rem;
+		left: .625rem;
+		width: calc(0% + 14.375rem);
+		height: calc(100% - 5.75rem);
+		border-radius: 1.125rem;
+		box-shadow: 0 10px 24px rgba(20, 24, 40, .14);
+	}
 }
