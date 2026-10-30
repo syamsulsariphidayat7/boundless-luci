@@ -81,15 +81,15 @@
         <span id="btw-scheme-preview" title="Klik untuk warna custom" style="width:110px;height:26px;border-radius:999px;border:1px solid var(--btw-border);display:inline-block;flex:none"></span>
         <button class="btw-btn primary" id="btw-btn-scheme" type="button">Terapkan Skema</button>
       </span>
+      <span id="btw-material-row" style="display:none;align-items:center;gap:8px">
+        <label style="display:inline-flex;align-items:center;gap:8px;cursor:pointer" title="Header, sidebar, dock &amp; kartu jadi kaca buram">
+          <span class="btw-switch"><input type="checkbox" id="btw-material-toggle"><span class="btw-track"></span></span>
+          <b>Efek Glass</b>
+        </label>
+      </span>
     </div>
     <div class="btw-statusline" id="btw-theme-status"></div>
     <div class="btw-statusline" id="btw-scheme-status"></div>
-    <div id="btw-material-row" style="display:none;margin-top:10px">
-      <label style="display:flex;align-items:center;gap:10px;cursor:pointer">
-        <span class="btw-switch"><input type="checkbox" id="btw-material-toggle"><span class="btw-track"></span></span>
-        <span><b>Efek Glass</b> &mdash; header, sidebar, dock &amp; kartu jadi kaca buram</span>
-      </label>
-    </div>
     <div class="btw-statusline" id="btw-material-status"></div>
   </div>
 
@@ -228,7 +228,7 @@ function applyPanelScheme(id){
 function syncSchemeRow(){
   var isB = $("btw-theme-select").value === "/luci-static/boundless";
   $("btw-scheme-group").style.display = isB ? "inline-flex" : "none";
-  $("btw-material-row").style.display = isB ? "block" : "none";
+  $("btw-material-row").style.display = isB ? "inline-flex" : "none";
 }
 $("btw-theme-select").addEventListener("change", syncSchemeRow);
 

@@ -4,6 +4,18 @@ Semua perubahan penting tema ini dicatat di sini.
 Format mengikuti [Keep a Changelog](https://keepachangelog.com/),
 versi mengikuti [Semantic Versioning](https://semver.org/).
 
+## [2.0.1] - 2026-10-30
+
+### Fixed
+
+- **Dock terpental ke atas saat Glass aktif**: `backdrop-filter`
+  di elemen `header` menjadikannya containing block bagi
+  descendant `position: fixed` — dan dock adalah anak header,
+  jadi posisi fixed-nya dihitung dari kotak header, bukan
+  viewport. Blur header dipindah ke lapisan `header::after`
+  (bukan ancestor dock) + `.fill` diangkat ke z-index 1; dock
+  kembali ke bawah dan efek kaca header tetap jalan.
+
 ## [2.0.0] - 2026-10-30
 
 ### Added

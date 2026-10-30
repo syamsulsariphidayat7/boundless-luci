@@ -1,5 +1,14 @@
 # Changelog
 
+## [2.0.1] - 2026-10-30
+
+### Changed
+
+- Saklar **Efek Glass** pindah sebaris dengan kontrol skema
+  (di samping tombol Terapkan Skema), tidak lagi di baris
+  tersendiri di bawahnya. Perbaikan dock yang terpental saat
+  Glass aktif ada di tema (glass.css).
+
 ## [2.0.0] - 2026-10-30
 
 ### Added
