@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.1.6] - 2026-11-03
+
+Tidak ada perubahan kode aplikasi pada rilis ini — nomor versi
+mengikuti rilis gabungan 2.1.6 (perubahan ada di tema: ikon dock
+berwarna per item).
+
 ## [2.1.5] - 2026-11-03
 
 Tidak ada perubahan kode aplikasi pada rilis ini — nomor versi

@@ -161,7 +161,7 @@ header > .fill > .container > #logo > img {
 
 /**
  *	luci-theme-boundless - cascade.css
- *	Version: 2.1.5 (see the VERSION file and CHANGELOG.md; check the
+ *	Version: 2.1.6 (see the VERSION file and CHANGELOG.md; check the
  *	installed version on a device with: grep -m1 "Version:" cascade.css)
  *
  *	DERIVATIVE WORK: everything up to the "MATERIAL3 LIGHT OVERRIDES" block
@@ -4056,6 +4056,22 @@ header { height: 4rem; }
 	vertical-align: -2px;
 	margin-right: 6px;
 }
+
+/* v2.1.6 (user request, 2026-11-03): every dock icon gets its own
+   colour. The colour is set on the svg itself, so the currentColor
+   fill picks it up while the label text stays white (the link's
+   own color is untouched). One rule per item, keyed by its href
+   (the Zsb anchor carries no href in the HTML - it is set by
+   script - so it is keyed by its id). */
+#menu a[href="http://192.168.8.1/"] svg.bicon { color: #38bdf8; }
+#menu a[href="/cgi-bin/luci/admin/services/ttyd"] svg.bicon { color: #4ade80; }
+#menu a#zsb svg.bicon { color: #a78bfa; }
+#menu a[href="/cgi-bin/luci/admin/status/release_ram"] svg.bicon { color: #22d3ee; }
+#menu a[href="/cgi-bin/luci/admin/services/sunset"] svg.bicon { color: #fb923c; }
+#menu a[href="/cgi-bin/luci/admin/modem/3ginfo-lite"] svg.bicon { color: #a3e635; }
+#menu a[href="/cgi-bin/luci/admin/modem/5gmodem/readsms"] svg.bicon { color: #f472b6; }
+#menu a[href="/cgi-bin/luci/admin/services/boundlesstools"] svg.bicon { color: #facc15; }
+#menu a[href="/cgi-bin/luci/admin/system/boundlesstheme"] svg.bicon { color: #e879f9; }
 #maincontent { padding-bottom: 5rem; }
 
 @media (max-width: 640px) {

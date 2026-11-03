@@ -4,6 +4,18 @@ Semua perubahan penting tema ini dicatat di sini.
 Format mengikuti [Keep a Changelog](https://keepachangelog.com/),
 versi mengikuti [Semantic Versioning](https://semver.org/).
 
+## [2.1.6] - 2026-11-03
+
+### Changed
+
+- **Ikon dock berwarna** (permintaan Syamsul): tiap ikon item
+  dock kini punya warna sendiri — Modem biru langit `#38bdf8`,
+  Terminal hijau `#4ade80`, Zsb ungu `#a78bfa`, Clear cyan
+  `#22d3ee`, Sunset oranye `#fb923c`, Sinyal lime `#a3e635`,
+  SMS pink `#f472b6`, Tools kuning `#facc15`, Tema fuchsia
+  `#e879f9`. Label teks tetap putih; warna diatur per item di
+  cascade.css berdasarkan href item (Zsb berdasarkan id).
+
 ## [2.1.5] - 2026-11-03
 
 ### Added
