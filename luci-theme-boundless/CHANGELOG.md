@@ -4,6 +4,23 @@ Semua perubahan penting tema ini dicatat di sini.
 Format mengikuti [Keep a Changelog](https://keepachangelog.com/),
 versi mengikuti [Semantic Versioning](https://semver.org/).
 
+## [2.1.4] - 2026-11-03
+
+### Added
+
+- **Item dock "Sinyal" dan "SMS"** (permintaan Syamsul):
+  Sinyal → `/cgi-bin/luci/admin/modem/3ginfo-lite` (ikon
+  `signal_cellular_alt`), SMS → `/cgi-bin/luci/admin/modem/5gmodem/readsms`
+  (ikon `sms`), posisi sesudah Sunset. Dock sekarang: Modem,
+  Terminal, Zsb, Clear, Sunset, Sinyal, SMS, Tema.
+
+### Removed
+
+- **Ikon modem & monitor dari baris ikon navbar header** — kedua
+  link itu persis yang dipindah ke dock (3ginfo-lite dan readsms),
+  jadi duplikatnya di header dihapus sesuai permintaan Syamsul.
+  Sisa ikon navbar: nikki, openclash, tinyfm, netmon, interface.
+
 ## [2.1.3] - 2026-11-03
 
 ### Added
