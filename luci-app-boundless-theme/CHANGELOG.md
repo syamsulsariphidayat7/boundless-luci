@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.1.3] - 2026-11-03
+
+Tidak ada perubahan kode aplikasi pada rilis ini — nomor versi
+mengikuti rilis gabungan 2.1.3 (perubahan ada di tema: item dock
+baru "Sunset").
+
 ## [2.1.2] - 2026-10-30
 
 ### Changed

@@ -4,6 +4,17 @@ Semua perubahan penting tema ini dicatat di sini.
 Format mengikuti [Keep a Changelog](https://keepachangelog.com/),
 versi mengikuti [Semantic Versioning](https://semver.org/).
 
+## [2.1.3] - 2026-11-03
+
+### Added
+
+- **Item dock "Sunset"** (permintaan Syamsul): shortcut ke halaman
+  luci-app-sunset (`/cgi-bin/luci/admin/services/sunset`), ikon
+  Material Symbols `wb_twilight`, posisi di antara Clear dan Tema.
+  Dock sekarang: Modem, Terminal, Zsb, Clear, Sunset, Tema. Karena
+  link-nya LuCI lokal, titik penanda aktif ikut bekerja di halaman
+  Sunset seperti item lokal lain.
+
 ## [2.1.2] - 2026-10-30
 
 Tidak ada perubahan kode tema pada rilis ini — nomor versi mengikuti
