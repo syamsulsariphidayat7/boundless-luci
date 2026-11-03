@@ -4,6 +4,12 @@ Semua perubahan penting tema ini dicatat di sini.
 Format mengikuti [Keep a Changelog](https://keepachangelog.com/),
 versi mengikuti [Semantic Versioning](https://semver.org/).
 
+## [2.2.1] - 2026-11-03
+
+Tidak ada perubahan kode tema pada rilis ini — nomor versi
+mengikuti rilis gabungan 2.2.1 (perbaikan routing endpoint dock
+di aplikasi pengelola).
+
 ## [2.2.0] - 2026-11-03
 
 ### Changed

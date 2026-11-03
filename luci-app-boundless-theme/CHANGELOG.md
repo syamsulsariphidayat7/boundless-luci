@@ -1,5 +1,19 @@
 # Changelog
 
+## [2.2.1] - 2026-11-03
+
+### Fixed
+
+- **Tombol Simpan Dock di 2.2.0 tidak benar-benar menyimpan.**
+  Endpoint simpan/reset/halaman terdaftar bersarang di bawah
+  entry `dock` yang `.leaf`, sehingga dispatcher menyerahkan
+  segment ekstra ke `action_dock` sebagai argumen: POST simpan
+  dijawab `ok` tanpa `count` dan tanpa menulis UCI (pesan sukses
+  di dashboard menampilkan "undefined item"). Endpoint kini
+  sejajar seperti endpoint lain: `dock`, `dock_save`,
+  `dock_reset`, `dock_pages`; URL di dashboard disesuaikan.
+  Pelajaran: jangan beri `.leaf` pada entry yang punya anak.
+
 ## [2.2.0] - 2026-11-03
 
 ### Added

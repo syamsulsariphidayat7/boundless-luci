@@ -188,9 +188,9 @@ var URL_ACTIVATE = "<%=luci.dispatcher.build_url("admin", "system", "boundlessth
 var URL_SCHEME = "<%=luci.dispatcher.build_url("admin", "system", "boundlesstheme", "scheme")%>";
 var URL_MATERIAL = "<%=luci.dispatcher.build_url("admin", "system", "boundlesstheme", "material")%>";
 var URL_DOCK = "<%=luci.dispatcher.build_url("admin", "system", "boundlesstheme", "dock")%>";
-var URL_DOCK_SAVE = "<%=luci.dispatcher.build_url("admin", "system", "boundlesstheme", "dock", "save")%>";
-var URL_DOCK_RESET = "<%=luci.dispatcher.build_url("admin", "system", "boundlesstheme", "dock", "reset")%>";
-var URL_DOCK_PAGES = "<%=luci.dispatcher.build_url("admin", "system", "boundlesstheme", "dock", "pages")%>";
+var URL_DOCK_SAVE = "<%=luci.dispatcher.build_url("admin", "system", "boundlesstheme", "dock_save")%>";
+var URL_DOCK_RESET = "<%=luci.dispatcher.build_url("admin", "system", "boundlesstheme", "dock_reset")%>";
+var URL_DOCK_PAGES = "<%=luci.dispatcher.build_url("admin", "system", "boundlesstheme", "dock_pages")%>";
 
 function $(id){ return document.getElementById(id); }
 function esc(s){ return String(s == null ? "" : s).replace(/&/g,"&amp;").replace(/</g,"&lt;"); }
@@ -750,7 +750,7 @@ $("btw-dock-add").addEventListener("click", function(){
 $("btw-dock-save").addEventListener("click", function(){
   dockStatus("Menyimpan...", true);
   postJSON(URL_DOCK_SAVE, { items: JSON.stringify(dockItems) }).then(function(r){
-    if (r && r.ok) dockStatus("Dock tersimpan (" + r.count + " item). Muat ulang halaman untuk melihat dock baru.", true);
+    if (r && r.ok) dockStatus("Dock tersimpan (" + (r.count != null ? r.count : dockItems.length) + " item). Muat ulang halaman untuk melihat dock baru.", true);
     else dockStatus("Gagal menyimpan: " + ((r && r.error) || "tidak diketahui"), false);
   }).catch(function(e){ dockStatus("Gagal menghubungi STB: " + e.message, false); });
 });

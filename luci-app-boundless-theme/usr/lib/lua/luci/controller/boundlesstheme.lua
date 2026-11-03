@@ -34,13 +34,21 @@ function index()
 		post("action_scheme")).leaf = true
 	entry({"admin", "system", "boundlesstheme", "material"},
 		post("action_material")).leaf = true
+	-- PERHATIAN (fix 2.2.1): endpoint dock dibuat SEJAJAR (dock,
+	-- dock_save, ...) seperti endpoint lain di file ini, BUKAN
+	-- bersarang di bawah "dock". Di 2.2.0 bentuknya
+	-- dock/save|reset|pages di bawah entry "dock" yang .leaf -
+	-- dispatcher menyerahkan segment ekstra ke action_dock sebagai
+	-- argumen, jadi POST simpan dijawab action_dock (ok=true tapi
+	-- tanpa count dan TANPA menyimpan apa pun). Pelajaran: jangan
+	-- beri .leaf pada entry yang punya anak.
 	entry({"admin", "system", "boundlesstheme", "dock"},
 		call("action_dock")).leaf = true
-	entry({"admin", "system", "boundlesstheme", "dock", "save"},
+	entry({"admin", "system", "boundlesstheme", "dock_save"},
 		post("action_dock_save")).leaf = true
-	entry({"admin", "system", "boundlesstheme", "dock", "reset"},
+	entry({"admin", "system", "boundlesstheme", "dock_reset"},
 		post("action_dock_reset")).leaf = true
-	entry({"admin", "system", "boundlesstheme", "dock", "pages"},
+	entry({"admin", "system", "boundlesstheme", "dock_pages"},
 		call("action_dock_pages")).leaf = true
 end
 
