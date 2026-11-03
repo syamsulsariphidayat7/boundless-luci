@@ -34,6 +34,14 @@ function index()
 		post("action_scheme")).leaf = true
 	entry({"admin", "system", "boundlesstheme", "material"},
 		post("action_material")).leaf = true
+	entry({"admin", "system", "boundlesstheme", "dock"},
+		call("action_dock")).leaf = true
+	entry({"admin", "system", "boundlesstheme", "dock", "save"},
+		post("action_dock_save")).leaf = true
+	entry({"admin", "system", "boundlesstheme", "dock", "reset"},
+		post("action_dock_reset")).leaf = true
+	entry({"admin", "system", "boundlesstheme", "dock", "pages"},
+		call("action_dock_pages")).leaf = true
 end
 
 local BUNDLE_SLUG = "syamsulsariphidayat7/boundless-luci"
@@ -44,6 +52,13 @@ local THEME_SUB  = "luci-theme-boundless"
 local CASCADE    = "/www/luci-static/boundless/cascade.css"
 local SCHEME_CSS = "/www/luci-static/boundless/scheme.css"
 local MATERIAL_CSS = "/www/luci-static/boundless/material.css"
+local DOCK_JS    = "/www/luci-static/boundless/dock-data.js"
+
+-- Pustaka ikon dock (nama simbol -> path SVG). Bila modulnya
+-- hilang (pasang tidak lengkap), dock tetap jalan dengan tabel
+-- kosong dan ikon jatuh ke "link".
+local _ok_icons, _icons = pcall(require, "luci.boundlesstheme.icons")
+local ICONS = (_ok_icons and type(_icons) == "table") and _icons or {}
 local PREV_FILE  = "/etc/boundless-previous-theme"
 local INSTALLER_DIR = "/root/luci-theme-boundless"
 local APP_VERSION_FILE = "/usr/lib/lua/luci/view/boundlesstheme/VERSION"
@@ -328,6 +343,222 @@ local function write_material_css(id)
 	end
 	f:close()
 	return true
+end
+
+-- =====================================================================
+-- DOCK (2.2.0) - item dock bawah dikelola dari dashboard, tidak lagi
+-- hardcoded di header tema. Item tersimpan sebagai section UCI
+-- bertipe "dock" di config boundlesstheme (urutan section = urutan
+-- tampil) dan ditulis ke dock-data.js di folder statis tema; header
+-- memuat file itu lalu dock-render.js (milik tema) menggambarnya.
+-- Tanpa section UCI, yang dipakai daftar bawaan di bawah ini -
+-- sama persis dengan dock hardcoded sampai 2.1.6 (termasuk warna
+-- per itemnya). {host} di href diganti hostname oleh renderer.
+-- =====================================================================
+
+local function dock_defaults()
+	return {
+		{ label = "Modem",    href = "http://192.168.8.1/",                        icon = "router",             color = "#38bdf8", external = true,  enabled = true },
+		{ label = "Terminal", href = "/cgi-bin/luci/admin/services/ttyd",          icon = "terminal",           color = "#4ade80", external = false, enabled = true },
+		{ label = "Zsb",      href = "http://{host}:9090/ui/zsb",                  icon = "dashboard",          color = "#a78bfa", external = true,  enabled = true },
+		{ label = "Clear",    href = "/cgi-bin/luci/admin/status/release_ram",     icon = "memory",             color = "#22d3ee", external = false, enabled = true },
+		{ label = "Sunset",   href = "/cgi-bin/luci/admin/services/sunset",        icon = "wb_twilight",        color = "#fb923c", external = false, enabled = true },
+		{ label = "Sinyal",   href = "/cgi-bin/luci/admin/modem/3ginfo-lite",      icon = "signal_cellular_alt", color = "#a3e635", external = false, enabled = true },
+		{ label = "SMS",      href = "/cgi-bin/luci/admin/modem/5gmodem/readsms",  icon = "sms",                color = "#f472b6", external = false, enabled = true },
+		{ label = "Tools",    href = "/cgi-bin/luci/admin/services/boundlesstools", icon = "build",             color = "#facc15", external = false, enabled = true },
+		{ label = "Tema",     href = "/cgi-bin/luci/admin/system/boundlesstheme",  icon = "palette",            color = "#e879f9", external = false, enabled = true },
+	}
+end
+
+local function dock_items()
+	local uci = luci.model.uci.cursor()
+	local items, custom = {}, false
+	uci:foreach("boundlesstheme", "dock", function(s)
+		custom = true
+		items[#items + 1] = {
+			label = s.label or "",
+			href = s.href or "",
+			icon = (s.icon and ICONS[s.icon]) and s.icon or "link",
+			color = valid_hex(s.color or "") and s.color:lower() or "#ffffff",
+			external = s.external == "1",
+			enabled = s.enabled ~= "0",
+		}
+	end)
+	if not custom then
+		return dock_defaults(), false
+	end
+	return items, true
+end
+
+-- Tulis dock-data.js: ikon diterjemahkan dari nama ke path SVG di
+-- sini, jadi tema tidak perlu tahu pustaka ikonnya.
+local function write_dock_js(items)
+	local out = {}
+	for _, it in ipairs(items) do
+		out[#out + 1] = {
+			label = it.label,
+			href = it.href,
+			icon = ICONS[it.icon] or ICONS.link or "",
+			color = it.color,
+			external = it.external and true or false,
+			enabled = it.enabled and true or false,
+		}
+	end
+	local f = io.open(DOCK_JS, "w")
+	if not f then return false end
+	f:write("/* Dock Boundless - ditulis dashboard Boundless Theme; jangan diedit manual. */\n")
+	f:write("window.BOUNDLESS_DOCK_ITEMS = ")
+	f:write(luci.jsonc.stringify(out))
+	f:write(";\n")
+	f:close()
+	return true
+end
+
+local function dock_section_names(uci)
+	local names = {}
+	uci:foreach("boundlesstheme", "dock", function(s)
+		if s[".name"] then names[#names + 1] = s[".name"] end
+	end)
+	return names
+end
+
+-- GET /dock - daftar item untuk editor + pustaka ikon untuk
+-- pemilih. Sekaligus menulis ulang dock-data.js dari keadaan UCI
+-- saat ini, jadi file itu sembuh sendiri setelah update tema
+-- (folder statis tema terganti) begitu dashboard dibuka.
+function action_dock()
+	local items, custom = dock_items()
+	write_dock_js(items)
+	luci.http.prepare_content("application/json")
+	luci.http.write(luci.jsonc.stringify({
+		ok = true, custom = custom, items = items, icons = ICONS,
+	}))
+end
+
+-- GET /dock/pages - daftar halaman LuCI yang terpasang (pohon menu
+-- dispatcher) untuk dropdown pemilih href di editor. Gagal total
+-- pun tidak fatal: editor tetap bisa isi href manual.
+function action_dock_pages()
+	local pages = {}
+	pcall(function()
+		local disp = luci.dispatcher
+		local tree = disp.context and (disp.context.treetable or disp.context.tree)
+		if not tree or type(tree.nodes) ~= "table" then return end
+		local function walk(node, parts, depth)
+			if depth > 4 or type(node) ~= "table" or type(node.nodes) ~= "table" then return end
+			local names = {}
+			for name in pairs(node.nodes) do names[#names + 1] = name end
+			table.sort(names, function(a, b)
+				local na, nb = node.nodes[a], node.nodes[b]
+				return (na.order or 100) < (nb.order or 100)
+			end)
+			for _, name in ipairs(names) do
+				local child = node.nodes[name]
+				local p2 = {}
+				for _, p in ipairs(parts) do p2[#p2 + 1] = p end
+				p2[#p2 + 1] = name
+				local tgt = child.target
+				if tgt and child.title and child.title ~= "" and not child.hidden
+					and (tgt.type == "template" or tgt.type == "call" or tgt.type == "cbi"
+						or tgt.type == "form" or tgt.type == "view") then
+					pages[#pages + 1] = {
+						path = "/cgi-bin/luci/" .. table.concat(p2, "/"),
+						title = tostring(child.title),
+					}
+				end
+				walk(child, p2, depth + 1)
+			end
+		end
+		if tree.nodes.admin then walk(tree.nodes.admin, { "admin" }, 1) end
+	end)
+	luci.http.prepare_content("application/json")
+	luci.http.write(luci.jsonc.stringify({ ok = true, pages = pages }))
+end
+
+local function clean_label(s)
+	s = tostring(s or "")
+	s = s:gsub("[%z\1-\31\127]", ""):gsub("[<>\"']", "")
+	s = s:gsub("^%s+", ""):gsub("%s+$", "")
+	if #s > 24 then s = s:sub(1, 24) end
+	return s
+end
+
+local function valid_href(h)
+	if type(h) ~= "string" or #h == 0 or #h > 200 then return false end
+	if h:find("[%s<>\"']") then return false end
+	if h:lower():find("javascript:", 1, true) then return false end
+	if h:sub(1, 1) == "/" and h:sub(2, 2) ~= "/" then return true end
+	if h:sub(1, 7) == "http://" or h:sub(1, 8) == "https://" then return true end
+	return false
+end
+
+-- POST /dock/save - terima daftar item (JSON di field "items"),
+-- validasi, simpan sebagai section UCI "dock", tulis dock-data.js.
+function action_dock_save()
+	if not require_post() then return end
+	local http = luci.http
+	http.prepare_content("application/json")
+	local data = luci.jsonc.parse(http.formvalue("items") or "")
+	if type(data) ~= "table" or #data == 0 or #data > 14 then
+		http.status(400, "Bad Request")
+		return http.write(luci.jsonc.stringify({ ok = false, error = "daftar item tidak valid (1-14 item)" }))
+	end
+	local items = {}
+	for _, d in ipairs(data) do
+		if type(d) ~= "table" then
+			http.status(400, "Bad Request")
+			return http.write(luci.jsonc.stringify({ ok = false, error = "format item tidak valid" }))
+		end
+		local label = clean_label(d.label)
+		local href = tostring(d.href or "")
+		if label == "" or not valid_href(href) then
+			http.status(400, "Bad Request")
+			return http.write(luci.jsonc.stringify({ ok = false, error = "label kosong atau href tidak valid: " .. href }))
+		end
+		items[#items + 1] = {
+			label = label,
+			href = href,
+			icon = (type(d.icon) == "string" and ICONS[d.icon]) and d.icon or "link",
+			color = valid_hex(tostring(d.color or "")) and tostring(d.color):lower() or "#ffffff",
+			external = d.external == true or d.external == "1" or d.external == 1,
+			enabled = not (d.enabled == false or d.enabled == "0" or d.enabled == 0),
+		}
+	end
+	local uci = luci.model.uci.cursor()
+	for _, name in ipairs(dock_section_names(uci)) do
+		uci:delete("boundlesstheme", name)
+	end
+	for _, it in ipairs(items) do
+		local id = uci:add("boundlesstheme", "dock")
+		uci:set("boundlesstheme", id, "label", it.label)
+		uci:set("boundlesstheme", id, "href", it.href)
+		uci:set("boundlesstheme", id, "icon", it.icon)
+		uci:set("boundlesstheme", id, "color", it.color)
+		uci:set("boundlesstheme", id, "external", it.external and "1" or "0")
+		uci:set("boundlesstheme", id, "enabled", it.enabled and "1" or "0")
+	end
+	uci:commit("boundlesstheme")
+	if not write_dock_js(items) then
+		http.status(500, "Internal Server Error")
+		return http.write(luci.jsonc.stringify({ ok = false, error = "gagal menulis dock-data.js - tema belum terpasang?" }))
+	end
+	http.write(luci.jsonc.stringify({ ok = true, count = #items }))
+end
+
+-- POST /dock/reset - hapus semua section dock (kembali ke daftar
+-- bawaan) + segarkan dock-data.js.
+function action_dock_reset()
+	if not require_post() then return end
+	local http = luci.http
+	http.prepare_content("application/json")
+	local uci = luci.model.uci.cursor()
+	for _, name in ipairs(dock_section_names(uci)) do
+		uci:delete("boundlesstheme", name)
+	end
+	uci:commit("boundlesstheme")
+	local items = dock_defaults()
+	write_dock_js(items)
+	http.write(luci.jsonc.stringify({ ok = true, items = items }))
 end
 
 -- Ref rilis terbaru repo gabungan = tag v<versi> tertinggi; fallback

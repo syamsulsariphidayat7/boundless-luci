@@ -1,5 +1,30 @@
 # Changelog
 
+## [2.2.0] - 2026-11-03
+
+### Added
+
+- **Manajemen Dock dari dashboard** (permintaan Syamsul): kartu
+  "Dock" baru untuk tambah / hapus / geser urutan item dock,
+  ganti ikon dan warna per item, aktif/nonaktif, dan buka di tab
+  baru. Item tersimpan sebagai section UCI bertipe `dock` di
+  config `boundlesstheme` dan ditulis ke
+  `/www/luci-static/boundless/dock-data.js` untuk digambar tema.
+  Tanpa konfigurasi tersimpan, berlaku 9 item bawaan (dock sampai
+  2.1.6 persis, termasuk warnanya).
+- **Pustaka ikon tanpa upload**: 53 ikon Material Symbols
+  (`usr/lib/lua/luci/boundlesstheme/icons.lua`, nama → path SVG).
+  Pemilih ikon di dashboard berupa grid klik; ikon item custom di
+  luar pustaka tidak didukung (cukup tambah baris di file itu).
+- Endpoint baru: `GET dock` (item + pustaka ikon; sekaligus
+  menulis ulang dock-data.js), `POST dock/save` (validasi label,
+  href, ikon, warna; maks 14 item), `POST dock/reset` (kembali ke
+  bawaan), `GET dock/pages` (daftar halaman LuCI terpasang dari
+  pohon menu, untuk dropdown pemilih href; href manual tetap
+  bisa, termasuk pola `{host}` untuk alamat dinamis).
+- `install.sh` memasang `icons.lua` (+ verifikasi), `uninstall.sh`
+  menghapus modul ikon dan `dock-data.js`.
+
 ## [2.1.6] - 2026-11-03
 
 Tidak ada perubahan kode aplikasi pada rilis ini — nomor versi

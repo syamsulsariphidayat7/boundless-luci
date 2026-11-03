@@ -14,6 +14,8 @@ set -e
 echo "[boundless-app] Menghapus file aplikasi pengelola..."
 rm -f /usr/lib/lua/luci/controller/boundlesstheme.lua
 rm -rf /usr/lib/lua/luci/view/boundlesstheme
+rm -rf /usr/lib/lua/luci/boundlesstheme
+rm -f /www/luci-static/boundless/dock-data.js
 rm -f /etc/config/boundlesstheme
 
 echo "[boundless-app] Membersihkan cache LuCI + restart uhttpd..."

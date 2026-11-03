@@ -19,8 +19,9 @@ set -e
 DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
 CTL="usr/lib/lua/luci/controller/boundlesstheme.lua"
 VIEW="usr/lib/lua/luci/view/boundlesstheme"
+ICONS="usr/lib/lua/luci/boundlesstheme/icons.lua"
 
-if [ ! -f "$DIR/$CTL" ] || [ ! -f "$DIR/$VIEW/dashboard.htm" ]; then
+if [ ! -f "$DIR/$CTL" ] || [ ! -f "$DIR/$VIEW/dashboard.htm" ] || [ ! -f "$DIR/$ICONS" ]; then
   echo "[boundless-app] ERROR: file aplikasi tidak lengkap di $DIR" >&2
   echo "[boundless-app] Jalankan script dari dalam folder luci-app-boundless-theme." >&2
   exit 1
@@ -30,16 +31,17 @@ VER=$(cat "$DIR/VERSION" 2>/dev/null || echo "?")
 echo "[boundless-app] luci-app-boundless-theme v$VER"
 
 echo "[boundless-app] Menyalin file..."
-mkdir -p /usr/lib/lua/luci/controller "/$VIEW"
+mkdir -p /usr/lib/lua/luci/controller "/$VIEW" /usr/lib/lua/luci/boundlesstheme
 cp -f "$DIR/$CTL" "/$CTL"
 cp -f "$DIR/$VIEW/dashboard.htm" "/$VIEW/dashboard.htm"
 cp -f "$DIR/$VIEW/VERSION" "/$VIEW/VERSION"
+cp -f "$DIR/$ICONS" "/$ICONS"
 if [ -f /etc/config/boundlesstheme ]; then
   echo "[boundless-app] Config yang sudah ada dipertahankan"
 else
   cp -f "$DIR/etc/config/boundlesstheme" /etc/config/boundlesstheme
 fi
-chmod 644 "/$CTL" "/$VIEW/dashboard.htm" "/$VIEW/VERSION"
+chmod 644 "/$CTL" "/$VIEW/dashboard.htm" "/$VIEW/VERSION" "/$ICONS"
 
 echo "[boundless-app] Membersihkan cache LuCI + restart uhttpd..."
 rm -f /tmp/luci-indexcache /tmp/luci-indexcache.* 2>/dev/null || true
@@ -48,5 +50,6 @@ rm -rf /tmp/luci-modulecache /tmp/luci-modulecache.* 2>/dev/null || true
 
 echo "[boundless-app] Verifikasi:"
 grep -q "luci.controller.boundlesstheme" "/$CTL" && echo "[boundless-app] controller OK"
+[ -f "/$ICONS" ] && echo "[boundless-app] pustaka ikon dock OK"
 [ -f /etc/config/boundlesstheme ] && echo "[boundless-app] config OK"
 echo "[boundless-app] SELESAI. Buka LuCI -> System -> Boundless Theme (hard refresh: Ctrl+F5)."

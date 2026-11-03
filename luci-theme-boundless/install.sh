@@ -41,6 +41,13 @@ if [ -f /www/luci-static/boundless/material.css ]; then
 	MATERIAL_BAK=$(mktemp)
 	cp -f /www/luci-static/boundless/material.css "$MATERIAL_BAK" 2>/dev/null || MATERIAL_BAK=""
 fi
+# Data dock user (dock-data.js, ditulis dashboard sejak 2.2.0) juga
+# sama: tanpa ini, dock custom kembali ke bawaan tiap update tema.
+DOCK_BAK=""
+if [ -f /www/luci-static/boundless/dock-data.js ]; then
+	DOCK_BAK=$(mktemp)
+	cp -f /www/luci-static/boundless/dock-data.js "$DOCK_BAK" 2>/dev/null || DOCK_BAK=""
+fi
 # Static files (CSS / logo / icon) -> /www/luci-static/...
 mkdir -p /www/luci-static/boundless /www/luci-static/resources
 cp -r "$DIR/htdocs/luci-static/boundless/." /www/luci-static/boundless/
@@ -54,6 +61,10 @@ fi
 if [ -n "$MATERIAL_BAK" ] && [ -f "$MATERIAL_BAK" ]; then
 	cp -f "$MATERIAL_BAK" /www/luci-static/boundless/material.css
 	rm -f "$MATERIAL_BAK"
+fi
+if [ -n "$DOCK_BAK" ] && [ -f "$DOCK_BAK" ]; then
+	cp -f "$DOCK_BAK" /www/luci-static/boundless/dock-data.js
+	rm -f "$DOCK_BAK"
 fi
 
 # Ikon navbar REYRE-WRT (v7): header tema ini menampilkan baris ikon

@@ -57,6 +57,23 @@
 .btw-grow label{width:80px;flex:none;font-weight:600}
 .btw-grow input[type=range]{flex:1;accent-color:var(--btw-primary,#0b486b);cursor:pointer}
 .btw-grow .gv{width:46px;flex:none;text-align:right;font-family:ui-monospace,Menlo,monospace;font-weight:700}
+.btw-dock-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;border:1px solid var(--btw-border);border-radius:12px;padding:10px;margin-bottom:8px;background:#fbfcfe}
+.btw-dock-row.off{opacity:.55}
+.btw-dock-icon{width:38px;height:38px;flex:none;display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--btw-border);border-radius:10px;background:#141a22;cursor:pointer;padding:0}
+.btw-dock-icon svg{width:20px;height:20px;fill:currentColor}
+.btw-dock-txt{border:1px solid var(--btw-border);border-radius:10px;padding:8px 10px;font-size:13px;background:#fff;color:var(--btw-text)}
+.btw-dock-label{width:110px}
+.btw-dock-href{flex:1;min-width:170px}
+.btw-dock-page{max-width:220px}
+.btw-dock-color{width:44px;height:34px;flex:none;border:1px solid var(--btw-border);border-radius:9px;background:#fff;padding:2px;cursor:pointer}
+.btw-dock-mini{appearance:none;border:1px solid var(--btw-border);background:#fff;border-radius:9px;width:30px;height:30px;cursor:pointer;font-size:14px;line-height:1;padding:0}
+.btw-dock-check{display:inline-flex;align-items:center;gap:5px;font-size:12.5px;color:var(--btw-muted)}
+.btw-picker{display:none;border:1px solid var(--btw-border);border-radius:12px;padding:10px;margin:2px 0 10px;background:#f7f9fc}
+.btw-picker.show{display:block}
+.btw-picker-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(86px,1fr));gap:6px;max-height:264px;overflow:auto}
+.btw-picker-it{display:flex;flex-direction:column;align-items:center;gap:4px;border:1px solid var(--btw-border);background:#141a22;border-radius:10px;padding:8px 4px;cursor:pointer;color:#fff;font-size:10.5px}
+.btw-picker-it svg{width:20px;height:20px;fill:currentColor}
+.btw-picker-it span{color:#c8d2dd;font-family:ui-monospace,Menlo,monospace;word-break:break-all;text-align:center}
 </style>
 
 <div class="btw-wrap">
@@ -123,6 +140,22 @@
     <pre class="btw-log" id="btw-manage-log"></pre>
   </div>
 
+  <div class="btw-card">
+    <h2>Dock</h2>
+    <p class="btw-note">Atur link dock bawah: <b>tambah, hapus, geser urutan</b> (tombol &#8593; &#8595;), ganti <b>ikon</b> dari pustaka Material Symbols (klik kotak ikon &mdash; tanpa upload) dan <b>warna</b> per item. Href boleh dipilih dari daftar halaman LuCI yang terpasang atau diisi manual; <b>{host}</b> di href diganti hostname router (mis. <span style="font-family:ui-monospace,Menlo,monospace">http://{host}:9090/ui/zsb</span>). Tersimpan di perangkat &mdash; muat ulang halaman untuk melihat dock baru.</p>
+    <div id="btw-dock-list"></div>
+    <div class="btw-picker" id="btw-dock-picker">
+      <div class="btw-note" style="margin-bottom:8px">Pilih ikon untuk <b id="btw-dock-picker-for"></b>:</div>
+      <div class="btw-picker-grid" id="btw-dock-picker-grid"></div>
+    </div>
+    <div class="btw-btnrow">
+      <button class="btw-btn" id="btw-dock-add" type="button">+ Tambah Item</button>
+      <button class="btw-btn primary" id="btw-dock-save" type="button">Simpan Dock</button>
+      <button class="btw-btn" id="btw-dock-reset" type="button">Reset ke Bawaan</button>
+    </div>
+    <div class="btw-statusline" id="btw-dock-status"></div>
+  </div>
+
   <div class="btw-modal" id="btw-modal" style="display:none">
     <div class="btw-modal-box">
       <h3>Warna Custom</h3>
@@ -154,6 +187,10 @@ var URL_MANAGELOG = "<%=luci.dispatcher.build_url("admin", "system", "boundlesst
 var URL_ACTIVATE = "<%=luci.dispatcher.build_url("admin", "system", "boundlesstheme", "activate")%>";
 var URL_SCHEME = "<%=luci.dispatcher.build_url("admin", "system", "boundlesstheme", "scheme")%>";
 var URL_MATERIAL = "<%=luci.dispatcher.build_url("admin", "system", "boundlesstheme", "material")%>";
+var URL_DOCK = "<%=luci.dispatcher.build_url("admin", "system", "boundlesstheme", "dock")%>";
+var URL_DOCK_SAVE = "<%=luci.dispatcher.build_url("admin", "system", "boundlesstheme", "dock", "save")%>";
+var URL_DOCK_RESET = "<%=luci.dispatcher.build_url("admin", "system", "boundlesstheme", "dock", "reset")%>";
+var URL_DOCK_PAGES = "<%=luci.dispatcher.build_url("admin", "system", "boundlesstheme", "dock", "pages")%>";
 
 function $(id){ return document.getElementById(id); }
 function esc(s){ return String(s == null ? "" : s).replace(/&/g,"&amp;").replace(/</g,"&lt;"); }
@@ -551,6 +588,7 @@ $("btw-btn-update").addEventListener("click", function(){
         st.textContent = "Selesai. Tema + aplikasi Boundless v" + ((r && r["local"]) || "?") + " terpasang. Menerapkan ulang skema terakhir...";
         refresh();
         reapplyScheme().then(function(){
+          loadDock();
           setTimeout(function(){ location.reload(); }, 1500);
         });
       } else {
@@ -600,8 +638,133 @@ $("btw-btn-remove").addEventListener("click", function(){
   doManage("remove", "HAPUS tema Boundless dari perangkat?\nTema aktif diganti ke tema bawaan dan semua file Boundless dihapus. Aplikasi pengelola ini TIDAK ikut terhapus.");
 });
 
+/* ---------- Dock (2.2.0) ---------- */
+var dockIcons = {};
+var dockPages = [];
+var dockItems = [];
+var dockPickerFor = -1;
+
+function escA(s){ return esc(s).replace(/"/g, "&quot;"); }
+function dockSvg(path, color){
+  return '<svg viewBox="0 -960 960 960" aria-hidden="true" style="color:' + escA(color || "#ffffff") + '"><path d="' + escA(path || "") + '"/></svg>';
+}
+function dockStatus(msg, ok){
+  var st = $("btw-dock-status");
+  st.className = "btw-statusline " + (ok ? "ok" : "err");
+  st.textContent = msg;
+}
+function renderDock(){
+  var box = $("btw-dock-list");
+  box.innerHTML = "";
+  dockItems.forEach(function(it, i){
+    var row = document.createElement("div");
+    row.className = "btw-dock-row" + (it.enabled ? "" : " off");
+    var opts = '<option value="">— halaman LuCI —</option>';
+    dockPages.forEach(function(p){
+      opts += '<option value="' + escA(p.path) + '"' + (p.path === it.href ? " selected" : "") + ">" + esc(p.title) + " · " + esc(p.path.replace("/cgi-bin/luci", "")) + "</option>";
+    });
+    row.innerHTML =
+      '<button type="button" class="btw-dock-icon" data-act="icon" title="Ganti ikon">' + dockSvg(dockIcons[it.icon], it.color) + "</button>" +
+      '<input type="text" class="btw-dock-txt btw-dock-label" data-f="label" maxlength="24" value="' + escA(it.label) + '" placeholder="Label">' +
+      '<input type="text" class="btw-dock-txt btw-dock-href" data-f="href" value="' + escA(it.href) + '" placeholder="/cgi-bin/luci/... atau https://...">' +
+      '<select class="btw-dock-txt btw-dock-page" data-f="page">' + opts + "</select>" +
+      '<input type="color" class="btw-dock-color" data-f="color" value="' + escA(it.color || "#ffffff") + '">' +
+      '<label class="btw-dock-check"><input type="checkbox" data-f="external"' + (it.external ? " checked" : "") + "> Tab baru</label>" +
+      '<label class="btw-dock-check"><input type="checkbox" data-f="enabled"' + (it.enabled ? " checked" : "") + "> Aktif</label>" +
+      '<button type="button" class="btw-dock-mini" data-act="up" title="Geser ke kiri">&#8593;</button>' +
+      '<button type="button" class="btw-dock-mini" data-act="down" title="Geser ke kanan">&#8595;</button>' +
+      '<button type="button" class="btw-dock-mini" data-act="del" title="Hapus item">&#215;</button>';
+    row.querySelector('[data-f="label"]').addEventListener("input", function(){ dockItems[i].label = this.value; });
+    row.querySelector('[data-f="href"]').addEventListener("input", function(){ dockItems[i].href = this.value; });
+    row.querySelector('[data-f="page"]').addEventListener("change", function(){
+      if (this.value) { dockItems[i].href = this.value; row.querySelector('[data-f="href"]').value = this.value; }
+    });
+    row.querySelector('[data-f="color"]').addEventListener("input", function(){
+      dockItems[i].color = this.value;
+      row.querySelector(".btw-dock-icon").innerHTML = dockSvg(dockIcons[dockItems[i].icon], this.value);
+    });
+    row.querySelector('[data-f="external"]').addEventListener("change", function(){ dockItems[i].external = this.checked; });
+    row.querySelector('[data-f="enabled"]').addEventListener("change", function(){
+      dockItems[i].enabled = this.checked;
+      row.className = "btw-dock-row" + (this.checked ? "" : " off");
+    });
+    row.querySelector('[data-act="icon"]').addEventListener("click", function(){ openDockPicker(i); });
+    row.querySelector('[data-act="up"]').addEventListener("click", function(){
+      if (i > 0) { var t = dockItems[i - 1]; dockItems[i - 1] = dockItems[i]; dockItems[i] = t; renderDock(); }
+    });
+    row.querySelector('[data-act="down"]').addEventListener("click", function(){
+      if (i < dockItems.length - 1) { var t = dockItems[i + 1]; dockItems[i + 1] = dockItems[i]; dockItems[i] = t; renderDock(); }
+    });
+    row.querySelector('[data-act="del"]').addEventListener("click", function(){
+      dockItems.splice(i, 1); closeDockPicker(); renderDock();
+    });
+    box.appendChild(row);
+  });
+}
+function buildDockPicker(){
+  var grid = $("btw-dock-picker-grid");
+  grid.innerHTML = "";
+  Object.keys(dockIcons).sort().forEach(function(name){
+    var b = document.createElement("button");
+    b.type = "button";
+    b.className = "btw-picker-it";
+    b.innerHTML = dockSvg(dockIcons[name], "#ffffff") + "<span>" + esc(name) + "</span>";
+    b.addEventListener("click", function(){
+      if (dockPickerFor >= 0 && dockItems[dockPickerFor]) dockItems[dockPickerFor].icon = name;
+      closeDockPicker();
+      renderDock();
+    });
+    grid.appendChild(b);
+  });
+}
+function openDockPicker(i){
+  dockPickerFor = i;
+  $("btw-dock-picker-for").textContent = dockItems[i].label || ("item " + (i + 1));
+  $("btw-dock-picker").className = "btw-picker show";
+}
+function closeDockPicker(){
+  dockPickerFor = -1;
+  $("btw-dock-picker").className = "btw-picker";
+}
+function loadDock(){
+  return getJSON(URL_DOCK).then(function(j){
+    if (!j || !j.ok) return;
+    dockIcons = j.icons || {};
+    dockItems = j.items || [];
+    buildDockPicker();
+    renderDock();
+    getJSON(URL_DOCK_PAGES).then(function(pj){
+      dockPages = (pj && pj.pages) || [];
+      renderDock();
+    }).catch(function(){});
+  }).catch(function(e){
+    dockStatus("Gagal memuat dock: " + e.message, false);
+  });
+}
+
+$("btw-dock-add").addEventListener("click", function(){
+  if (dockItems.length >= 14) { dockStatus("Maksimal 14 item dock.", false); return; }
+  dockItems.push({ label: "Baru", href: "/cgi-bin/luci/", icon: "link", color: "#ffffff", external: false, enabled: true });
+  renderDock();
+});
+$("btw-dock-save").addEventListener("click", function(){
+  dockStatus("Menyimpan...", true);
+  postJSON(URL_DOCK_SAVE, { items: JSON.stringify(dockItems) }).then(function(r){
+    if (r && r.ok) dockStatus("Dock tersimpan (" + r.count + " item). Muat ulang halaman untuk melihat dock baru.", true);
+    else dockStatus("Gagal menyimpan: " + ((r && r.error) || "tidak diketahui"), false);
+  }).catch(function(e){ dockStatus("Gagal menghubungi STB: " + e.message, false); });
+});
+$("btw-dock-reset").addEventListener("click", function(){
+  if (!confirm("Kembalikan dock ke 9 item bawaan?\nDaftar dock custom kamu akan dihapus.")) return;
+  postJSON(URL_DOCK_RESET, {}).then(function(r){
+    if (r && r.ok) { dockItems = r.items || []; closeDockPicker(); renderDock(); dockStatus("Dock dikembalikan ke bawaan. Muat ulang halaman untuk melihatnya.", true); }
+    else dockStatus("Gagal reset: " + ((r && r.error) || "tidak diketahui"), false);
+  }).catch(function(e){ dockStatus("Gagal menghubungi STB: " + e.message, false); });
+});
+
 /* ---------- Muat awal: status + cek update otomatis + lanjutkan pantauan bila ada proses ---------- */
 refresh();
+loadDock();
 doCheck();
 (function resume(){
   getJSON(URL_UPDATELOG).then(function(r){
@@ -610,7 +773,7 @@ doCheck();
       setBusy(true);
       st.textContent = "Pemasangan sedang berjalan...";
       log.className = "btw-log show"; log.textContent = r.log || "";
-      pollLog(URL_UPDATELOG, log, st, function(){ setBusy(false); refresh(); reapplyScheme(); });
+      pollLog(URL_UPDATELOG, log, st, function(){ setBusy(false); refresh(); reapplyScheme(); loadDock(); });
     }
   }).catch(function(){});
   getJSON(URL_MANAGELOG).then(function(r){

@@ -4,6 +4,28 @@ Semua perubahan penting tema ini dicatat di sini.
 Format mengikuti [Keep a Changelog](https://keepachangelog.com/),
 versi mengikuti [Semantic Versioning](https://semver.org/).
 
+## [2.2.0] - 2026-11-03
+
+### Changed
+
+- **Dock kini dinamis, tidak lagi hardcoded di header.** Item
+  dock digambar `dock-render.js` dari `dock-data.js` (ditulis
+  dashboard Boundless Theme dari konfigurasi UCI; lihat changelog
+  aplikasi). Header (`header.ut` + `header.htm`) hanya memuat dua
+  file script itu di dalam `<ul id="menu">`; script penanda item
+  aktif tidak berubah dan tetap berjalan sesudahnya.
+- Bila `dock-data.js` tidak ada (aplikasi pengelola belum
+  terpasang), renderer memakai **daftar bawaan** yang sama persis
+  dengan dock sampai 2.1.6 — termasuk ikon, warna per item, dan
+  href Zsb dinamis (sekarang lewat pola umum `{host}` di href,
+  bukan script khusus Zsb lagi).
+- Aturan warna ikon per-href dari 2.1.6 di cascade.css **dihapus**:
+  warna sekarang datang dari data item sebagai style inline pada
+  ikon. Aturan dasar `.bicon` tetap.
+- `install.sh` tema kini **menjaga `dock-data.js`** saat install
+  ulang (seperti scheme.css & material.css), jadi dock custom
+  tidak kembali ke bawaan setiap update tema.
+
 ## [2.1.6] - 2026-11-03
 
 ### Changed
