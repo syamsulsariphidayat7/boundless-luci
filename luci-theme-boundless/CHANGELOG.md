@@ -4,6 +4,17 @@ Semua perubahan penting tema ini dicatat di sini.
 Format mengikuti [Keep a Changelog](https://keepachangelog.com/),
 versi mengikuti [Semantic Versioning](https://semver.org/).
 
+## [2.1.5] - 2026-11-03
+
+### Added
+
+- **Item dock "Tools"** (permintaan Syamsul): menuju halaman
+  Boundless Tools `/cgi-bin/luci/admin/services/boundlesstools`
+  (aplikasi terpisah `luci-app-boundless-tools`), ikon Material
+  `build` (kunci inggris), posisi sesudah SMS sebelum Tema.
+  Dock sekarang: Modem, Terminal, Zsb, Clear, Sunset, Sinyal,
+  SMS, Tools, Tema.
+
 ## [2.1.4] - 2026-11-03
 
 ### Added
