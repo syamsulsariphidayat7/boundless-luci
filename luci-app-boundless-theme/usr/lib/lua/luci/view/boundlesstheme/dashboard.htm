@@ -59,6 +59,9 @@
 .btw-grow .gv{width:46px;flex:none;text-align:right;font-family:ui-monospace,Menlo,monospace;font-weight:700}
 .btw-dock-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;border:1px solid var(--btw-border);border-radius:12px;padding:10px;margin-bottom:8px;background:#fbfcfe}
 .btw-dock-row.off{opacity:.55}
+.btw-dock-row.dragging{opacity:.9;border-color:#0b486b;box-shadow:0 8px 22px rgba(16,24,40,.22)}
+.btw-dock-grip{flex:none;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none;color:var(--btw-muted);font-size:15px;letter-spacing:-3px;padding:6px 4px 6px 1px}
+.btw-dock-grip:active{cursor:grabbing}
 .btw-dock-icon{width:38px;height:38px;flex:none;display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--btw-border);border-radius:10px;background:#141a22;cursor:pointer;padding:0}
 .btw-dock-icon svg{width:20px;height:20px;fill:currentColor}
 .btw-dock-txt{border:1px solid var(--btw-border);border-radius:10px;padding:8px 10px;font-size:13px;background:#fff;color:var(--btw-text)}
@@ -142,7 +145,7 @@
 
   <div class="btw-card">
     <h2>Dock</h2>
-    <p class="btw-note">Atur link dock bawah: <b>tambah, hapus, geser urutan</b> (tombol &#8593; &#8595;), ganti <b>ikon</b> dari pustaka Material Symbols (klik kotak ikon &mdash; tanpa upload) dan <b>warna</b> per item. Href boleh dipilih dari daftar halaman LuCI yang terpasang atau diisi manual; <b>{host}</b> di href diganti hostname router (mis. <span style="font-family:ui-monospace,Menlo,monospace">http://{host}:9090/ui/zsb</span>). Tersimpan di perangkat &mdash; muat ulang halaman untuk melihat dock baru.</p>
+    <p class="btw-note">Atur link dock bawah: <b>tambah, hapus, geser urutan</b> (seret pegangan di kiri baris, atau tombol &#8593; &#8595;), ganti <b>ikon</b> dari pustaka Material Symbols (klik kotak ikon &mdash; tanpa upload) dan <b>warna</b> per item. Href boleh dipilih dari daftar halaman LuCI yang terpasang atau diisi manual; <b>{host}</b> di href diganti hostname router (mis. <span style="font-family:ui-monospace,Menlo,monospace">http://{host}:9090/ui/zsb</span>). Tersimpan di perangkat &mdash; muat ulang halaman untuk melihat dock baru.</p>
     <div id="btw-dock-list"></div>
     <div class="btw-picker" id="btw-dock-picker">
       <div class="btw-note" style="margin-bottom:8px">Pilih ikon untuk <b id="btw-dock-picker-for"></b>:</div>
@@ -653,6 +656,47 @@ function dockStatus(msg, ok){
   st.className = "btw-statusline " + (ok ? "ok" : "err");
   st.textContent = msg;
 }
+function moveDockItem(from, to){
+  var it = dockItems.splice(from, 1)[0];
+  dockItems.splice(to, 0, it);
+}
+/* Seret & letakkan untuk urutan dock (2.2.2): Pointer Events
+   (mouse + sentuh sama-sama jalan, beda dengan drag HTML5 lama).
+   Selama seret, baris dipindah langsung di DOM + dockItems
+   diselaraskan; selesai -> renderDock() membangun ulang baris
+   supaya semua indeks listener segar lagi. */
+function startDockDrag(ev, row, grip){
+  ev.preventDefault();
+  var list = $("btw-dock-list");
+  row.classList.add("dragging");
+  try { grip.setPointerCapture(ev.pointerId); } catch(e) {}
+  function curIndex(){
+    return Array.prototype.indexOf.call(list.querySelectorAll(".btw-dock-row"), row);
+  }
+  function onMove(e2){
+    var y = e2.clientY;
+    var rs = list.querySelectorAll(".btw-dock-row");
+    for (var k = 0; k < rs.length; k++) {
+      if (rs[k] === row) continue;
+      var r = rs[k].getBoundingClientRect();
+      var mid = r.top + r.height / 2;
+      var ci = curIndex();
+      var ti = Array.prototype.indexOf.call(rs, rs[k]);
+      if (y < mid && ti < ci) { list.insertBefore(row, rs[k]); moveDockItem(ci, ti); break; }
+      if (y > mid && ti > ci) { list.insertBefore(row, rs[k].nextSibling); moveDockItem(ci, ti); break; }
+    }
+  }
+  function onUp(){
+    row.classList.remove("dragging");
+    grip.removeEventListener("pointermove", onMove);
+    grip.removeEventListener("pointerup", onUp);
+    grip.removeEventListener("pointercancel", onUp);
+    renderDock();
+  }
+  grip.addEventListener("pointermove", onMove);
+  grip.addEventListener("pointerup", onUp);
+  grip.addEventListener("pointercancel", onUp);
+}
 function renderDock(){
   var box = $("btw-dock-list");
   box.innerHTML = "";
@@ -664,6 +708,7 @@ function renderDock(){
       opts += '<option value="' + escA(p.path) + '"' + (p.path === it.href ? " selected" : "") + ">" + esc(p.title) + " · " + esc(p.path.replace("/cgi-bin/luci", "")) + "</option>";
     });
     row.innerHTML =
+      '<span class="btw-dock-grip" data-act="grip" title="Seret untuk menggeser urutan">&#8942;&#8942;</span>' +
       '<button type="button" class="btw-dock-icon" data-act="icon" title="Ganti ikon">' + dockSvg(dockIcons[it.icon], it.color) + "</button>" +
       '<input type="text" class="btw-dock-txt btw-dock-label" data-f="label" maxlength="24" value="' + escA(it.label) + '" placeholder="Label">' +
       '<input type="text" class="btw-dock-txt btw-dock-href" data-f="href" value="' + escA(it.href) + '" placeholder="/cgi-bin/luci/... atau https://...">' +
@@ -697,6 +742,9 @@ function renderDock(){
     });
     row.querySelector('[data-act="del"]').addEventListener("click", function(){
       dockItems.splice(i, 1); closeDockPicker(); renderDock();
+    });
+    row.querySelector('[data-act="grip"]').addEventListener("pointerdown", function(ev){
+      startDockDrag(ev, row, this);
     });
     box.appendChild(row);
   });

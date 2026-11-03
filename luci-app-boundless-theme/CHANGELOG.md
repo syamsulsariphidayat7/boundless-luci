@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.2.2] - 2026-11-03
+
+### Added
+
+- **Geser urutan item dock dengan seret & letakkan** (permintaan
+  Syamsul): pegangan grip di kiri tiap baris editor Dock, didrag
+  dengan Pointer Events (mouse dan sentuh; bukan drag HTML5 lama
+  yang tidak jalan di layar sentuh). Baris berpindah langsung
+  mengikuti pointer dan urutan tersimpan saat Simpan Dock
+  ditekan. Tombol &#8593; &#8595; tetap ada sebagai cadangan.
+
 ## [2.2.1] - 2026-11-03
 
 ### Fixed
