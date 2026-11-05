@@ -4,6 +4,18 @@ Semua perubahan penting tema ini dicatat di sini.
 Format mengikuti [Keep a Changelog](https://keepachangelog.com/),
 versi mengikuti [Semantic Versioning](https://semver.org/).
 
+## [2.3.2] - 2026-11-05
+
+### Fixed
+
+- **Teks dock kanan kini sejajar** (umpan balik Syamsul: yang
+  bikin jelek teksnya tidak sejajar): link tiap item kini
+  membentang selebar dock (`display: flex; width: 100%`) dengan
+  isi rata kiri — semua ikon mulai dari x yang sama dan semua
+  label mulai dari x yang sama. Chip item aktif dan hover ikut
+  selebar baris, seperti seleksi sidebar. Mode ikon-saja di
+  layar sempit tetap rata tengah.
+
 ## [2.3.1] - 2026-11-05
 
 ### Fixed

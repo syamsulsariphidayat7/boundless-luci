@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.3.2] - 2026-11-05
+
+Tidak ada perubahan kode aplikasi pada rilis ini — nomor versi
+mengikuti rilis gabungan 2.3.2 (perubahan ada di tema: teks
+dock kanan sejajar).
+
 ## [2.3.1] - 2026-11-05
 
 Tidak ada perubahan kode aplikasi pada rilis ini — nomor versi
