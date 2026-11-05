@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.4.1] - 2026-11-06
+
+Tidak ada perubahan kode aplikasi pada rilis ini — nomor versi
+mengikuti rilis gabungan 2.4.1 (perubahan ada di tema: radius
+link dock diperkecil).
+
 ## [2.4.0] - 2026-11-05
 
 ### Changed

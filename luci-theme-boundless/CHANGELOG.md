@@ -4,6 +4,15 @@ Semua perubahan penting tema ini dicatat di sini.
 Format mengikuti [Keep a Changelog](https://keepachangelog.com/),
 versi mengikuti [Semantic Versioning](https://semver.org/).
 
+## [2.4.1] - 2026-11-06
+
+### Changed
+
+- **Radius link dock diperkecil** (permintaan Syamsul, supaya
+  tidak terlihat oval): link dock bawah dari pill penuh 999px
+  menjadi 12px, link dock pojok kanan bawah disamakan 12px
+  (dari 14px). Radius wadah dock tidak berubah.
+
 ## [2.4.0] - 2026-11-05
 
 ### Changed

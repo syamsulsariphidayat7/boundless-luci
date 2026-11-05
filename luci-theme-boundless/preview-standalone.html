@@ -161,7 +161,7 @@ header > .fill > .container > #logo > img {
 
 /**
  *	luci-theme-boundless - cascade.css
- *	Version: 2.4.0 (see the VERSION file and CHANGELOG.md; check the
+ *	Version: 2.4.1 (see the VERSION file and CHANGELOG.md; check the
  *	installed version on a device with: grep -m1 "Version:" cascade.css)
  *
  *	DERIVATIVE WORK: everything up to the "MATERIAL3 LIGHT OVERRIDES" block
@@ -4011,7 +4011,8 @@ header { height: 4rem; }
 	line-height: 1.2 !important;
 	padding: .55rem 1rem !important;
 	font-size: .85rem !important;
-	border-radius: 999px;
+	/* 2.4.1: radius link diperkecil (999px -> 12px) supaya chip link tidak terlihat oval (permintaan Syamsul). */
+	border-radius: 12px;
 	color: #fff !important;
 	/* 2.4.0: setiap link dock (bawah maupun kanan) berchip latar
 	   + bingkai samar + bayangan teks, supaya aksinya kelihatan
@@ -4112,7 +4113,8 @@ header { height: 4rem; }
 	box-sizing: border-box;
 	text-align: left;
 	padding: .5rem .85rem !important;
-	border-radius: 14px;
+	/* 2.4.1: disamakan 12px seperti dock bawah (dari 14px). */
+	border-radius: 12px;
 	/* Chip latar/bingkai/bayangan per tombol: sejak 2.4.0 hidup
 	   di aturan dasar #menu a (berlaku juga untuk dock bawah),
 	   jadi di sini tidak diulang. */
