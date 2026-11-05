@@ -4,6 +4,19 @@ Semua perubahan penting tema ini dicatat di sini.
 Format mengikuti [Keep a Changelog](https://keepachangelog.com/),
 versi mengikuti [Semantic Versioning](https://semver.org/).
 
+## [2.3.0] - 2026-11-05
+
+### Added
+
+- **Mode dock kanan**: bila dashboard mengatur posisi dock ke
+  Kanan, `dock-render.js` memasang kelas `dock-right` (dari
+  `BOUNDLESS_DOCK_POS` di dock-data.js) dan cascade.css
+  menampilkannya sebagai dock vertikal melayang di sisi kanan
+  layar — item tersusun ke bawah, titik penanda aktif pindah ke
+  sisi kiri item, konten diberi padding kanan supaya tidak
+  tertutup dock, dan di layar ≤900px label disembunyikan
+  (ikon saja) agar ramping. Efek Glass tetap berlaku.
+
 ## [2.2.2] - 2026-11-03
 
 Tidak ada perubahan kode tema pada rilis ini — nomor versi

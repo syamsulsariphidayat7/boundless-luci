@@ -6,7 +6,10 @@
    sama persis dengan dock hardcoded sampai 2.1.6.
    {host} di href diganti hostname yang sedang dipakai browser.
    Penanda item aktif TIDAK di sini: script lama di header
-   yang berjalan sesudah file ini yang menanganinya. */
+   yang berjalan sesudah file ini yang menanganinya.
+   Posisi dock (2.3.0): window.BOUNDLESS_DOCK_POS = "right"
+   memasang kelas dock-right di #menu dan body; gayanya di
+   cascade.css. Tanpa data itu, posisinya bawah (bawaan). */
 (function () {
 	"use strict";
 	var FALLBACK = [
@@ -24,6 +27,11 @@
 		? window.BOUNDLESS_DOCK_ITEMS : FALLBACK;
 	var ul = document.querySelector("#menu ul");
 	if (!ul) return;
+	if (window.BOUNDLESS_DOCK_POS === "right") {
+		var menu = document.querySelector("#menu");
+		if (menu) menu.classList.add("dock-right");
+		if (document.body) document.body.classList.add("dock-right");
+	}
 	var SVGNS = "http://www.w3.org/2000/svg";
 	items.forEach(function (it) {
 		if (!it || it.enabled === false) return;

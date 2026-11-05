@@ -50,6 +50,8 @@ function index()
 		post("action_dock_reset")).leaf = true
 	entry({"admin", "system", "boundlesstheme", "dock_pages"},
 		call("action_dock_pages")).leaf = true
+	entry({"admin", "system", "boundlesstheme", "dock_pos"},
+		post("action_dock_pos")).leaf = true
 end
 
 local BUNDLE_SLUG = "syamsulsariphidayat7/boundless-luci"
@@ -398,6 +400,17 @@ local function dock_items()
 	return items, true
 end
 
+-- Posisi dock (2.3.0): "bottom" (bawaan) atau "right", disimpan di
+-- UCI settings.dock_position dan ikut ditulis ke dock-data.js;
+-- dock-render.js memasang kelas dock-right dari nilai itu.
+local function current_dock_pos()
+	local uci = luci.model.uci.cursor()
+	if uci:get("boundlesstheme", "settings", "dock_position") == "right" then
+		return "right"
+	end
+	return "bottom"
+end
+
 -- Tulis dock-data.js: ikon diterjemahkan dari nama ke path SVG di
 -- sini, jadi tema tidak perlu tahu pustaka ikonnya.
 local function write_dock_js(items)
@@ -415,6 +428,7 @@ local function write_dock_js(items)
 	local f = io.open(DOCK_JS, "w")
 	if not f then return false end
 	f:write("/* Dock Boundless - ditulis dashboard Boundless Theme; jangan diedit manual. */\n")
+	f:write("window.BOUNDLESS_DOCK_POS = " .. luci.jsonc.stringify(current_dock_pos()) .. ";\n")
 	f:write("window.BOUNDLESS_DOCK_ITEMS = ")
 	f:write(luci.jsonc.stringify(out))
 	f:write(";\n")
@@ -440,7 +454,33 @@ function action_dock()
 	luci.http.prepare_content("application/json")
 	luci.http.write(luci.jsonc.stringify({
 		ok = true, custom = custom, items = items, icons = ICONS,
+		pos = current_dock_pos(),
 	}))
+end
+
+-- POST /dock_pos - atur posisi dock (bottom/right): simpan UCI +
+-- segarkan dock-data.js. Sinkron seperti /scheme.
+function action_dock_pos()
+	if not require_post() then return end
+	local http = luci.http
+	http.prepare_content("application/json")
+	local pos = http.formvalue("pos") or ""
+	if pos ~= "bottom" and pos ~= "right" then
+		http.status(400, "Bad Request")
+		return http.write(luci.jsonc.stringify({ ok = false, error = "posisi tidak dikenal (bottom/right)" }))
+	end
+	local uci = luci.model.uci.cursor()
+	if not uci:get_first("boundlesstheme", "settings") then
+		uci:section("boundlesstheme", "settings", "settings")
+	end
+	uci:set("boundlesstheme", "settings", "dock_position", pos)
+	uci:commit("boundlesstheme")
+	local items = dock_items()
+	if not write_dock_js(items) then
+		http.status(500, "Internal Server Error")
+		return http.write(luci.jsonc.stringify({ ok = false, error = "gagal menulis dock-data.js - tema belum terpasang?" }))
+	end
+	http.write(luci.jsonc.stringify({ ok = true, pos = pos }))
 end
 
 -- GET /dock/pages - daftar halaman LuCI yang terpasang (pohon menu

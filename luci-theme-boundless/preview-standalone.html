@@ -161,7 +161,7 @@ header > .fill > .container > #logo > img {
 
 /**
  *	luci-theme-boundless - cascade.css
- *	Version: 2.2.2 (see the VERSION file and CHANGELOG.md; check the
+ *	Version: 2.3.0 (see the VERSION file and CHANGELOG.md; check the
  *	installed version on a device with: grep -m1 "Version:" cascade.css)
  *
  *	DERIVATIVE WORK: everything up to the "MATERIAL3 LIGHT OVERRIDES" block
@@ -4061,6 +4061,33 @@ header { height: 4rem; }
    v2.2.0 the dock items (and their colours) come from dock-data.js
    and are drawn by dock-render.js, which sets each icon's colour
    as an inline style on the svg - no per-item rules needed here. */
+
+/* v2.3.0: dock di sisi kanan (pilihan Posisi Dock di dashboard;
+   kelas dock-right dipasang dock-render.js dari nilai
+   BOUNDLESS_DOCK_POS di dock-data.js). Bawaan tetap bawah.
+   Konten diberi ruang kanan supaya dock tidak menutup tombol
+   aksi di ujung kanan baris tabel; di layar sempit label
+   disembunyikan (font-size 0, ikon tetap tampil) agar ramping. */
+#menu.dock-right {
+	left: auto !important;
+	right: .9rem !important;
+	top: 50% !important;
+	bottom: auto !important;
+	transform: translateY(-50%);
+}
+#menu.dock-right ul { flex-direction: column; }
+#menu.dock-right li::after {
+	left: 5px;
+	bottom: auto;
+	top: 50%;
+	transform: translateY(-50%);
+}
+body.dock-right #maincontent { padding-bottom: 1rem; padding-right: 7rem; }
+@media (max-width: 900px) {
+	body.dock-right #maincontent { padding-right: 4.6rem; }
+	#menu.dock-right a { font-size: 0; padding: .55rem .75rem !important; }
+	#menu.dock-right a svg.bicon { margin-right: 0; }
+}
 #maincontent { padding-bottom: 5rem; }
 
 @media (max-width: 640px) {

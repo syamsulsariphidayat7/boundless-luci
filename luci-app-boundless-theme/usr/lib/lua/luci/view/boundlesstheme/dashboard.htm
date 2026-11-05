@@ -146,6 +146,13 @@
   <div class="btw-card">
     <h2>Dock</h2>
     <p class="btw-note">Atur link dock bawah: <b>tambah, hapus, geser urutan</b> (seret pegangan di kiri baris, atau tombol &#8593; &#8595;), ganti <b>ikon</b> dari pustaka Material Symbols (klik kotak ikon &mdash; tanpa upload) dan <b>warna</b> per item. Href boleh dipilih dari daftar halaman LuCI yang terpasang atau diisi manual; <b>{host}</b> di href diganti hostname router (mis. <span style="font-family:ui-monospace,Menlo,monospace">http://{host}:9090/ui/zsb</span>). Tersimpan di perangkat &mdash; muat ulang halaman untuk melihat dock baru.</p>
+    <div class="btw-btnrow" style="margin:0 0 12px;align-items:center">
+      <span style="font-size:13.5px"><b>Posisi Dock</b></span>
+      <select class="btw-select" id="btw-dock-pos" style="min-width:150px">
+        <option value="bottom">Bawah</option>
+        <option value="right">Kanan</option>
+      </select>
+    </div>
     <div id="btw-dock-list"></div>
     <div class="btw-picker" id="btw-dock-picker">
       <div class="btw-note" style="margin-bottom:8px">Pilih ikon untuk <b id="btw-dock-picker-for"></b>:</div>
@@ -194,6 +201,7 @@ var URL_DOCK = "<%=luci.dispatcher.build_url("admin", "system", "boundlesstheme"
 var URL_DOCK_SAVE = "<%=luci.dispatcher.build_url("admin", "system", "boundlesstheme", "dock_save")%>";
 var URL_DOCK_RESET = "<%=luci.dispatcher.build_url("admin", "system", "boundlesstheme", "dock_reset")%>";
 var URL_DOCK_PAGES = "<%=luci.dispatcher.build_url("admin", "system", "boundlesstheme", "dock_pages")%>";
+var URL_DOCK_POS = "<%=luci.dispatcher.build_url("admin", "system", "boundlesstheme", "dock_pos")%>";
 
 function $(id){ return document.getElementById(id); }
 function esc(s){ return String(s == null ? "" : s).replace(/&/g,"&amp;").replace(/</g,"&lt;"); }
@@ -779,6 +787,7 @@ function loadDock(){
     if (!j || !j.ok) return;
     dockIcons = j.icons || {};
     dockItems = j.items || [];
+    $("btw-dock-pos").value = j.pos || "bottom";
     buildDockPicker();
     renderDock();
     getJSON(URL_DOCK_PAGES).then(function(pj){
@@ -790,6 +799,13 @@ function loadDock(){
   });
 }
 
+$("btw-dock-pos").addEventListener("change", function(){
+  var pos = this.value;
+  postJSON(URL_DOCK_POS, { pos: pos }).then(function(r){
+    if (r && r.ok) dockStatus("Posisi dock: " + (pos === "right" ? "Kanan" : "Bawah") + ". Muat ulang halaman untuk melihatnya.", true);
+    else dockStatus("Gagal mengatur posisi: " + ((r && r.error) || "tidak diketahui"), false);
+  }).catch(function(e){ dockStatus("Gagal menghubungi STB: " + e.message, false); });
+});
 $("btw-dock-add").addEventListener("click", function(){
   if (dockItems.length >= 14) { dockStatus("Maksimal 14 item dock.", false); return; }
   dockItems.push({ label: "Baru", href: "/cgi-bin/luci/", icon: "link", color: "#ffffff", external: false, enabled: true });

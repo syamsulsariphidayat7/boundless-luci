@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.3.0] - 2026-11-05
+
+### Added
+
+- **Pengaturan posisi dock: Bawah atau Kanan** (permintaan
+  Syamsul). Pemilih "Posisi Dock" di kartu Dock tersimpan di UCI
+  `boundlesstheme.settings.dock_position`, berlaku langsung
+  (POST `dock_pos`, sejajar seperti endpoint lain) dan ikut
+  ditulis ke `dock-data.js` sebagai `BOUNDLESS_DOCK_POS` —
+  diterapkan tema lewat kelas `dock-right`. Bawaan: Bawah.
+  `GET dock` kini juga mengembalikan `pos` untuk editor.
+
 ## [2.2.2] - 2026-11-03
 
 ### Added
