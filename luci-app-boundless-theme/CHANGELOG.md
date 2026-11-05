@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.3.1] - 2026-11-05
+
+Tidak ada perubahan kode aplikasi pada rilis ini — nomor versi
+mengikuti rilis gabungan 2.3.1 (perubahan ada di tema:
+perbaikan tampilan dock kanan).
+
 ## [2.3.0] - 2026-11-05
 
 ### Added

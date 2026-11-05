@@ -4,6 +4,18 @@ Semua perubahan penting tema ini dicatat di sini.
 Format mengikuti [Keep a Changelog](https://keepachangelog.com/),
 versi mengikuti [Semantic Versioning](https://semver.org/).
 
+## [2.3.1] - 2026-11-05
+
+### Fixed
+
+- **Tampilan dock kanan diperbaiki** (umpan balik Syamsul dari
+  screenshot STB: "jelek ui nya"): wadah dock kanan bukan lagi
+  kapsul raksasa (radius 999px diganti panel 22px, padding
+  dirapatkan), titik penanda di kiri semua baris yang terbaca
+  seperti bullet list dimatikan — item aktif kini ditandai chip
+  latar terang pada link-nya — dan baris dirapatkan
+  (gap .1rem, padding .5rem .85rem, radius chip 14px).
+
 ## [2.3.0] - 2026-11-05
 
 ### Added
