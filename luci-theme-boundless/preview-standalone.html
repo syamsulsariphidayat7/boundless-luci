@@ -161,7 +161,7 @@ header > .fill > .container > #logo > img {
 
 /**
  *	luci-theme-boundless - cascade.css
- *	Version: 2.3.2 (see the VERSION file and CHANGELOG.md; check the
+ *	Version: 2.3.3 (see the VERSION file and CHANGELOG.md; check the
  *	installed version on a device with: grep -m1 "Version:" cascade.css)
  *
  *	DERIVATIVE WORK: everything up to the "MATERIAL3 LIGHT OVERRIDES" block
@@ -4071,15 +4071,24 @@ header { height: 4rem; }
 #menu.dock-right {
 	left: auto !important;
 	right: .9rem !important;
-	top: 50% !important;
-	bottom: auto !important;
-	transform: translateY(-50%);
+	/* 2.3.3: nempel pojok kanan bawah seperti rel aksi video
+	   TikTok/IG (usulan Syamsul) - sebelumnya melayang di
+	   tengah kanan (top 50% + translateY). Tumpukan item
+	   tumbuh ke atas dari pojok. */
+	top: auto !important;
+	bottom: 1rem;
+	transform: none;
 	/* 2.3.1: panel, bukan kapsul - radius 999px bawaan dock bawah
 	   membuat busur kosong besar di ujung atas/bawah. */
 	border-radius: 22px !important;
 	padding: .45rem !important;
+	/* 2.3.3 (revisi sebelum rilis diterapkan): panel dibuat
+	   menonjol dari halaman - bingkai terang + bayangan kuat,
+	   supaya tombol aksinya kelihatan di pojok. */
+	border: 1px solid rgba(255, 255, 255, .22);
+	box-shadow: 0 16px 38px rgba(0, 0, 0, .45);
 }
-#menu.dock-right ul { flex-direction: column; gap: .1rem; }
+#menu.dock-right ul { flex-direction: column; gap: .35rem; }
 /* 2.3.2: baris membentang selebar dock dan isinya rata kiri -
    sebelumnya ikon+teks rata tengah mengikuti item terpanjang,
    jadi tepi kirinya zig-zag (tidak sejajar, kata Syamsul). */
@@ -4092,12 +4101,20 @@ header { height: 4rem; }
 	text-align: left;
 	padding: .5rem .85rem !important;
 	border-radius: 14px;
+	/* 2.3.3 (revisi): tiap item jadi tombol berbingkai sendiri
+	   seperti tombol aksi TikTok/IG, teks diberi bayangan
+	   supaya terbaca di atas latar apa pun. */
+	background: rgba(255, 255, 255, .10);
+	border: 1px solid rgba(255, 255, 255, .16);
+	text-shadow: 0 1px 2px rgba(0, 0, 0, .45);
 }
+#menu.dock-right li a:hover { background: rgba(255, 255, 255, .20) !important; }
+#menu.dock-right a svg.bicon { filter: drop-shadow(0 1px 1px rgba(0, 0, 0, .5)); }
 /* 2.3.1: titik penanda di kiri tiap baris terbaca seperti bullet
    list (jelek, kata Syamsul) - dimatikan; item aktif ditandai
    chip latar pada link-nya, seperti pilihan di sidebar. */
 #menu.dock-right li::after { display: none; }
-#menu.dock-right li.on a { background: rgba(255, 255, 255, .22) !important; }
+#menu.dock-right li.on a { background: rgba(255, 255, 255, .28) !important; border-color: rgba(255, 255, 255, .40); }
 body.dock-right #maincontent { padding-bottom: 1rem; padding-right: 7rem; }
 @media (max-width: 900px) {
 	body.dock-right #maincontent { padding-right: 4.6rem; }

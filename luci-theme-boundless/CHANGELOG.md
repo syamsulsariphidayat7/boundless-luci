@@ -4,6 +4,19 @@ Semua perubahan penting tema ini dicatat di sini.
 Format mengikuti [Keep a Changelog](https://keepachangelog.com/),
 versi mengikuti [Semantic Versioning](https://semver.org/).
 
+## [2.3.3] - 2026-11-05
+
+### Changed
+
+- **Dock kanan kini nempel di pojok kanan bawah** (usulan
+  Syamsul, meniru rel aksi video TikTok/IG) — sebelumnya
+  melayang di tengah sisi kanan. Tumpukan item tumbuh ke atas
+  dari pojok; jarak ke tepi kanan/bawah sama seperti dock
+  bawah (0.9rem / 1rem). Panel dan tombolnya dibuat menonjol
+  (bingkai terang + bayangan kuat; tiap item chip berbingkai
+  dengan bayangan teks/ikon) atas permintaan Syamsul sebelum
+  rilis ini diterapkan — "aksinya gak kelihatan, kasi style".
+
 ## [2.3.2] - 2026-11-05
 
 ### Fixed

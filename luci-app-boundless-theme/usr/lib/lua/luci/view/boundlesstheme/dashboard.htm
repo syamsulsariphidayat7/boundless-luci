@@ -150,7 +150,7 @@
       <span style="font-size:13.5px"><b>Posisi Dock</b></span>
       <select class="btw-select" id="btw-dock-pos" style="min-width:150px">
         <option value="bottom">Bawah</option>
-        <option value="right">Kanan</option>
+        <option value="right">Kanan Bawah</option>
       </select>
     </div>
     <div id="btw-dock-list"></div>
@@ -802,7 +802,7 @@ function loadDock(){
 $("btw-dock-pos").addEventListener("change", function(){
   var pos = this.value;
   postJSON(URL_DOCK_POS, { pos: pos }).then(function(r){
-    if (r && r.ok) dockStatus("Posisi dock: " + (pos === "right" ? "Kanan" : "Bawah") + ". Muat ulang halaman untuk melihatnya.", true);
+    if (r && r.ok) dockStatus("Posisi dock: " + (pos === "right" ? "Kanan Bawah" : "Bawah") + ". Muat ulang halaman untuk melihatnya.", true);
     else dockStatus("Gagal mengatur posisi: " + ((r && r.error) || "tidak diketahui"), false);
   }).catch(function(e){ dockStatus("Gagal menghubungi STB: " + e.message, false); });
 });

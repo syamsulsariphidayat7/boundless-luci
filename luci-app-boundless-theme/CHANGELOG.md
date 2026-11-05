@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.3.3] - 2026-11-05
+
+### Changed
+
+- Label opsi posisi "Kanan" menjadi **"Kanan Bawah"** mengikuti
+  perilaku barunya di tema 2.3.3 (dock menempel di pojok kanan
+  bawah). Nilai UCI tetap `right`.
+
 ## [2.3.2] - 2026-11-05
 
 Tidak ada perubahan kode aplikasi pada rilis ini — nomor versi
