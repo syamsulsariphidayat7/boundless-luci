@@ -137,7 +137,7 @@
       <button class="btw-btn primary" id="btw-btn-update" type="button" style="display:none">Install / Update Sekarang</button>
       <button class="btw-btn danger" id="btw-btn-remove" type="button">Hapus Tema</button>
     </div>
-    <div class="btw-statusline" id="btw-update-status"></div>
+    <div class="btw-statusline" id="btw-update-status">Klik Cek Update untuk memeriksa versi terbaru di GitHub.</div>
     <pre class="btw-log" id="btw-update-log"></pre>
     <div class="btw-statusline" id="btw-manage-status"></div>
     <pre class="btw-log" id="btw-manage-log"></pre>
@@ -148,11 +148,12 @@
     <p class="btw-note">Atur link dock bawah: <b>tambah, hapus, geser urutan</b> (seret pegangan di kiri baris, atau tombol &#8593; &#8595;), ganti <b>ikon</b> dari pustaka Material Symbols (klik kotak ikon &mdash; tanpa upload) dan <b>warna</b> per item. Href boleh dipilih dari daftar halaman LuCI yang terpasang atau diisi manual; <b>{host}</b> di href diganti hostname router (mis. <span style="font-family:ui-monospace,Menlo,monospace">http://{host}:9090/ui/zsb</span>). Tersimpan di perangkat &mdash; muat ulang halaman untuk melihat dock baru.</p>
     <div class="btw-btnrow" style="margin:0 0 12px;align-items:center">
       <span style="font-size:13.5px"><b>Posisi Dock</b></span>
-      <select class="btw-select" id="btw-dock-pos" style="min-width:150px">
-        <option value="bottom">Bawah</option>
-        <option value="right">Kanan Bawah</option>
+      <select class="btw-select" id="btw-dock-pos" style="min-width:190px">
+        <option value="bottom">Tengah Bawah</option>
+        <option value="right">Pojok Kanan Bawah</option>
       </select>
     </div>
+    <p class="btw-note" style="margin:0 0 12px"><b>Tengah Bawah</b> = dock melayang di tengah bawah layar. <b>Pojok Kanan Bawah</b> = dock menempel di pojok kanan bawah, seperti rel tombol video TikTok/IG.</p>
     <div id="btw-dock-list"></div>
     <div class="btw-picker" id="btw-dock-picker">
       <div class="btw-note" style="margin-bottom:8px">Pilih ikon untuk <b id="btw-dock-picker-for"></b>:</div>
@@ -545,8 +546,9 @@ function pollLog(url, logEl, statusEl, doneFn){
 }
 
 /* Tombol Install / Update hanya muncul bila cek menyatakan ada
-   versi baru; cek berjalan otomatis saat halaman dibuka dan bisa
-   diulang manual lewat tombol Cek Update. */
+   versi baru. Sejak 2.4.0 cek HANYA berjalan saat tombol Cek
+   Update diklik - tidak lagi otomatis saat halaman dibuka
+   (permintaan Syamsul). */
 function doCheck(){
   var st = $("btw-update-status"), notes = $("btw-notes"), btn = $("btw-btn-update");
   st.className = "btw-statusline"; st.textContent = "Memeriksa GitHub...";
@@ -802,7 +804,7 @@ function loadDock(){
 $("btw-dock-pos").addEventListener("change", function(){
   var pos = this.value;
   postJSON(URL_DOCK_POS, { pos: pos }).then(function(r){
-    if (r && r.ok) dockStatus("Posisi dock: " + (pos === "right" ? "Kanan Bawah" : "Bawah") + ". Muat ulang halaman untuk melihatnya.", true);
+    if (r && r.ok) dockStatus("Posisi dock: " + (pos === "right" ? "Pojok Kanan Bawah" : "Tengah Bawah") + ". Muat ulang halaman untuk melihatnya.", true);
     else dockStatus("Gagal mengatur posisi: " + ((r && r.error) || "tidak diketahui"), false);
   }).catch(function(e){ dockStatus("Gagal menghubungi STB: " + e.message, false); });
 });
@@ -826,10 +828,9 @@ $("btw-dock-reset").addEventListener("click", function(){
   }).catch(function(e){ dockStatus("Gagal menghubungi STB: " + e.message, false); });
 });
 
-/* ---------- Muat awal: status + cek update otomatis + lanjutkan pantauan bila ada proses ---------- */
+/* ---------- Muat awal: status + lanjutkan pantauan bila ada proses (cek update manual saja sejak 2.4.0) ---------- */
 refresh();
 loadDock();
-doCheck();
 (function resume(){
   getJSON(URL_UPDATELOG).then(function(r){
     if (r.running) {

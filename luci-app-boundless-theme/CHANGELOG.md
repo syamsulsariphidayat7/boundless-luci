@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.4.0] - 2026-11-05
+
+### Changed
+
+- **Cek update tidak lagi otomatis** (permintaan Syamsul):
+  halaman dashboard tidak memeriksa GitHub saat dibuka; cek
+  hanya berjalan bila tombol **Cek Update** diklik. Baris status
+  awal kini mengarahkan ke tombol itu.
+- **Label posisi dock lebih jelas**: pilihan yang tadinya
+  "Bawah / Kanan Bawah" menjadi **"Tengah Bawah"** dan
+  **"Pojok Kanan Bawah"**, ditambah satu baris penjelasan di
+  kartu Dock tentang letak masing-masing.
+
 ## [2.3.3] - 2026-11-05
 
 ### Changed

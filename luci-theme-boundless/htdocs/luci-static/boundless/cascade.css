@@ -1,6 +1,6 @@
 /**
  *	luci-theme-boundless - cascade.css
- *	Version: 2.3.3 (see the VERSION file and CHANGELOG.md; check the
+ *	Version: 2.4.0 (see the VERSION file and CHANGELOG.md; check the
  *	installed version on a device with: grep -m1 "Version:" cascade.css)
  *
  *	DERIVATIVE WORK: everything up to the "MATERIAL3 LIGHT OVERRIDES" block
@@ -3852,6 +3852,13 @@ header { height: 4rem; }
 	font-size: .85rem !important;
 	border-radius: 999px;
 	color: #fff !important;
+	/* 2.4.0: setiap link dock (bawah maupun kanan) berchip latar
+	   + bingkai samar + bayangan teks, supaya aksinya kelihatan
+	   (sebelumnya gaya ini hanya ada di dock kanan 2.3.3;
+	   permintaan Syamsul: dock bawah juga). */
+	background: rgba(255, 255, 255, .10);
+	border: 1px solid rgba(255, 255, 255, .16);
+	text-shadow: 0 1px 2px rgba(0, 0, 0, .45);
 }
 #menu li a:hover { background: rgba(255, 255, 255, .16) !important; color: #fff !important; }
 #menu a p { margin: 0 !important; display: inline; }
@@ -3884,6 +3891,9 @@ header { height: 4rem; }
 	height: 6px;
 	background: #fff;
 }
+/* 2.4.0: link item aktif (dock bawah) latarnya lebih terang,
+   selaras dengan chip aktif dock kanan. */
+#menu li.on a { background: rgba(255, 255, 255, .28) !important; border-color: rgba(255, 255, 255, .40); }
 
 /* v1.8.2: inline Material Symbols icon on every dock item
    (router/terminal/dashboard/memory/palette), coloured by
@@ -3894,6 +3904,8 @@ header { height: 4rem; }
 	fill: currentColor;
 	vertical-align: -2px;
 	margin-right: 6px;
+	/* 2.4.0: bayangan ikon (dilebur dari aturan dock kanan). */
+	filter: drop-shadow(0 1px 1px rgba(0, 0, 0, .5));
 }
 
 /* v2.1.6 coloured the dock icons with per-href rules here; since
@@ -3940,15 +3952,11 @@ header { height: 4rem; }
 	text-align: left;
 	padding: .5rem .85rem !important;
 	border-radius: 14px;
-	/* 2.3.3 (revisi): tiap item jadi tombol berbingkai sendiri
-	   seperti tombol aksi TikTok/IG, teks diberi bayangan
-	   supaya terbaca di atas latar apa pun. */
-	background: rgba(255, 255, 255, .10);
-	border: 1px solid rgba(255, 255, 255, .16);
-	text-shadow: 0 1px 2px rgba(0, 0, 0, .45);
+	/* Chip latar/bingkai/bayangan per tombol: sejak 2.4.0 hidup
+	   di aturan dasar #menu a (berlaku juga untuk dock bawah),
+	   jadi di sini tidak diulang. */
 }
 #menu.dock-right li a:hover { background: rgba(255, 255, 255, .20) !important; }
-#menu.dock-right a svg.bicon { filter: drop-shadow(0 1px 1px rgba(0, 0, 0, .5)); }
 /* 2.3.1: titik penanda di kiri tiap baris terbaca seperti bullet
    list (jelek, kata Syamsul) - dimatikan; item aktif ditandai
    chip latar pada link-nya, seperti pilihan di sidebar. */

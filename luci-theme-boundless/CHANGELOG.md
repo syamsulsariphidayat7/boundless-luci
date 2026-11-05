@@ -4,6 +4,18 @@ Semua perubahan penting tema ini dicatat di sini.
 Format mengikuti [Keep a Changelog](https://keepachangelog.com/),
 versi mengikuti [Semantic Versioning](https://semver.org/).
 
+## [2.4.0] - 2026-11-05
+
+### Changed
+
+- **Semua link dock kini berchip latar** (permintaan Syamsul:
+  dock bawah juga): gaya tombol berbingkai yang di 2.3.3 hanya
+  ada di dock kanan kini hidup di aturan dasar `#menu a` —
+  latar samar, bingkai tipis, bayangan teks dan ikon — berlaku
+  untuk dock bawah maupun pojok kanan bawah. Item aktif dock
+  bawah latarnya lebih terang, selaras dengan dock kanan;
+  deklarasi ganda di blok dock kanan dilebur.
+
 ## [2.3.3] - 2026-11-05
 
 ### Changed
