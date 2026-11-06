@@ -4,6 +4,16 @@ Semua perubahan penting tema ini dicatat di sini.
 Format mengikuti [Keep a Changelog](https://keepachangelog.com/),
 versi mengikuti [Semantic Versioning](https://semver.org/).
 
+## [2.4.2] - 2026-11-06
+
+### Changed
+
+- **Konten kembali full width saat dock di pojok kanan bawah**
+  (pilihan Syamsul): padding kanan 7rem pada `#maincontent`
+  yang diwarisi dari dock tengah-kanan (2.3.0) dibuang — dock
+  kini melayang di atas konten di pojok, seperti rel aksi
+  TikTok/IG, dan Main tidak menyempit lagi.
+
 ## [2.4.1] - 2026-11-06
 
 ### Changed

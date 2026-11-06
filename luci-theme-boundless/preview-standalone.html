@@ -161,7 +161,7 @@ header > .fill > .container > #logo > img {
 
 /**
  *	luci-theme-boundless - cascade.css
- *	Version: 2.4.1 (see the VERSION file and CHANGELOG.md; check the
+ *	Version: 2.4.2 (see the VERSION file and CHANGELOG.md; check the
  *	installed version on a device with: grep -m1 "Version:" cascade.css)
  *
  *	DERIVATIVE WORK: everything up to the "MATERIAL3 LIGHT OVERRIDES" block
@@ -4078,9 +4078,9 @@ header { height: 4rem; }
 /* v2.3.0: dock di sisi kanan (pilihan Posisi Dock di dashboard;
    kelas dock-right dipasang dock-render.js dari nilai
    BOUNDLESS_DOCK_POS di dock-data.js). Bawaan tetap bawah.
-   Konten diberi ruang kanan supaya dock tidak menutup tombol
-   aksi di ujung kanan baris tabel; di layar sempit label
-   disembunyikan (font-size 0, ikon tetap tampil) agar ramping. */
+   Di layar sempit label disembunyikan (font-size 0, ikon tetap
+   tampil) agar ramping. (Ruang kanan untuk konten yang sempat
+   ada di versi awal sudah dibuang di 2.4.2 - lihat di bawah.) */
 #menu.dock-right {
 	left: auto !important;
 	right: .9rem !important;
@@ -4125,9 +4125,13 @@ header { height: 4rem; }
    chip latar pada link-nya, seperti pilihan di sidebar. */
 #menu.dock-right li::after { display: none; }
 #menu.dock-right li.on a { background: rgba(255, 255, 255, .28) !important; border-color: rgba(255, 255, 255, .40); }
-body.dock-right #maincontent { padding-bottom: 1rem; padding-right: 7rem; }
+/* 2.4.2: padding kanan konten DIBUANG (pilihan Syamsul) - Main
+   kembali full width; dock pojok kanan bawah melayang di atas
+   konten seperti rel TikTok/IG. Cadangan 7rem warisan 2.3.0
+   (dock tengah kanan) sudah tidak perlu sejak dock pindah ke
+   pojok di 2.3.3. */
+body.dock-right #maincontent { padding-bottom: 1rem; }
 @media (max-width: 900px) {
-	body.dock-right #maincontent { padding-right: 4.6rem; }
 	#menu.dock-right a { font-size: 0; padding: .55rem .75rem !important; justify-content: center; }
 	#menu.dock-right a svg.bicon { margin-right: 0; }
 }
