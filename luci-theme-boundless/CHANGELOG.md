@@ -4,6 +4,20 @@ Semua perubahan penting tema ini dicatat di sini.
 Format mengikuti [Keep a Changelog](https://keepachangelog.com/),
 versi mengikuti [Semantic Versioning](https://semver.org/).
 
+## [2.4.4] - 2026-11-12
+
+### Fixed
+
+- **Dock bawah tidak lagi menutupi konten** (umpan balik
+  Syamsul dari screenshot halaman Kuota: "ui rusak"): sejak
+  dock bawaan 11 item, satu barisnya hampir selebar layar.
+  Kini chip link diperamping (padding .45rem .7rem, font
+  .8rem, jarak ikon 4px), lebar dock dibatasi
+  `calc(100vw - 1.5rem)`, item boleh membungkus ke baris kedua
+  dengan rapi di tengah bila tetap tidak muat, dan ruang bawah
+  konten ditambah jadi 6.5rem. Mode pojok kanan bawah tidak
+  berubah.
+
 ## [2.4.3] - 2026-11-12
 
 ### Added

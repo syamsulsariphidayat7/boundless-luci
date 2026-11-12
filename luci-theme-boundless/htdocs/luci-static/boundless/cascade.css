@@ -1,6 +1,6 @@
 /**
  *	luci-theme-boundless - cascade.css
- *	Version: 2.4.3 (see the VERSION file and CHANGELOG.md; check the
+ *	Version: 2.4.4 (see the VERSION file and CHANGELOG.md; check the
  *	installed version on a device with: grep -m1 "Version:" cascade.css)
  *
  *	DERIVATIVE WORK: everything up to the "MATERIAL3 LIGHT OVERRIDES" block
@@ -3845,11 +3845,20 @@ header { height: 4rem; }
 	z-index: 800;
 }
 #menu ul { display: flex; width: auto !important; gap: .15rem; }
+/* 2.4.4: dock bawah dibatasi lebar viewport dan item boleh
+   membungkus ke baris kedua dengan rapi di tengah - sejak
+   dock bawaan jadi 11 item (2.4.3), satu baris hampir selebar
+   layar dan menutupi konten di belakangnya ("ui rusak", kata
+   Syamsul). Mode pojok kanan tidak ikut aturan ini. */
+#menu:not(.dock-right) { max-width: calc(100vw - 1.5rem); }
+#menu:not(.dock-right) ul { flex-wrap: wrap; justify-content: center; }
 #menu li { float: none; }
 #menu a {
 	line-height: 1.2 !important;
-	padding: .55rem 1rem !important;
-	font-size: .85rem !important;
+	/* 2.4.4: chip diperamping (padding + font diperkecil)
+	   supaya 11 item muat lebih lega dalam satu baris. */
+	padding: .45rem .7rem !important;
+	font-size: .8rem !important;
 	/* 2.4.1: radius link diperkecil (999px -> 12px) supaya chip link tidak terlihat oval (permintaan Syamsul). */
 	border-radius: 12px;
 	color: #fff !important;
@@ -3904,7 +3913,7 @@ header { height: 4rem; }
 	height: 15px;
 	fill: currentColor;
 	vertical-align: -2px;
-	margin-right: 6px;
+	margin-right: 4px;
 	/* 2.4.0: bayangan ikon (dilebur dari aturan dock kanan). */
 	filter: drop-shadow(0 1px 1px rgba(0, 0, 0, .5));
 }
@@ -3974,10 +3983,12 @@ body.dock-right #maincontent { padding-bottom: 1rem; }
 	#menu.dock-right a { font-size: 0; padding: .55rem .75rem !important; justify-content: center; }
 	#menu.dock-right a svg.bicon { margin-right: 0; }
 }
-#maincontent { padding-bottom: 5rem; }
+/* 2.4.4: ruang bawah konten ditambah (5rem -> 6.5rem) untuk
+   jaga-jaga bila dock bawah membungkus jadi dua baris. */
+#maincontent { padding-bottom: 6.5rem; }
 
 @media (max-width: 640px) {
-	#menu a { padding: .5rem .6rem !important; font-size: .78rem !important; }
+	#menu a { padding: .4rem .55rem !important; font-size: .76rem !important; }
 }
 
 /* v22 (STB report 2026-10-28): the save-status popup ("There are no

@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.4.4] - 2026-11-12
+
+Tidak ada perubahan kode aplikasi pada rilis ini — nomor versi
+mengikuti rilis gabungan 2.4.4 (perubahan ada di tema: dock
+bawah diperamping + dibatasi lebarnya).
+
 ## [2.4.3] - 2026-11-12
 
 ### Added
