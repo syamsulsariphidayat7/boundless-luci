@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.4.3] - 2026-11-12
+
+### Added
+
+- **Dua item dock bawaan baru** (permintaan Syamsul): **Led**
+  (halaman hg680pcls, ikon `lightbulb`, warna amber) dan
+  **Kuota** (Monitoring Kuota / boundless-kuota, ikon
+  `monitoring`, warna teal) — dock bawaan kini 11 item. Item
+  bawaan hanya berlaku bila belum ada simpanan dock sendiri;
+  dock yang sudah diatur manual tidak berubah.
+
 ## [2.4.2] - 2026-11-06
 
 Tidak ada perubahan kode aplikasi pada rilis ini — nomor versi

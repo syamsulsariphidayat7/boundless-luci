@@ -377,6 +377,8 @@ local function dock_defaults()
 		{ label = "SMS",      href = "/cgi-bin/luci/admin/modem/5gmodem/readsms",  icon = "sms",                color = "#f472b6", external = false, enabled = true },
 		{ label = "Tools",    href = "/cgi-bin/luci/admin/services/boundlesstools", icon = "build",             color = "#facc15", external = false, enabled = true },
 		{ label = "Tema",     href = "/cgi-bin/luci/admin/system/boundlesstheme",  icon = "palette",            color = "#e879f9", external = false, enabled = true },
+		{ label = "Led",      href = "/cgi-bin/luci/admin/services/hg680pcls",     icon = "lightbulb",          color = "#fbbf24", external = false, enabled = true },
+		{ label = "Kuota",    href = "/cgi-bin/luci/admin/services/boundlesskuota", icon = "monitoring",        color = "#2dd4bf", external = false, enabled = true },
 	}
 end
 

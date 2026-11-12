@@ -4,6 +4,14 @@ Semua perubahan penting tema ini dicatat di sini.
 Format mengikuti [Keep a Changelog](https://keepachangelog.com/),
 versi mengikuti [Semantic Versioning](https://semver.org/).
 
+## [2.4.3] - 2026-11-12
+
+### Added
+
+- Daftar bawaan di `dock-render.js` (dipakai bila dock-data.js
+  belum ada) kini sama dengan bawaan aplikasi 2.4.3: 11 item,
+  termasuk **Led** (hg680pcls) dan **Kuota** (boundless-kuota).
+
 ## [2.4.2] - 2026-11-06
 
 ### Changed

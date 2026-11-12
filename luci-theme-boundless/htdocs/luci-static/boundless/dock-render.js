@@ -1,9 +1,10 @@
-/* Boundless dock renderer (2.2.0) - menggambar item dock bawah
+/* Boundless dock renderer (2.2.0, bawaan diperbarui 2.4.3) - menggambar item dock bawah
    dari window.BOUNDLESS_DOCK_ITEMS (dock-data.js, ditulis
    dashboard Boundless Theme dari konfigurasi UCI). Bila data
    itu tidak ada (aplikasi pengelola belum terpasang / belum
    pernah membuka dashboard), dipakai daftar bawaan di bawah -
-   sama persis dengan dock hardcoded sampai 2.1.6.
+   daftar bawaan yang sama dengan dock_defaults() di
+   controller aplikasi (termasuk Led + Kuota sejak 2.4.3).
    {host} di href diganti hostname yang sedang dipakai browser.
    Penanda item aktif TIDAK di sini: script lama di header
    yang berjalan sesudah file ini yang menanganinya.
@@ -22,6 +23,8 @@
 		{ label: "SMS", href: "/cgi-bin/luci/admin/modem/5gmodem/readsms", icon: "M320-520q17 0 28.5-11.5T360-560q0-17-11.5-28.5T320-600q-17 0-28.5 11.5T280-560q0 17 11.5 28.5T320-520Zm160 0q17 0 28.5-11.5T520-560q0-17-11.5-28.5T480-600q-17 0-28.5 11.5T440-560q0 17 11.5 28.5T480-520Zm160 0q17 0 28.5-11.5T680-560q0-17-11.5-28.5T640-600q-17 0-28.5 11.5T600-560q0 17 11.5 28.5T640-520ZM80-80v-720q0-33 23.5-56.5T160-880h640q33 0 56.5 23.5T880-800v480q0 33-23.5 56.5T800-240H240L80-80Zm126-240h594v-480H160v525l46-45Zm-46 0v-480 480Z", color: "#f472b6", external: false, enabled: true },
 		{ label: "Tools", href: "/cgi-bin/luci/admin/services/boundlesstools", icon: "M686-132 444-376q-20 8-40.5 12t-43.5 4q-100 0-170-70t-70-170q0-36 10-68.5t28-61.5l146 146 72-72-146-146q29-18 61.5-28t68.5-10q100 0 170 70t70 170q0 23-4 43.5T584-516l244 242q12 12 12 29t-12 29l-84 84q-12 12-29 12t-29-12Zm29-85 27-27-256-256q18-20 26-46.5t8-53.5q0-60-38.5-104.5T386-758l74 74q12 12 12 28t-12 28L332-500q-12 12-28 12t-28-12l-74-74q9 57 53.5 95.5T360-440q26 0 52-8t47-25l256 256ZM472-488Z", color: "#facc15", external: false, enabled: true },
 		{ label: "Tema", href: "/cgi-bin/luci/admin/system/boundlesstheme", icon: "M480-80q-82 0-155-31.5t-127.5-86Q143-252 111.5-325T80-480q0-83 32.5-156t88-127Q256-817 330-848.5T488-880q80 0 151 27.5t124.5 76q53.5 48.5 85 115T880-518q0 115-70 176.5T640-280h-74q-9 0-12.5 5t-3.5 11q0 12 15 34.5t15 51.5q0 50-27.5 74T480-80Zm0-400Zm-220 40q26 0 43-17t17-43q0-26-17-43t-43-17q-26 0-43 17t-17 43q0 26 17 43t43 17Zm120-160q26 0 43-17t17-43q0-26-17-43t-43-17q-26 0-43 17t-17 43q0 26 17 43t43 17Zm200 0q26 0 43-17t17-43q0-26-17-43t-43-17q-26 0-43 17t-17 43q0 26 17 43t43 17Zm120 160q26 0 43-17t17-43q0-26-17-43t-43-17q-26 0-43 17t-17 43q0 26 17 43t43 17ZM480-160q9 0 14.5-5t5.5-13q0-14-15-33t-15-57q0-42 29-67t71-25h70q66 0 113-38.5T800-518q0-121-92.5-201.5T488-800q-136 0-232 93t-96 227q0 133 93.5 226.5T480-160Z", color: "#e879f9", external: false, enabled: true },
+		{ label: "Led", href: "/cgi-bin/luci/admin/services/hg680pcls", icon: "M480-80q-33 0-56.5-23.5T400-160h160q0 33-23.5 56.5T480-80ZM320-200v-80h320v80H320Zm10-120q-69-41-109.5-110T180-580q0-125 87.5-212.5T480-880q125 0 212.5 87.5T780-580q0 81-40.5 150T630-320H330Zm24-80h252q45-32 69.5-79T700-580q0-92-64-156t-156-64q-92 0-156 64t-64 156q0 54 24.5 101t69.5 79Zm126 0Z", color: "#fbbf24", external: false, enabled: true },
+		{ label: "Kuota", href: "/cgi-bin/luci/admin/services/boundlesskuota", icon: "M120-120v-80l80-80v160h-80Zm160 0v-240l80-80v320h-80Zm160 0v-320l80 81v239h-80Zm160 0v-239l80-80v319h-80Zm160 0v-400l80-80v480h-80ZM120-327v-113l280-280 160 160 280-280v113L560-447 400-607 120-327Z", color: "#2dd4bf", external: false, enabled: true },
 	];
 	var items = (window.BOUNDLESS_DOCK_ITEMS && window.BOUNDLESS_DOCK_ITEMS.length)
 		? window.BOUNDLESS_DOCK_ITEMS : FALLBACK;
