@@ -4,6 +4,17 @@ Semua perubahan penting tema ini dicatat di sini.
 Format mengikuti [Keep a Changelog](https://keepachangelog.com/),
 versi mengikuti [Semantic Versioning](https://semver.org/).
 
+## [2.4.5] - 2026-11-15
+
+### Fixed
+
+- **Dock bawah di HP tidak lagi membentuk oval raksasa**
+  (laporan Syamsul dari screenshot HP: "bug dock gak
+  responsif"): pembungkusan baris dari 2.4.4 di layar ≤640px
+  diganti satu baris yang bisa **digeser menyamping** — item
+  tidak menyusut, scrollbar disembunyikan. Tampilan desktop
+  tidak berubah.
+
 ## [2.4.4] - 2026-11-12
 
 ### Fixed

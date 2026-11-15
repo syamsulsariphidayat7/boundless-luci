@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.4.5] - 2026-11-15
+
+Tidak ada perubahan kode aplikasi pada rilis ini — nomor versi
+mengikuti rilis gabungan 2.4.5 (perubahan ada di tema: dock
+bawah di HP jadi satu baris geser).
+
 ## [2.4.4] - 2026-11-12
 
 Tidak ada perubahan kode aplikasi pada rilis ini — nomor versi

@@ -161,7 +161,7 @@ header > .fill > .container > #logo > img {
 
 /**
  *	luci-theme-boundless - cascade.css
- *	Version: 2.4.4 (see the VERSION file and CHANGELOG.md; check the
+ *	Version: 2.4.5 (see the VERSION file and CHANGELOG.md; check the
  *	installed version on a device with: grep -m1 "Version:" cascade.css)
  *
  *	DERIVATIVE WORK: everything up to the "MATERIAL3 LIGHT OVERRIDES" block
@@ -4150,6 +4150,20 @@ body.dock-right #maincontent { padding-bottom: 1rem; }
 
 @media (max-width: 640px) {
 	#menu a { padding: .4rem .55rem !important; font-size: .76rem !important; }
+	/* 2.4.5: dock bawah di layar kecil jadi SATU baris yang bisa
+	   digeser menyamping (scrollbar disembunyikan) - bukan
+	   membungkus bertumpuk seperti di 2.4.4, yang di HP
+	   membentuk oval raksasa menutupi layar ("bug dock gak
+	   responsif", kata Syamsul dari screenshot HP). */
+	#menu:not(.dock-right) ul {
+		flex-wrap: nowrap;
+		justify-content: flex-start;
+		overflow-x: auto;
+		scrollbar-width: none;
+		-webkit-overflow-scrolling: touch;
+	}
+	#menu:not(.dock-right) ul::-webkit-scrollbar { display: none; }
+	#menu:not(.dock-right) li { flex: none; }
 }
 
 /* v22 (STB report 2026-10-28): the save-status popup ("There are no
